@@ -3,265 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contratos Médicos - Dashboard</title>
+    <title>Contratos Médicos</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #f8f9fa;
-            color: #1a1a1a;
-        }
-        
-        header {
-            background: linear-gradient(135deg, #0066cc 0%, #0088ff 100%);
-            color: white;
-            padding: 60px 20px;
-            text-align: center;
-        }
-        
-        header h1 {
-            font-size: 48px;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-        
-        header p {
-            font-size: 16px;
-            opacity: 0.95;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 60px 20px;
-        }
-        
-        h2 {
-            font-size: 32px;
-            margin-bottom: 40px;
-            text-align: center;
-            color: #1a1a1a;
-            position: relative;
-            padding-bottom: 20px;
-        }
-        
-        h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 4px;
-            background: linear-gradient(90deg, #0066cc, #0088ff);
-            border-radius: 2px;
-        }
-        
-        .contratos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .contrato-item {
-            background: white;
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-            border-top: 4px solid;
-            border-top-color: #0066cc;
-        }
-        
-        .contrato-item[data-cor="#f5576c"] { border-top-color: #f5576c; }
-        .contrato-item[data-cor="#56ab2f"] { border-top-color: #56ab2f; }
-        .contrato-item[data-cor="#ffa500"] { border-top-color: #ffa500; }
-        
-        .contrato-item:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
-        }
-        
-        .contrato-numero {
-            font-size: 12px;
-            font-weight: 600;
-            color: #0066cc;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
-        
-        .contrato-nome {
-            font-size: 22px;
-            font-weight: 700;
-            color: #1a1a1a;
-            margin-bottom: 5px;
-        }
-        
-        .contrato-prestador {
-            font-size: 13px;
-            color: #666;
-            margin-bottom: 20px;
-        }
-        
-        .contrato-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: #f5f7fa;
-            border-radius: 8px;
-        }
-        
-        .stat-box {
-            text-align: center;
-        }
-        
-        .stat-label {
-            font-size: 11px;
-            color: #999;
-            text-transform: uppercase;
-            margin-bottom: 5px;
-        }
-        
-        .stat-value {
-            font-size: 16px;
-            font-weight: 700;
-            color: #0066cc;
-        }
-        
-        .contrato-meta {
-            font-size: 12px;
-            color: #999;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .btn-contrato {
-            display: block;
-            width: 100%;
-            text-align: center;
-            background: linear-gradient(135deg, #0066cc, #0088ff);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 13px;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-        }
-        
-        .btn-contrato:hover {
-            transform: scale(1.02);
-            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
-        }
-        
-        footer {
-            background: #1a1a1a;
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-            font-size: 13px;
-            margin-top: 60px;
-        }
-        
-        footer p {
-            margin: 10px 0;
-            opacity: 0.8;
-        }
-        
-        @media (max-width: 768px) {
-            header {
-                padding: 40px 20px;
-            }
-            
-            header h1 {
-                font-size: 32px;
-            }
-            
-            .container {
-                padding: 40px 20px;
-            }
-            
-            .contratos-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f8f9fa; color: #1a1a1a; }
+        header { background: linear-gradient(135deg, #0066cc 0%, #0088ff 100%); color: white; padding: 60px 20px; text-align: center; }
+        header h1 { font-size: 48px; margin-bottom: 10px; font-weight: 700; }
+        header p { font-size: 16px; opacity: 0.95; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 60px 20px; }
+        h2 { font-size: 32px; margin-bottom: 40px; text-align: center; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
+        .card { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: all 0.3s; border-top: 4px solid #0066cc; }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 12px 24px rgba(0,0,0,0.12); }
+        .card h3 { font-size: 22px; margin-bottom: 10px; }
+        .card p { font-size: 13px; color: #666; margin-bottom: 20px; }
+        .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; padding: 15px; background: #f5f7fa; border-radius: 8px; }
+        .stat { text-align: center; }
+        .stat-label { font-size: 11px; color: #999; text-transform: uppercase; margin-bottom: 5px; }
+        .stat-value { font-size: 16px; font-weight: 700; color: #0066cc; }
+        .btn { display: block; width: 100%; text-align: center; background: linear-gradient(135deg, #0066cc, #0088ff); color: white; padding: 12px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 13px; transition: all 0.3s; }
+        .btn:hover { transform: scale(1.02); }
+        footer { background: #1a1a1a; color: white; padding: 40px 20px; text-align: center; font-size: 13px; margin-top: 60px; }
     </style>
 </head>
 <body>
     <header>
         <h1>📋 Contratos Médicos</h1>
-        <p>Gerencie seus contratos de forma centralizada e eficiente</p>
+        <p>Gerencie seus contratos de forma centralizada</p>
     </header>
     
     <div class="container">
         <h2>Contratos Disponíveis</h2>
-        <div class="contratos-grid">
-            
-            <div class="contrato-item" data-cor="#0066cc">
-                <div class="contrato-numero">N° 0067/2023</div>
-                <div class="contrato-nome">OFTALMOLOGIA</div>
-                <div class="contrato-prestador">AZUL SAÚDE GESTĀO EM SAÚDE SS</div>
-                <div class="contrato-stats">
-                    <div class="stat-box">
-                        <div class="stat-label">Contratado</div>
-                        <div class="stat-value">94,846</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-label">Consumido</div>
-                        <div class="stat-value">2,410</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-label">Saldo</div>
-                        <div class="stat-value" style="color: #56ab2f">92,436</div>
-                    </div>
+        <div class="grid">
+            <div class="card">
+                <h3>Oftalmologia</h3>
+                <p>Serviços oftalmológicos</p>
+                <div class="stats">
+                    <div class="stat"><div class="stat-label">Contratado</div><div class="stat-value">0</div></div>
+                    <div class="stat"><div class="stat-label">Consumido</div><div class="stat-value">0</div></div>
+                    <div class="stat"><div class="stat-label">Saldo</div><div class="stat-value">0</div></div>
                 </div>
-                <div class="contrato-meta">
-                    17 serviços • 41 procedimentos
-                </div>
-                <a href="oftalmologia.html" class="btn-contrato">Acessar Detalhes →</a>
+                <a href="oftalmologia.html" class="btn">Acessar →</a>
             </div>
-
-            <div class="contrato-item" data-cor="#f5576c">
-                <div class="contrato-numero"></div>
-                <div class="contrato-nome">RESUMO</div>
-                <div class="contrato-prestador"></div>
-                <div class="contrato-stats">
-                    <div class="stat-box">
-                        <div class="stat-label">Contratado</div>
-                        <div class="stat-value">0</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-label">Consumido</div>
-                        <div class="stat-value">0</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-label">Saldo</div>
-                        <div class="stat-value" style="color: #f5576c">0</div>
-                    </div>
-                </div>
-                <div class="contrato-meta">
-                    0 serviços • 0 procedimentos
-                </div>
-                <a href="resumo.html" class="btn-contrato">Acessar Detalhes →</a>
-            </div>
-
         </div>
     </div>
     
     <footer>
-        <p>🔄 Dashboard Automático | Atualizado em 25/11/2025 às 12:54</p>
-        <p>Desenvolvido com Google Sheets + GitHub Pages</p>
+        <p>Dashboard Automático</p>
     </footer>
 </body>
 </html>
