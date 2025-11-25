@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contratos Médicos - Índice</title>
+    <title>Contratos Médicos - Dashboard</title>
     <style>
         * {
             margin: 0;
@@ -12,268 +12,395 @@
             box-sizing: border-box;
         }
         
+        :root {
+            --primary: #0066cc;
+            --secondary: #0088ff;
+            --success: #56ab2f;
+            --danger: #f5576c;
+            --dark: #1a1a1a;
+            --light: #f5f7fa;
+            --border: #e0e0e0;
+        }
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-            color: #333;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f8f9fa;
+            color: var(--dark);
+            line-height: 1.6;
         }
         
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
+        /* ==================== HEADER ==================== */
         
-        .header {
-            background: white;
-            border-radius: 12px;
-            padding: 40px;
-            margin-bottom: 40px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        
-        .header h1 {
-            font-size: 36px;
-            color: #0066cc;
-            margin-bottom: 10px;
-        }
-        
-        .header p {
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 20px;
-        }
-        
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-        
-        .stat {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
-            padding: 20px;
-            border-radius: 8px;
+            padding: 80px 20px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
         
-        .stat-number {
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="20" fill="white" opacity="0.05"/><circle cx="80" cy="80" r="30" fill="white" opacity="0.05"/></svg>');
+            background-repeat: repeat;
+            opacity: 0.1;
+        }
+        
+        header > * {
+            position: relative;
+            z-index: 1;
+        }
+        
+        header h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        header p {
+            font-size: 18px;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+        
+        .header-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .header-stat {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 25px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .header-stat-value {
             font-size: 32px;
             font-weight: bold;
             margin-bottom: 5px;
         }
         
-        .stat-label {
-            font-size: 12px;
+        .header-stat-label {
+            font-size: 13px;
             opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
-        .main-content {
-            background: white;
-            border-radius: 12px;
-            padding: 40px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        /* ==================== CONTAINER ==================== */
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
         
-        .main-content h2 {
-            font-size: 24px;
-            color: #0066cc;
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 3px solid #0066cc;
+        /* ==================== SEÇÕES ==================== */
+        
+        section {
+            padding: 60px 20px;
         }
+        
+        section h2 {
+            font-size: 32px;
+            margin-bottom: 40px;
+            text-align: center;
+            color: var(--dark);
+            position: relative;
+            padding-bottom: 20px;
+        }
+        
+        section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+        
+        /* ==================== CONTRATOS GRID ==================== */
         
         .contratos-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 30px;
+            margin-top: 40px;
         }
         
-        .contrato-card {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-        
-        .contrato-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            border-color: #0066cc;
-        }
-        
-        .contrato-header {
-            background: linear-gradient(135deg, #0066cc 0%, #0088ff 100%);
-            color: white;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .contrato-header h3 {
-            font-size: 20px;
-            margin: 0;
-        }
-        
-        .btn-acessar {
+        .contrato-item {
             background: white;
-            color: #0066cc;
-            padding: 8px 16px;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border-top: 4px solid;
+            border-top-color: var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contrato-item[data-cor="#f5576c"] {
+            border-top-color: #f5576c;
+        }
+        
+        .contrato-item[data-cor="#56ab2f"] {
+            border-top-color: #56ab2f;
+        }
+        
+        .contrato-item[data-cor="#ffa500"] {
+            border-top-color: #ffa500;
+        }
+        
+        .contrato-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+        }
+        
+        .contrato-numero {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        
+        .contrato-nome {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+        
+        .contrato-prestador {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .contrato-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: var(--light);
+            border-radius: 8px;
+        }
+        
+        .stat-box {
+            text-align: center;
+        }
+        
+        .stat-label {
+            font-size: 11px;
+            color: #999;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .contrato-meta {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .btn-contrato {
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 12px 20px;
             border-radius: 6px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 12px;
+            font-size: 13px;
             transition: all 0.3s;
             border: none;
             cursor: pointer;
         }
         
-        .btn-acessar:hover {
-            background: #f0f7ff;
-            transform: scale(1.05);
+        .btn-contrato:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
         }
         
-        .contrato-info {
-            padding: 25px;
-            background: white;
-        }
+        /* ==================== FOOTER ==================== */
         
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .info-row:last-child {
-            border-bottom: none;
-        }
-        
-        .label {
-            font-weight: 600;
-            color: #0066cc;
-            font-size: 12px;
-        }
-        
-        .value {
-            text-align: right;
-            color: #333;
-            flex: 1;
-            margin-left: 15px;
-        }
-        
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px;
+        footer {
+            background: var(--dark);
             color: white;
-            font-size: 12px;
+            padding: 40px 20px;
+            text-align: center;
+            font-size: 13px;
+            margin-top: 60px;
         }
         
-        .footer p {
-            margin: 5px 0;
+        footer p {
+            margin: 10px 0;
+            opacity: 0.8;
         }
+        
+        /* ==================== RESPONSIVO ==================== */
         
         @media (max-width: 768px) {
-            .header {
-                padding: 20px;
+            header {
+                padding: 50px 20px;
             }
             
-            .header h1 {
+            header h1 {
+                font-size: 32px;
+            }
+            
+            header p {
+                font-size: 16px;
+            }
+            
+            .header-stats {
+                gap: 15px;
+            }
+            
+            section {
+                padding: 40px 20px;
+            }
+            
+            section h2 {
                 font-size: 24px;
             }
             
             .contratos-grid {
                 grid-template-columns: 1fr;
+                gap: 20px;
             }
-            
-            .main-content {
-                padding: 20px;
+        }
+        
+        /* ==================== ANIMAÇÕES ==================== */
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
             }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .contrato-item {
+            animation: fadeInUp 0.6s ease forwards;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- HEADER -->
-        <div class="header">
-            <h1>📋 Contratos Médicos</h1>
-            <p>Dashboard de Controle de Contratos de Serviços Médicos</p>
+    <!-- HEADER -->
+    <header>
+        <h1>📊 Contratos Médicos</h1>
+        <p>Dashboard centralizado de contratos de serviços médicos</p>
+        
+        <div class="header-stats">
+            <div class="header-stat">
+                <div class="header-stat-value">2</div>
+                <div class="header-stat-label">Contratos Ativos</div>
+            </div>
+            <div class="header-stat">
+                <div class="header-stat-value">94,846</div>
+                <div class="header-stat-label">Total Contratado</div>
+            </div>
+            <div class="header-stat">
+                <div class="header-stat-value">2,410</div>
+                <div class="header-stat-label">Total Consumido</div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- CONTRATOS -->
+    <section class="container">
+        <h2>📋 Seus Contratos</h2>
+        <div class="contratos-grid">
             
-            <div class="stats">
-                <div class="stat">
-                    <div class="stat-number">2</div>
-                    <div class="stat-label">Contratos</div>
+            <div class="contrato-item" data-cor="#0066cc">
+                <div class="contrato-numero">N° 0067/2023</div>
+                <div class="contrato-nome">OFTALMOLOGIA</div>
+                <div class="contrato-prestador">AZUL SAÚDE GESTĀO EM SAÚDE SS</div>
+                <div class="contrato-stats">
+                    <div class="stat-box">
+                        <div class="stat-label">Contratado</div>
+                        <div class="stat-value">94,846</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Consumido</div>
+                        <div class="stat-value">2,410</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Saldo</div>
+                        <div class="stat-value" style="color: #56ab2f">92,436</div>
+                    </div>
                 </div>
-                <div class="stat">
-                    <div class="stat-number">25/11/2025</div>
-                    <div class="stat-label">Atualizado em</div>
+                <div class="contrato-meta">
+                    17 serviços • 41 procedimentos
                 </div>
+                <a href="oftalmologia.html" class="btn-contrato">Acessar Detalhes →</a>
             </div>
-        </div>
-        
-        <!-- MAIN CONTENT -->
-        <div class="main-content">
-            <h2>📊 Contratos Disponíveis</h2>
-            <div class="contratos-grid">
-                
-                <div class="contrato-card">
-                    <div class="contrato-header">
-                        <h3>OFTALMOLOGIA</h3>
-                        <a href="oftalmologia.html" class="btn-acessar">Acessar →</a>
+
+            <div class="contrato-item" data-cor="#f5576c">
+                <div class="contrato-numero"></div>
+                <div class="contrato-nome">RESUMO</div>
+                <div class="contrato-prestador"></div>
+                <div class="contrato-stats">
+                    <div class="stat-box">
+                        <div class="stat-label">Contratado</div>
+                        <div class="stat-value">0</div>
                     </div>
-                    <div class="contrato-info">
-                        <div class="info-row">
-                            <span class="label">Contrato:</span>
-                            <span class="value">N° 0067/2023</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="label">Prestador:</span>
-                            <span class="value">AZUL SAÚDE GESTĀO EM SAÚDE SS</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="label">CNPJ:</span>
-                            <span class="value">07.637.128/0001-00</span>
-                        </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Consumido</div>
+                        <div class="stat-value">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Saldo</div>
+                        <div class="stat-value" style="color: #f5576c">0</div>
                     </div>
                 </div>
-
-                <div class="contrato-card">
-                    <div class="contrato-header">
-                        <h3>RESUMO</h3>
-                        <a href="resumo.html" class="btn-acessar">Acessar →</a>
-                    </div>
-                    <div class="contrato-info">
-                        <div class="info-row">
-                            <span class="label">Contrato:</span>
-                            <span class="value"></span>
-                        </div>
-                        <div class="info-row">
-                            <span class="label">Prestador:</span>
-                            <span class="value"></span>
-                        </div>
-                        <div class="info-row">
-                            <span class="label">CNPJ:</span>
-                            <span class="value">Total Consumido (Ano)</span>
-                        </div>
-                    </div>
+                <div class="contrato-meta">
+                    0 serviços • 0 procedimentos
                 </div>
-
+                <a href="resumo.html" class="btn-contrato">Acessar Detalhes →</a>
             </div>
+
         </div>
-        
-        <!-- FOOTER -->
-        <div class="footer">
-            <p>🔄 Dashboard Automático | Atualizado em 25/11/2025 às 12:21</p>
-            <p>Desenvolvido com Google Sheets + GitHub Pages</p>
-        </div>
-    </div>
+    </section>
+    
+    <!-- FOOTER -->
+    <footer>
+        <p>🔄 Dashboard Automático | Atualizado em 25/11/2025 às 12:50</p>
+        <p>Desenvolvido com Google Sheets + GitHub Pages</p>
+    </footer>
 </body>
 </html>
