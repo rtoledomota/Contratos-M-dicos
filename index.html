@@ -34,7 +34,7 @@
         header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
-            padding: 80px 20px;
+            padding: 60px 20px;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -64,41 +64,8 @@
         }
         
         header p {
-            font-size: 18px;
+            font-size: 16px;
             opacity: 0.95;
-            max-width: 600px;
-            margin: 0 auto 30px;
-        }
-        
-        .header-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .header-stat {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 25px;
-            border-radius: 10px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .header-stat-value {
-            font-size: 32px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        
-        .header-stat-label {
-            font-size: 13px;
-            opacity: 0.9;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
         
         /* ==================== CONTAINER ==================== */
@@ -272,7 +239,7 @@
         
         @media (max-width: 768px) {
             header {
-                padding: 50px 20px;
+                padding: 40px 20px;
             }
             
             header h1 {
@@ -280,11 +247,7 @@
             }
             
             header p {
-                font-size: 16px;
-            }
-            
-            .header-stats {
-                gap: 15px;
+                font-size: 14px;
             }
             
             section {
@@ -322,28 +285,13 @@
 <body>
     <!-- HEADER -->
     <header>
-        <h1>📊 Contratos Médicos</h1>
-        <p>Dashboard centralizado de contratos de serviços médicos</p>
-        
-        <div class="header-stats">
-            <div class="header-stat">
-                <div class="header-stat-value">2</div>
-                <div class="header-stat-label">Contratos Ativos</div>
-            </div>
-            <div class="header-stat">
-                <div class="header-stat-value">94,846</div>
-                <div class="header-stat-label">Total Contratado</div>
-            </div>
-            <div class="header-stat">
-                <div class="header-stat-value">2,410</div>
-                <div class="header-stat-label">Total Consumido</div>
-            </div>
-        </div>
+        <h1>📋 Contratos Médicos</h1>
+        <p>Gerencie seus contratos de forma centralizada e eficiente</p>
     </header>
     
     <!-- CONTRATOS -->
     <section class="container">
-        <h2>📋 Seus Contratos</h2>
+        <h2>Contratos Disponíveis</h2>
         <div class="contratos-grid">
             
             <div class="contrato-item" data-cor="#0066cc">
@@ -399,7 +347,7 @@
     
     <!-- FOOTER -->
     <footer>
-        <p>🔄 Dashboard Automático | Atualizado em 25/11/2025 às 12:51</p>
+        <p>🔄 Dashboard Automático | Atualizado em 25/11/2025 às 12:53</p>
         <p>Desenvolvido com Google Sheets + GitHub Pages</p>
     </footer>
 </body>
