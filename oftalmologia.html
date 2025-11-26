@@ -6,10 +6,10 @@
     <style>
         body { font-family: Arial; background: #f5f5f5; padding: 20px; }
         .container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 8px; padding: 20px; }
-        .mes { margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; }
+        .mes { margin: 10px 0; border: 1px solid #ddd; }
         .mes-header { background: #0066cc; color: white; padding: 15px; cursor: pointer; font-weight: bold; }
         .mes-header:hover { background: #0055aa; }
-        .mes-dados { padding: 10px 15px; font-size: 12px; background: #f0f0f0; }
+        .mes-info { padding: 10px 15px; font-size: 12px; background: #f0f0f0; }
         .mes-table { display: none; padding: 15px; background: #f9f9f9; }
         .mes-table.aberto { display: block; }
         table { width: 100%; border-collapse: collapse; }
@@ -20,52 +20,161 @@
 <body>
     <div class="container">
         <h1>Oftalmologia - Consumo Mensal</h1>
-        <div id="meses"></div>
+        
+        <div class="mes">
+            <div class="mes-header" onclick="toggle('jan')">Janeiro</div>
+            <div class="mes-info">Contratado: R$ 152.688,00 | Consumido: R$ 635.618,49 | Saldo: R$ 32.401,98</div>
+            <div class="mes-table" id="jan">
+                <table>
+                    <tr><th>Procedimento</th><th>Qtd</th></tr>
+                    <tr><td>Consultas</td><td>3785</td></tr>
+                    <tr><td>Biometria</td><td>51</td></tr>
+                    <tr><td>Campo visual</td><td>93</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="mes">
+            <div class="mes-header" onclick="toggle('fev')">Fevereiro</div>
+            <div class="mes-info">Contratado: R$ 152.688,00 | Consumido: R$ 736.911,11 | Saldo: -R$ 68.890,64</div>
+            <div class="mes-table" id="fev">
+                <table>
+                    <tr><th>Procedimento</th><th>Qtd</th></tr>
+                    <tr><td>Consultas</td><td>4862</td></tr>
+                    <tr><td>Biometria</td><td>69</td></tr>
+                    <tr><td>Campo visual</td><td>204</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="mes">
+            <div class="mes-header" onclick="toggle('mar')">Março</div>
+            <div class="mes-info">Contratado: R$ 152.688,00 | Consumido: R$ 683.430,90 | Saldo: -R$ 15.410,43</div>
+            <div class="mes-table" id="mar">
+                <table>
+                    <tr><th>Procedimento</th><th>Qtd</th></tr>
+                    <tr><td>Consultas</td><td>4464</td></tr>
+                    <tr><td>Biometria</td><td>81</td></tr>
+                    <tr><td>Campo visual</td><td>167</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="mes">
+            <div class="mes-header" onclick="toggle('abr')">Abril</div>
+            <div class="mes-info">Contratado: R$ 152.688,00 | Consumido: R$ 670.374,01 | Saldo: -R$ 2.353,54</div>
+            <div class="mes-table" id="abr">
+                <table>
+                    <tr><th>Procedimento</th><th>Qtd</th></tr>
+                    <tr><td>Consultas</td><td>3943</td></tr>
+                    <tr><td>Biometria</td><td>79</td></tr>
+                    <tr><td>Campo visual</td><td>114</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="mes">
+            <div class="mes-header" onclick="toggle('mai')">Maio</div>
+            <div class="mes-info">Contratado: R$ 152.688,00 | Consumido: R$ 673.404,23 | Saldo: -R$ 5.383,76</div>
+            <div class="mes-table" id="mai">
+                <table>
+                    <tr><th>Procedimento</th><th>Qtd</th></tr>
+                    <tr><td>Consultas</td><td>4201</td></tr>
+                    <tr><td>Biometria</td><td>104</td></tr>
+                    <tr><td>Campo visual</td><td>117</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="mes">
+            <div class="mes-header" onclick="toggle('jun')">Junho</div>
+            <div class="mes-info">Contratado: R$ 152.688,00 | Consumido: R$ 634.565,75 | Saldo: R$ 33.454,72</div>
+            <div class="mes-table" id="jun">
+                <table>
+                    <tr><th>Procedimento</th><th>Qtd</th></tr>
+                    <tr><td>Consultas</td><td>3578</td></tr>
+                    <tr><td>Biometria</td><td>78</td></tr>
+                    <tr><td>Campo visual</td><td>119</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="mes">
+            <div class="mes-header" onclick="toggle('jul')">Julho</div>
+            <div class="mes-info">Contratado: R$ 152.688,00 | Consumido: R$ 655.108,07 | Saldo: R$ 12.912,40</div>
+            <div class="mes-table" id="jul">
+                <table>
+                    <tr><th>Procedimento</th><th>Qtd</th></tr>
+                    <tr><td>Consultas</td><td>4177</td></tr>
+                    <tr><td>Biometria</td><td>50</td></tr>
+                    <tr><td>Campo visual</td><td>145</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="mes">
+            <div class="mes-header" onclick="toggle('ago')">Agosto</div>
+            <div class="mes-info">Contratado: R$ 152.688,00 | Consumido: R$ 647.693,47 | Saldo: R$ 20.327,00</div>
+            <div class="mes-table" id="ago">
+                <table>
+                    <tr><th>Procedimento</th><th>Qtd</th></tr>
+                    <tr><td>Consultas</td><td>4124</td></tr>
+                    <tr><td>Biometria</td><td>64</td></tr>
+                    <tr><td>Campo visual</td><td>163</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="mes">
+            <div class="mes-header" onclick="toggle('set')">Setembro</div>
+            <div class="mes-info">Contratado: R$ 152.688,00 | Consumido: R$ 637.993,32 | Saldo: R$ 30.027,15</div>
+            <div class="mes-table" id="set">
+                <table>
+                    <tr><th>Procedimento</th><th>Qtd</th></tr>
+                    <tr><td>Consultas</td><td>3938</td></tr>
+                    <tr><td>Biometria</td><td>91</td></tr>
+                    <tr><td>Campo visual</td><td>177</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="mes">
+            <div class="mes-header" onclick="toggle('out')">Outubro</div>
+            <div class="mes-info">Contratado: R$ 152.688,00 | Consumido: R$ 657.065,89 | Saldo: R$ 10.954,58</div>
+            <div class="mes-table" id="out">
+                <table>
+                    <tr><th>Procedimento</th><th>Qtd</th></tr>
+                    <tr><td>Consultas</td><td>4010</td></tr>
+                    <tr><td>Biometria</td><td>75</td></tr>
+                    <tr><td>Campo visual</td><td>178</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="mes">
+            <div class="mes-header" onclick="toggle('nov')">Novembro</div>
+            <div class="mes-info">Contratado: R$ 152.688,00 | Consumido: R$ 0,00 | Saldo: R$ 0,00</div>
+            <div class="mes-table" id="nov">
+                <p>Sem dados</p>
+            </div>
+        </div>
+
+        <div class="mes">
+            <div class="mes-header" onclick="toggle('dez')">Dezembro</div>
+            <div class="mes-info">Contratado: R$ 152.688,00 | Consumido: R$ 0,00 | Saldo: R$ 0,00</div>
+            <div class="mes-table" id="dez">
+                <p>Sem dados</p>
+            </div>
+        </div>
     </div>
 
     <script>
-        const dados = {
-            JAN: { nome: "Janeiro", contratado: "R$ 152.688,00", consumido: "R$ 635.618,49", saldo: "R$ 32.401,98", procs: [["Consultas", "3785"], ["Biometria", "51"], ["Campo visual", "93"]] },
-            FEV: { nome: "Fevereiro", contratado: "R$ 152.688,00", consumido: "R$ 736.911,11", saldo: "-R$ 68.890,64", procs: [["Consultas", "4862"], ["Biometria", "69"], ["Campo visual", "204"]] },
-            MAR: { nome: "Março", contratado: "R$ 152.688,00", consumido: "R$ 683.430,90", saldo: "-R$ 15.410,43", procs: [["Consultas", "4464"], ["Biometria", "81"], ["Campo visual", "167"]] },
-            ABR: { nome: "Abril", contratado: "R$ 152.688,00", consumido: "R$ 670.374,01", saldo: "-R$ 2.353,54", procs: [["Consultas", "3943"], ["Biometria", "79"], ["Campo visual", "114"]] },
-            MAI: { nome: "Maio", contratado: "R$ 152.688,00", consumido: "R$ 673.404,23", saldo: "-R$ 5.383,76", procs: [["Consultas", "4201"], ["Biometria", "104"], ["Campo visual", "117"]] },
-            JUN: { nome: "Junho", contratado: "R$ 152.688,00", consumido: "R$ 634.565,75", saldo: "R$ 33.454,72", procs: [["Consultas", "3578"], ["Biometria", "78"], ["Campo visual", "119"]] },
-            JUL: { nome: "Julho", contratado: "R$ 152.688,00", consumido: "R$ 655.108,07", saldo: "R$ 12.912,40", procs: [["Consultas", "4177"], ["Biometria", "50"], ["Campo visual", "145"]] },
-            AGO: { nome: "Agosto", contratado: "R$ 152.688,00", consumido: "R$ 647.693,47", saldo: "R$ 20.327,00", procs: [["Consultas", "4124"], ["Biometria", "64"], ["Campo visual", "163"]] },
-            SET: { nome: "Setembro", contratado: "R$ 152.688,00", consumido: "R$ 637.993,32", saldo: "R$ 30.027,15", procs: [["Consultas", "3938"], ["Biometria", "91"], ["Campo visual", "177"]] },
-            OUT: { nome: "Outubro", contratado: "R$ 152.688,00", consumido: "R$ 657.065,89", saldo: "R$ 10.954,58", procs: [["Consultas", "4010"], ["Biometria", "75"], ["Campo visual", "178"]] },
-            NOV: { nome: "Novembro", contratado: "R$ 152.688,00", consumido: "R$ 0,00", saldo: "R$ 0,00", procs: [] },
-            DEZ: { nome: "Dezembro", contratado: "R$ 152.688,00", consumido: "R$ 0,00", saldo: "R$ 0,00", procs: [] }
-        };
-
-        function renderizar() {
-            let html = "";
-            for (const mes in dados) {
-                const d = dados[mes];
-                const idTabela = "tab_" + mes;
-                html += "<div class="mes">";
-                html += "<div class="mes-header" onclick="document.getElementById('" + idTabela + "').classList.toggle('aberto')">";
-                html += d.nome;
-                html += "</div>";
-                html += "<div class="mes-dados">";
-                html += "Contratado: " + d.contratado + " | Consumido: " + d.consumido + " | Saldo: " + d.saldo;
-                html += "</div>";
-                if (d.procs.length > 0) {
-                    html += "<div class="mes-table" id="" + idTabela + "">";
-                    html += "<table><tr><th>Procedimento</th><th>Qtd</th></tr>";
-                    for (const p of d.procs) {
-                        html += "<tr><td>" + p[0] + "</td><td>" + p[1] + "</td></tr>";
-                    }
-                    html += "</table>";
-                    html += "</div>";
-                }
-                html += "</div>";
+        function toggle(mes) {
+            const el = document.getElementById(mes);
+            if (el) {
+                el.classList.toggle('aberto');
             }
-            document.getElementById("meses").innerHTML = html;
         }
-
-        renderizar();
     </script>
 </body>
 </html>
