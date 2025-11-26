@@ -2,52 +2,92 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Oftalmologia</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oftalmologia - Consumo Mensal</title>
     <style>
-        body { font-family: Arial; background: #f5f5f5; padding: 20px; }
-        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 8px; padding: 20px; }
-        .mes { margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; }
-        .mes-header { background: #0066cc; color: white; padding: 15px; cursor: pointer; display: flex; justify-content: space-between; }
-        .mes-header:hover { background: #0055aa; }
-        .mes-details { display: none; padding: 15px; background: #f9f9f9; }
-        .mes-details.show { display: block; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
-        th { background: #e0e0e0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header { background: linear-gradient(135deg, #0066cc 0%, #0088ff 100%); color: white; padding: 30px; }
+        .header h1 { font-size: 28px; margin: 0; }
+        .mes-item { margin: 15px 0; border: 1px solid #ddd; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .mes-header { background: linear-gradient(135deg, #0066cc 0%, #0088ff 100%); color: white; padding: 15px 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
+        .mes-header:hover { background: linear-gradient(135deg, #0055aa 0%, #0077dd 100%); }
+        .mes-info { flex: 1; }
+        .mes-nome { font-weight: 600; font-size: 16px; display: block; margin-bottom: 5px; }
+        .mes-valores { font-size: 12px; opacity: 0.9; }
+        .mes-toggle { font-size: 18px; margin-left: 20px; }
+        .mes-detalhes { display: none; padding: 20px; background: #f9f9f9; border-top: 1px solid #ddd; }
+        .mes-detalhes.show { display: block; }
+        table { width: 100%; border-collapse: collapse; margin: 0; }
+        table th { background: #e8f2ff; color: #0066cc; padding: 10px; text-align: left; border-bottom: 2px solid #0066cc; }
+        table td { padding: 10px; border-bottom: 1px solid #eee; }
+        table tr:hover { background: #f0f0f0; }
+        .content { padding: 30px; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>👁️ OFTALMOLOGIA</h1>
-        <div id="lista"></div>
+        <div class="header">
+            <h1>👁️ OFTALMOLOGIA - CONSUMO MENSAL</h1>
+        </div>
+        
+        <div class="content">
+            <div id="meses-container"></div>
+        </div>
     </div>
 
     <script>
-        const dados = {
-            JAN: { nome: "Janeiro", contratado: "R$ 152.688,00", consumido: "R$ 635.618,49", saldo: "R$ 32.401,98", procs: [["Consultas", "3785"], ["Biometria", "51"], ["Campo visual", "93"]] },
-            FEV: { nome: "Fevereiro", contratado: "R$ 152.688,00", consumido: "R$ 736.911,11", saldo: "-R$ 68.890,64", procs: [["Consultas", "4862"], ["Biometria", "69"], ["Campo visual", "204"]] },
-            MAR: { nome: "Março", contratado: "R$ 152.688,00", consumido: "R$ 683.430,90", saldo: "-R$ 15.410,43", procs: [["Consultas", "4464"], ["Biometria", "81"], ["Campo visual", "167"]] }
+        const DADOS = {
+            JAN: { nome: "Janeiro", contratado: "R$ 152.688,00", consumido: "R$ 635.618,49", saldo: "R$ 32.401,98", procs: [["Consultas", "3785"], ["Biometria", "51"], ["Campo visual", "93"], ["Retinografia Colorida", "73"]] },
+            FEV: { nome: "Fevereiro", contratado: "R$ 152.688,00", consumido: "R$ 736.911,11", saldo: "-R$ 68.890,64", procs: [["Consultas", "4862"], ["Biometria", "69"], ["Campo visual", "204"], ["Retinografia Colorida", "109"]] },
+            MAR: { nome: "Março", contratado: "R$ 152.688,00", consumido: "R$ 683.430,90", saldo: "-R$ 15.410,43", procs: [["Consultas", "4464"], ["Biometria", "81"], ["Campo visual", "167"]] },
+            ABR: { nome: "Abril", contratado: "R$ 152.688,00", consumido: "R$ 670.374,01", saldo: "-R$ 2.353,54", procs: [["Consultas", "3943"], ["Biometria", "79"], ["Campo visual", "114"]] },
+            MAI: { nome: "Maio", contratado: "R$ 152.688,00", consumido: "R$ 673.404,23", saldo: "-R$ 5.383,76", procs: [["Consultas", "4201"], ["Biometria", "104"], ["Campo visual", "117"]] },
+            JUN: { nome: "Junho", contratado: "R$ 152.688,00", consumido: "R$ 634.565,75", saldo: "R$ 33.454,72", procs: [["Consultas", "3578"], ["Biometria", "78"], ["Campo visual", "119"]] },
+            JUL: { nome: "Julho", contratado: "R$ 152.688,00", consumido: "R$ 655.108,07", saldo: "R$ 12.912,40", procs: [["Consultas", "4177"], ["Biometria", "50"], ["Campo visual", "145"]] },
+            AGO: { nome: "Agosto", contratado: "R$ 152.688,00", consumido: "R$ 647.693,47", saldo: "R$ 20.327,00", procs: [["Consultas", "4124"], ["Biometria", "64"], ["Campo visual", "163"]] },
+            SET: { nome: "Setembro", contratado: "R$ 152.688,00", consumido: "R$ 637.993,32", saldo: "R$ 30.027,15", procs: [["Consultas", "3938"], ["Biometria", "91"], ["Campo visual", "177"]] },
+            OUT: { nome: "Outubro", contratado: "R$ 152.688,00", consumido: "R$ 657.065,89", saldo: "R$ 10.954,58", procs: [["Consultas", "4010"], ["Biometria", "75"], ["Campo visual", "178"]] },
+            NOV: { nome: "Novembro", contratado: "R$ 152.688,00", consumido: "R$ 0,00", saldo: "R$ 0,00", procs: [] },
+            DEZ: { nome: "Dezembro", contratado: "R$ 152.688,00", consumido: "R$ 0,00", saldo: "R$ 0,00", procs: [] }
         };
 
         function renderizar() {
             let html = '';
-            for (let mes in dados) {
-                const d = dados[mes];
-                html += '<div class="mes"><div class="mes-header" onclick="toggle('' + mes + '')"><div><strong>' + d.nome + '</strong><br><small>Contratado: ' + d.contratado + ' | Consumido: ' + d.consumido + ' | Saldo: ' + d.saldo + '</small></div><span>▼</span></div>';
-                html += '<div class="mes-details" id="' + mes + '"><table><tr><th>Procedimento</th><th>Qtd</th></tr>';
-                for (let p of d.procs) {
-                    html += '<tr><td>' + p[0] + '</td><td>' + p[1] + '</td></tr>';
+            for (let mes in DADOS) {
+                const d = DADOS[mes];
+                html += '<div class="mes-item">';
+                html += '<div class="mes-header" onclick="expandir('' + mes + '')">';
+                html += '<div class="mes-info">';
+                html += '<span class="mes-nome">' + d.nome + '</span>';
+                html += '<div class="mes-valores">Contratado: ' + d.contratado + ' | Consumido: ' + d.consumido + ' | Saldo: ' + d.saldo + '</div>';
+                html += '</div>';
+                html += '<span class="mes-toggle" id="tog-' + mes + '">▼</span>';
+                html += '</div>';
+                
+                if (d.procs && d.procs.length > 0) {
+                    html += '<div class="mes-detalhes" id="det-' + mes + '">';
+                    html += '<table><tr><th>Procedimento</th><th>Quantidade</th></tr>';
+                    for (let p of d.procs) {
+                        html += '<tr><td>' + p[0] + '</td><td>' + p[1] + '</td></tr>';
+                    }
+                    html += '</table></div>';
                 }
-                html += '</table></div></div>';
+                html += '</div>';
             }
-            document.getElementById('lista').innerHTML = html;
+            document.getElementById('meses-container').innerHTML = html;
         }
 
-        function toggle(mes) {
-            const el = document.getElementById(mes);
-            el.classList.toggle('show');
+        function expandir(mes) {
+            const det = document.getElementById('det-' + mes);
+            if (!det) return;
+            const tog = document.getElementById('tog-' + mes);
+            det.classList.toggle('show');
+            tog.style.transform = det.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0deg)';
         }
 
+        console.log("JavaScript carregado!");
         renderizar();
     </script>
 </body>
