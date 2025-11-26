@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teste Tabela</title>
+    <style>
+        .tabela { display: none; background: yellow; padding: 20px; }
+        .tabela.show { display: block; }
+    </style>
+</head>
+<body>
+    <h1>TESTE DE TOGGLE</h1>
+    
+    <button onclick="toggle()">CLIQUE AQUI PARA MOSTRAR/ESCONDER TABELA</button>
+    
+    <div id="minhaTabela" class="tabela">
+        <h2>TABELA APARECEU!</h2>
+        <table border="1">
+            <tr>
+                <th>Nome</th>
+                <th>Valor</th>
+            </tr>
+            <tr>
+                <td>Item 1</td>
+                <td>100</td>
+            </tr>
+            <tr>
+                <td>Item 2</td>
+                <td>200</td>
+            </tr>
+        </table>
+    </div>
+    
+    <script>
+        function toggle() {
+            const el = document.getElementById("minhaTabela");
+            el.classList.toggle("show");
+            console.log("Clique funcionou! Classe agora é:", el.className);
+        }
+        
+        console.log("Página carregada!");
+    </script>
+</body>
+</html>
