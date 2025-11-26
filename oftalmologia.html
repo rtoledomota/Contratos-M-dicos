@@ -6,332 +6,212 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oftalmologia - Consumo Mensal</title>
+    <title>Oftalmologia</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial; background: #f5f5f5; padding: 20px; }
-        .container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 8px; padding: 20px; }
-        .mes { margin: 10px 0; border: 1px solid #ddd; }
-        .mes-header { background: #0066cc; color: white; padding: 15px; cursor: pointer; font-weight: bold; }
-        .mes-header:hover { background: #0055aa; }
-        .mes-info { padding: 10px 15px; font-size: 12px; background: #f0f0f0; }
-        .mes-table { display: none; padding: 15px; background: #f9f9f9; }
-        .mes-table.aberto { display: block; }
+        body { font-family: 'Segoe UI', Arial; background: #f5f5f5; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 8px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { color: #0066cc; margin-bottom: 30px; text-align: center; }
+        .mes-selector { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; justify-content: center; }
+        .mes-btn { padding: 10px 15px; background: white; border: 2px solid #ddd; border-radius: 5px; cursor: pointer; transition: all 0.3s; font-weight: 600; }
+        .mes-btn.active { background: #0066cc; color: white; border-color: #0066cc; }
+        .mes-btn:hover { border-color: #0066cc; }
+        
+        .mes-container { background: white; border-radius: 8px; padding: 20px; }
+        .mes-titulo { color: #0066cc; font-size: 24px; margin-bottom: 20px; font-weight: 600; }
+        
+        .resumo-geral { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-bottom: 30px; }
+        .card-resumo { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 8px; }
+        .card-label { font-size: 12px; opacity: 0.9; }
+        .card-valor { font-size: 24px; font-weight: 700; margin-top: 10px; }
+        
+        .servicos-table { margin-bottom: 30px; }
+        .table-titulo { color: #0066cc; font-size: 18px; font-weight: 600; margin-bottom: 15px; }
         table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 8px; text-align: left; border-bottom: 1px solid #ddd; }
-        th { background: #e0e0e0; }
+        th { background: #f0f0f0; padding: 12px; text-align: left; border-bottom: 2px solid #ddd; font-weight: 600; color: #333; }
+        td { padding: 12px; border-bottom: 1px solid #eee; }
+        tr:hover { background: #f9f9f9; }
+        .numero { text-align: right; font-weight: 600; }
+        .barra-progresso { display: flex; align-items: center; gap: 10px; }
+        .barra { flex: 1; height: 8px; background: #eee; border-radius: 4px; overflow: hidden; }
+        .barra-preenchida { height: 100%; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); border-radius: 4px; }
+        .percentual { font-size: 12px; font-weight: 600; color: #666; }
+        .status-ok { color: #28a745; font-weight: 600; }
+        .status-limite { color: #ffc107; font-weight: 600; }
+        .status-acima { color: #dc3545; font-weight: 600; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>👁️ Oftalmologia - Consumo Mensal (VERSÃO ATUALIZADA)</h1>
+        <h1>👁️ OFTALMOLOGIA - ANÁLISE DE CONSUMO</h1>
         
-        <div class="mes">
-            <div class="mes-header" onclick="toggle('jan')">Janeiro</div>
-            <div class="mes-info">Contratado: R$ 152.688,00 | Consumido: R$ 635.618,49 | Saldo: R$ 32.401,98</div>
-            <div class="mes-table" id="jan">
-                <table>
-                    <tr><th>Procedimento</th><th>Qtd</th></tr>
-                    <tr><td>Pacote consulta</td><td>3785</td></tr>
-                    <tr><td>Biometria ultrassônica - binocular</td><td>51</td></tr>
-                    <tr><td>Campimetria computadorizada - binocular</td><td>93</td></tr>
-                    <tr><td>Retinografia colorida - binocular</td><td>73</td></tr>
-                    <tr><td>Microscopia especular de córnea - binocular</td><td>57</td></tr>
-                    <tr><td>Topografia computadorizada binocular</td><td>128</td></tr>
-                    <tr><td>Paquimetria ultrassônica</td><td>42</td></tr>
-                    <tr><td>Retinografia fluorescente (angiografia) - binocular</td><td>12</td></tr>
-                    <tr><td>Tomografia de coerência óptica (OCT) - binocular</td><td>280</td></tr>
-                    <tr><td>USG de globo ocular - binocular</td><td>50</td></tr>
-                    <tr><td>Cirurgia de catarata - monocular</td><td>108</td></tr>
-                    <tr><td>Cirurgia refrativa - binocular</td><td>92</td></tr>
-                    <tr><td>Cirurgia plastica ocular - monocular</td><td>29</td></tr>
-                    <tr><td>Cirurgia de glaucoma - trabeculectomia - monocular</td><td>24</td></tr>
-                    <tr><td>Capsulotomia a LASER - monocular</td><td>3</td></tr>
-                    <tr><td>Iridotomia a LASER - monocular</td><td>38</td></tr>
-                    <tr><td>Cirurgia de retina - vitrectomia-monocular</td><td>56</td></tr>
-                    <tr><td>Fotocoagulação a LASER - monocular</td><td>18</td></tr>
-                </table>
-            </div>
-        </div>
-
-        <div class="mes">
-            <div class="mes-header" onclick="toggle('fev')">Fevereiro</div>
-            <div class="mes-info">Contratado: R$ 152.688,00 | Consumido: R$ 736.911,11 | Saldo: -R$ 68.890,64</div>
-            <div class="mes-table" id="fev">
-                <table>
-                    <tr><th>Procedimento</th><th>Qtd</th></tr>
-                    <tr><td>Pacote consulta</td><td>4862</td></tr>
-                    <tr><td>Biometria ultrassônica - binocular</td><td>69</td></tr>
-                    <tr><td>Campimetria computadorizada - binocular</td><td>204</td></tr>
-                    <tr><td>Retinografia colorida - binocular</td><td>109</td></tr>
-                    <tr><td>Microscopia especular de córnea - binocular</td><td>76</td></tr>
-                    <tr><td>Topografia computadorizada binocular</td><td>146</td></tr>
-                    <tr><td>Paquimetria ultrassônica</td><td>55</td></tr>
-                    <tr><td>Retinografia fluorescente (angiografia) - binocular</td><td>12</td></tr>
-                    <tr><td>Tomografia de coerência óptica (OCT) - binocular</td><td>355</td></tr>
-                    <tr><td>USG de globo ocular - binocular</td><td>49</td></tr>
-                    <tr><td>Cirurgia de catarata - monocular</td><td>110</td></tr>
-                    <tr><td>Cirurgia refrativa - binocular</td><td>70</td></tr>
-                    <tr><td>Cirurgia plastica ocular - monocular</td><td>37</td></tr>
-                    <tr><td>Cirurgia de glaucoma - trabeculectomia - monocular</td><td>34</td></tr>
-                    <tr><td>Capsulotomia a LASER - monocular</td><td>6</td></tr>
-                    <tr><td>Iridotomia a LASER - monocular</td><td>48</td></tr>
-                    <tr><td>Cirurgia de retina - vitrectomia-monocular</td><td>62</td></tr>
-                    <tr><td>Fotocoagulação a LASER - monocular</td><td>2</td></tr>
-                </table>
-            </div>
-        </div>
-
-        <div class="mes">
-            <div class="mes-header" onclick="toggle('mar')">Março</div>
-            <div class="mes-info">Contratado: R$ 152.688,00 | Consumido: R$ 683.430,90 | Saldo: -R$ 15.410,43</div>
-            <div class="mes-table" id="mar">
-                <table>
-                    <tr><th>Procedimento</th><th>Qtd</th></tr>
-                    <tr><td>Pacote consulta</td><td>4464</td></tr>
-                    <tr><td>Biometria ultrassônica - binocular</td><td>81</td></tr>
-                    <tr><td>Campimetria computadorizada - binocular</td><td>167</td></tr>
-                    <tr><td>Microscopia especular de córnea - binocular</td><td>83</td></tr>
-                    <tr><td>Topografia computadorizada binocular</td><td>154</td></tr>
-                    <tr><td>Paquimetria ultrassônica</td><td>79</td></tr>
-                    <tr><td>Tomografia de coerência óptica (OCT) - binocular</td><td>263</td></tr>
-                    <tr><td>USG de globo ocular - binocular</td><td>30</td></tr>
-                    <tr><td>Cirurgia de catarata - monocular</td><td>107</td></tr>
-                    <tr><td>Cirurgia refrativa - binocular</td><td>60</td></tr>
-                    <tr><td>Cirurgia plastica ocular - monocular</td><td>34</td></tr>
-                    <tr><td>Cirurgia de glaucoma - trabeculectomia - monocular</td><td>44</td></tr>
-                    <tr><td>Capsulotomia a LASER - monocular</td><td>5</td></tr>
-                    <tr><td>Iridotomia a LASER - monocular</td><td>57</td></tr>
-                    <tr><td>Cirurgia de retina - vitrectomia-monocular</td><td>61</td></tr>
-                    <tr><td>Fotocoagulação a LASER - monocular</td><td>19</td></tr>
-                </table>
-            </div>
-        </div>
-
-        <div class="mes">
-            <div class="mes-header" onclick="toggle('abr')">Abril</div>
-            <div class="mes-info">Contratado: R$ 152.688,00 | Consumido: R$ 670.374,01 | Saldo: -R$ 2.353,54</div>
-            <div class="mes-table" id="abr">
-                <table>
-                    <tr><th>Procedimento</th><th>Qtd</th></tr>
-                    <tr><td>Pacote consulta</td><td>3943</td></tr>
-                    <tr><td>Biometria ultrassônica - binocular</td><td>79</td></tr>
-                    <tr><td>Campimetria computadorizada - binocular</td><td>114</td></tr>
-                    <tr><td>Retinografia colorida - binocular</td><td>99</td></tr>
-                    <tr><td>Microscopia especular de córnea - binocular</td><td>87</td></tr>
-                    <tr><td>Topografia computadorizada binocular</td><td>151</td></tr>
-                    <tr><td>Paquimetria ultrassônica</td><td>50</td></tr>
-                    <tr><td>Retinografia fluorescente (angiografia) - binocular</td><td>17</td></tr>
-                    <tr><td>Tomografia de coerência óptica (OCT) - binocular</td><td>311</td></tr>
-                    <tr><td>USG de globo ocular - binocular</td><td>44</td></tr>
-                    <tr><td>Cirurgia de catarata - monocular</td><td>98</td></tr>
-                    <tr><td>Cirurgia refrativa - binocular</td><td>89</td></tr>
-                    <tr><td>Cirurgia plastica ocular - monocular</td><td>42</td></tr>
-                    <tr><td>Cirurgia de glaucoma - trabeculectomia - monocular</td><td>40</td></tr>
-                    <tr><td>Capsulotomia a LASER - monocular</td><td>6</td></tr>
-                    <tr><td>Iridotomia a LASER - monocular</td><td>72</td></tr>
-                    <tr><td>Cirurgia de retina - vitrectomia-monocular</td><td>59</td></tr>
-                    <tr><td>Fotocoagulação a LASER - monocular</td><td>3</td></tr>
-                    <tr><td>Aplicação de anti-VGEF tratamento quimioterápico (incluindo medicação) - monocular</td><td>1</td></tr>
-                </table>
-            </div>
-        </div>
-
-        <div class="mes">
-            <div class="mes-header" onclick="toggle('mai')">Maio</div>
-            <div class="mes-info">Contratado: R$ 152.688,00 | Consumido: R$ 673.404,23 | Saldo: -R$ 5.383,76</div>
-            <div class="mes-table" id="mai">
-                <table>
-                    <tr><th>Procedimento</th><th>Qtd</th></tr>
-                    <tr><td>Pacote consulta</td><td>4201</td></tr>
-                    <tr><td>Biometria ultrassônica - binocular</td><td>104</td></tr>
-                    <tr><td>Campimetria computadorizada - binocular</td><td>117</td></tr>
-                    <tr><td>Retinografia colorida - binocular</td><td>116</td></tr>
-                    <tr><td>Microscopia especular de córnea - binocular</td><td>98</td></tr>
-                    <tr><td>Topografia computadorizada binocular</td><td>176</td></tr>
-                    <tr><td>Paquimetria ultrassônica</td><td>70</td></tr>
-                    <tr><td>Retinografia fluorescente (angiografia) - binocular</td><td>6</td></tr>
-                    <tr><td>Tomografia de coerência óptica (OCT) - binocular</td><td>344</td></tr>
-                    <tr><td>USG de globo ocular - binocular</td><td>42</td></tr>
-                    <tr><td>Cirurgia de catarata - monocular</td><td>100</td></tr>
-                    <tr><td>Cirurgia refrativa - binocular</td><td>60</td></tr>
-                    <tr><td>Cirurgia plastica ocular - monocular</td><td>35</td></tr>
-                    <tr><td>Cirurgia de glaucoma - trabeculectomia - monocular</td><td>78</td></tr>
-                    <tr><td>Capsulotomia a LASER - monocular</td><td>4</td></tr>
-                    <tr><td>Iridotomia a LASER - monocular</td><td>38</td></tr>
-                    <tr><td>Cirurgia de retina - vitrectomia-monocular</td><td>61</td></tr>
-                    <tr><td>Fotocoagulação a LASER - monocular</td><td>1</td></tr>
-                    <tr><td>Aplicação de anti-VGEF tratamento quimioterápico (incluindo medicação) - monocular</td><td>25</td></tr>
-                </table>
-            </div>
-        </div>
-
-        <div class="mes">
-            <div class="mes-header" onclick="toggle('jun')">Junho</div>
-            <div class="mes-info">Contratado: R$ 152.688,00 | Consumido: R$ 634.565,75 | Saldo: R$ 33.454,72</div>
-            <div class="mes-table" id="jun">
-                <table>
-                    <tr><th>Procedimento</th><th>Qtd</th></tr>
-                    <tr><td>Pacote consulta</td><td>3578</td></tr>
-                    <tr><td>Biometria ultrassônica - binocular</td><td>78</td></tr>
-                    <tr><td>Campimetria computadorizada - binocular</td><td>119</td></tr>
-                    <tr><td>Retinografia colorida - binocular</td><td>76</td></tr>
-                    <tr><td>Microscopia especular de córnea - binocular</td><td>84</td></tr>
-                    <tr><td>Topografia computadorizada binocular</td><td>132</td></tr>
-                    <tr><td>Paquimetria ultrassônica</td><td>20</td></tr>
-                    <tr><td>Retinografia fluorescente (angiografia) - binocular</td><td>6</td></tr>
-                    <tr><td>Tomografia de coerência óptica (OCT) - binocular</td><td>319</td></tr>
-                    <tr><td>USG de globo ocular - binocular</td><td>36</td></tr>
-                    <tr><td>Cirurgia de catarata - monocular</td><td>95</td></tr>
-                    <tr><td>Cirurgia refrativa - binocular</td><td>74</td></tr>
-                    <tr><td>Cirurgia plastica ocular - monocular</td><td>58</td></tr>
-                    <tr><td>Cirurgia de glaucoma - trabeculectomia - monocular</td><td>75</td></tr>
-                    <tr><td>Capsulotomia a LASER - monocular</td><td>5</td></tr>
-                    <tr><td>Iridotomia a LASER - monocular</td><td>39</td></tr>
-                    <tr><td>Cirurgia de retina - vitrectomia-monocular</td><td>63</td></tr>
-                    <tr><td>Fotocoagulação a LASER - monocular</td><td>2</td></tr>
-                    <tr><td>Aplicação de anti-VGEF tratamento quimioterápico (incluindo medicação) - monocular</td><td>22</td></tr>
-                </table>
-            </div>
-        </div>
-
-        <div class="mes">
-            <div class="mes-header" onclick="toggle('jul')">Julho</div>
-            <div class="mes-info">Contratado: R$ 152.688,00 | Consumido: R$ 655.108,07 | Saldo: R$ 12.912,40</div>
-            <div class="mes-table" id="jul">
-                <table>
-                    <tr><th>Procedimento</th><th>Qtd</th></tr>
-                    <tr><td>Pacote consulta</td><td>4177</td></tr>
-                    <tr><td>Biometria ultrassônica - binocular</td><td>50</td></tr>
-                    <tr><td>Campimetria computadorizada - binocular</td><td>145</td></tr>
-                    <tr><td>Retinografia colorida - binocular</td><td>80</td></tr>
-                    <tr><td>Microscopia especular de córnea - binocular</td><td>68</td></tr>
-                    <tr><td>Topografia computadorizada binocular</td><td>128</td></tr>
-                    <tr><td>Paquimetria ultrassônica</td><td>47</td></tr>
-                    <tr><td>Retinografia fluorescente (angiografia) - binocular</td><td>7</td></tr>
-                    <tr><td>Tomografia de coerência óptica (OCT) - binocular</td><td>220</td></tr>
-                    <tr><td>USG de globo ocular - binocular</td><td>39</td></tr>
-                    <tr><td>Cirurgia de catarata - monocular</td><td>108</td></tr>
-                    <tr><td>Cirurgia refrativa - binocular</td><td>30</td></tr>
-                    <tr><td>Cirurgia plastica ocular - monocular</td><td>64</td></tr>
-                    <tr><td>Cirurgia de glaucoma - trabeculectomia - monocular</td><td>64</td></tr>
-                    <tr><td>Capsulotomia a LASER - monocular</td><td>6</td></tr>
-                    <tr><td>Iridotomia a LASER - monocular</td><td>43</td></tr>
-                    <tr><td>Cirurgia de retina - vitrectomia-monocular</td><td>65</td></tr>
-                </table>
-            </div>
-        </div>
-
-        <div class="mes">
-            <div class="mes-header" onclick="toggle('ago')">Agosto</div>
-            <div class="mes-info">Contratado: R$ 152.688,00 | Consumido: R$ 647.693,47 | Saldo: R$ 20.327,00</div>
-            <div class="mes-table" id="ago">
-                <table>
-                    <tr><th>Procedimento</th><th>Qtd</th></tr>
-                    <tr><td>Pacote consulta</td><td>4124</td></tr>
-                    <tr><td>Biometria ultrassônica - binocular</td><td>64</td></tr>
-                    <tr><td>Campimetria computadorizada - binocular</td><td>163</td></tr>
-                    <tr><td>Retinografia colorida - binocular</td><td>51</td></tr>
-                    <tr><td>Microscopia especular de córnea - binocular</td><td>81</td></tr>
-                    <tr><td>Topografia computadorizada binocular</td><td>100</td></tr>
-                    <tr><td>Paquimetria ultrassônica</td><td>20</td></tr>
-                    <tr><td>Retinografia fluorescente (angiografia) - binocular</td><td>5</td></tr>
-                    <tr><td>Tomografia de coerência óptica (OCT) - binocular</td><td>267</td></tr>
-                    <tr><td>USG de globo ocular - binocular</td><td>53</td></tr>
-                    <tr><td>Cirurgia de catarata - monocular</td><td>91</td></tr>
-                    <tr><td>Cirurgia refrativa - binocular</td><td>14</td></tr>
-                    <tr><td>Cirurgia plastica ocular - monocular</td><td>67</td></tr>
-                    <tr><td>Cirurgia de glaucoma - trabeculectomia - monocular</td><td>37</td></tr>
-                    <tr><td>Capsulotomia a LASER - monocular</td><td>8</td></tr>
-                    <tr><td>Iridotomia a LASER - monocular</td><td>39</td></tr>
-                    <tr><td>Cirurgia de retina - vitrectomia-monocular</td><td>59</td></tr>
-                    <tr><td>Fotocoagulação a LASER - monocular</td><td>3</td></tr>
-                    <tr><td>Aplicação de anti-VGEF tratamento quimioterápico (incluindo medicação) - monocular</td><td>18</td></tr>
-                </table>
-            </div>
-        </div>
-
-        <div class="mes">
-            <div class="mes-header" onclick="toggle('set')">Setembro</div>
-            <div class="mes-info">Contratado: R$ 152.688,00 | Consumido: R$ 637.993,32 | Saldo: R$ 30.027,15</div>
-            <div class="mes-table" id="set">
-                <table>
-                    <tr><th>Procedimento</th><th>Qtd</th></tr>
-                    <tr><td>Pacote consulta</td><td>3938</td></tr>
-                    <tr><td>Biometria ultrassônica - binocular</td><td>91</td></tr>
-                    <tr><td>Campimetria computadorizada - binocular</td><td>177</td></tr>
-                    <tr><td>Retinografia colorida - binocular</td><td>77</td></tr>
-                    <tr><td>Microscopia especular de córnea - binocular</td><td>95</td></tr>
-                    <tr><td>Topografia computadorizada binocular</td><td>139</td></tr>
-                    <tr><td>Paquimetria ultrassônica</td><td>20</td></tr>
-                    <tr><td>Retinografia fluorescente (angiografia) - binocular</td><td>10</td></tr>
-                    <tr><td>Tomografia de coerência óptica (OCT) - binocular</td><td>359</td></tr>
-                    <tr><td>USG de globo ocular - binocular</td><td>34</td></tr>
-                    <tr><td>Cirurgia de catarata - monocular</td><td>92</td></tr>
-                    <tr><td>Cirurgia refrativa - binocular</td><td>27</td></tr>
-                    <tr><td>Cirurgia plastica ocular - monocular</td><td>70</td></tr>
-                    <tr><td>Cirurgia de glaucoma - trabeculectomia - monocular</td><td>48</td></tr>
-                    <tr><td>Capsulotomia a LASER - monocular</td><td>5</td></tr>
-                    <tr><td>Iridotomia a LASER - monocular</td><td>54</td></tr>
-                    <tr><td>Cirurgia de retina - vitrectomia-monocular</td><td>57</td></tr>
-                    <tr><td>Fotocoagulação a LASER - monocular</td><td>2</td></tr>
-                </table>
-            </div>
-        </div>
-
-        <div class="mes">
-            <div class="mes-header" onclick="toggle('out')">Outubro</div>
-            <div class="mes-info">Contratado: R$ 152.688,00 | Consumido: R$ 657.065,89 | Saldo: R$ 10.954,58</div>
-            <div class="mes-table" id="out">
-                <table>
-                    <tr><th>Procedimento</th><th>Qtd</th></tr>
-                    <tr><td>Pacote consulta</td><td>4010</td></tr>
-                    <tr><td>Biometria ultrassônica - binocular</td><td>75</td></tr>
-                    <tr><td>Campimetria computadorizada - binocular</td><td>178</td></tr>
-                    <tr><td>Retinografia colorida - binocular</td><td>56</td></tr>
-                    <tr><td>Microscopia especular de córnea - binocular</td><td>88</td></tr>
-                    <tr><td>Topografia computadorizada binocular</td><td>135</td></tr>
-                    <tr><td>Paquimetria ultrassônica</td><td>39</td></tr>
-                    <tr><td>Retinografia fluorescente (angiografia) - binocular</td><td>7</td></tr>
-                    <tr><td>Tomografia de coerência óptica (OCT) - binocular</td><td>292</td></tr>
-                    <tr><td>USG de globo ocular - binocular</td><td>49</td></tr>
-                    <tr><td>Cirurgia de catarata - monocular</td><td>103</td></tr>
-                    <tr><td>Cirurgia refrativa - binocular</td><td>26</td></tr>
-                    <tr><td>Cirurgia plastica ocular - monocular</td><td>74</td></tr>
-                    <tr><td>Cirurgia de glaucoma - trabeculectomia - monocular</td><td>46</td></tr>
-                    <tr><td>Capsulotomia a LASER - monocular</td><td>7</td></tr>
-                    <tr><td>Iridotomia a LASER - monocular</td><td>37</td></tr>
-                    <tr><td>Cirurgia de retina - vitrectomia-monocular</td><td>59</td></tr>
-                    <tr><td>Fotocoagulação a LASER - monocular</td><td>2</td></tr>
-                    <tr><td>Aplicação de anti-VGEF tratamento quimioterápico (incluindo medicação) - monocular</td><td>24</td></tr>
-                </table>
-            </div>
-        </div>
-
-        <div class="mes">
-            <div class="mes-header" onclick="toggle('nov')">Novembro</div>
-            <div class="mes-info">Contratado: R$ 152.688,00 | Consumido: R$ 0,00 | Saldo: R$ 0,00</div>
-            <div class="mes-table" id="nov">
-                <p style="padding: 10px;"><strong>Sem dados</strong></p>
-            </div>
-        </div>
-
-        <div class="mes">
-            <div class="mes-header" onclick="toggle('dez')">Dezembro</div>
-            <div class="mes-info">Contratado: R$ 152.688,00 | Consumido: R$ 0,00 | Saldo: R$ 0,00</div>
-            <div class="mes-table" id="dez">
-                <p style="padding: 10px;"><strong>Sem dados</strong></p>
-            </div>
-        </div>
+        <div class="mes-selector" id="mesSeletor"></div>
+        
+        <div id="conteudoMes"></div>
     </div>
 
     <script>
-        function toggle(mes) {
-            const el = document.getElementById(mes);
-            if (el) {
-                el.classList.toggle('aberto');
-            }
+        const precos = {
+            "Pacote consulta": 64.00,
+            "Biometria ultrassônica - binocular": 48.48,
+            "Campimetria computadorizada - binocular": 80.00,
+            "Retinografia colorida - binocular": 49.36,
+            "Microscopia especular de córnea - binocular": 48.48,
+            "Topografia computadorizada binocular": 48.48,
+            "Paquimetria ultrassônica": 29.62,
+            "Retinografia fluorescente (angiografia) - binocular": 128.00,
+            "Tomografia de coerência óptica (OCT) - binocular": 96.00,
+            "USG de globo ocular - binocular": 48.40,
+            "Cirurgia de catarata - monocular": 771.60,
+            "Cirurgia refrativa - binocular": 1500.00,
+            "Cirurgia plastica ocular - monocular": 449.44,
+            "Cirurgia de glaucoma - trabeculectomia - monocular": 898.35,
+            "Capsulotomia a LASER - monocular": 112.77,
+            "Iridotomia a LASER - monocular": 45.00,
+            "Cirurgia de retina - vitrectomia-monocular": 4701.84,
+            "Fotocoagulação a LASER - monocular": 107.61,
+            "Aplicação de anti-VGEF tratamento quimioterápico (incluindo medicação) - monocular": 627.28,
+            "Cirurgia de estrabismo - monocular": 1661.76,
+            "Cirurgia de pterígio - monocular": 209.55
+        };
+
+        const contratos = {
+            "Pacote consulta": 4000,
+            "Biometria ultrassônica - binocular": 100,
+            "Campimetria computadorizada - binocular": 220,
+            "Retinografia colorida - binocular": 200,
+            "Microscopia especular de córnea - binocular": 120,
+            "Topografia computadorizada binocular": 150,
+            "Paquimetria ultrassônica": 100,
+            "Retinografia fluorescente (angiografia) - binocular": 40,
+            "Tomografia de coerência óptica (OCT) - binocular": 300,
+            "USG de globo ocular - binocular": 40,
+            "Cirurgia de catarata - monocular": 100,
+            "Cirurgia refrativa - binocular": 2,
+            "Cirurgia plastica ocular - monocular": 30,
+            "Cirurgia de glaucoma - trabeculectomia - monocular": 1,
+            "Capsulotomia a LASER - monocular": 70,
+            "Iridotomia a LASER - monocular": 40,
+            "Cirurgia de retina - vitrectomia-monocular": 5,
+            "Fotocoagulação a LASER - monocular": 40,
+            "Aplicação de anti-VGEF tratamento quimioterápico (incluindo medicação) - monocular": 60,
+            "Cirurgia de estrabismo - monocular": 2,
+            "Cirurgia de pterígio - monocular": 10
+        };
+
+        const dados = {
+            JAN: { nome: "Janeiro", contratado: "R$ 152.688,00", consumido: "R$ 635.618,49", saldo: "R$ 32.401,98", procs: [["Pacote consulta", 3785], ["Biometria ultrassônica - binocular", 51], ["Campimetria computadorizada - binocular", 93], ["Retinografia colorida - binocular", 73], ["Microscopia especular de córnea - binocular", 57], ["Topografia computadorizada binocular", 128], ["Paquimetria ultrassônica", 42], ["Retinografia fluorescente (angiografia) - binocular", 12], ["Tomografia de coerência óptica (OCT) - binocular", 280], ["USG de globo ocular - binocular", 50], ["Cirurgia de catarata - monocular", 108], ["Cirurgia refrativa - binocular", 92], ["Cirurgia plastica ocular - monocular", 29], ["Cirurgia de glaucoma - trabeculectomia - monocular", 24], ["Capsulotomia a LASER - monocular", 3], ["Iridotomia a LASER - monocular", 38], ["Cirurgia de retina - vitrectomia-monocular", 56], ["Fotocoagulação a LASER - monocular", 18]] },
+            FEV: { nome: "Fevereiro", contratado: "R$ 152.688,00", consumido: "R$ 736.911,11", saldo: "-R$ 68.890,64", procs: [["Pacote consulta", 4862], ["Biometria ultrassônica - binocular", 69], ["Campimetria computadorizada - binocular", 204], ["Retinografia colorida - binocular", 109], ["Microscopia especular de córnea - binocular", 76], ["Topografia computadorizada binocular", 146], ["Paquimetria ultrassônica", 55], ["Retinografia fluorescente (angiografia) - binocular", 12], ["Tomografia de coerência óptica (OCT) - binocular", 355], ["USG de globo ocular - binocular", 49], ["Cirurgia de catarata - monocular", 110], ["Cirurgia refrativa - binocular", 70], ["Cirurgia plastica ocular - monocular", 37], ["Cirurgia de glaucoma - trabeculectomia - monocular", 34], ["Capsulotomia a LASER - monocular", 6], ["Iridotomia a LASER - monocular", 48], ["Cirurgia de retina - vitrectomia-monocular", 62], ["Fotocoagulação a LASER - monocular", 2]] },
+            MAR: { nome: "Março", contratado: "R$ 152.688,00", consumido: "R$ 683.430,90", saldo: "-R$ 15.410,43", procs: [["Pacote consulta", 4464], ["Biometria ultrassônica - binocular", 81], ["Campimetria computadorizada - binocular", 167], ["Microscopia especular de córnea - binocular", 83], ["Topografia computadorizada binocular", 154], ["Paquimetria ultrassônica", 79], ["Tomografia de coerência óptica (OCT) - binocular", 263], ["USG de globo ocular - binocular", 30], ["Cirurgia de catarata - monocular", 107], ["Cirurgia refrativa - binocular", 60], ["Cirurgia plastica ocular - monocular", 34], ["Cirurgia de glaucoma - trabeculectomia - monocular", 44], ["Capsulotomia a LASER - monocular", 5], ["Iridotomia a LASER - monocular", 57], ["Cirurgia de retina - vitrectomia-monocular", 61], ["Fotocoagulação a LASER - monocular", 19]] },
+            ABR: { nome: "Abril", contratado: "R$ 152.688,00", consumido: "R$ 670.374,01", saldo: "-R$ 2.353,54", procs: [["Pacote consulta", 3943], ["Biometria ultrassônica - binocular", 79], ["Campimetria computadorizada - binocular", 114], ["Retinografia colorida - binocular", 99], ["Microscopia especular de córnea - binocular", 87], ["Topografia computadorizada binocular", 151], ["Paquimetria ultrassônica", 50], ["Retinografia fluorescente (angiografia) - binocular", 17], ["Tomografia de coerência óptica (OCT) - binocular", 311], ["USG de globo ocular - binocular", 44], ["Cirurgia de catarata - monocular", 98], ["Cirurgia refrativa - binocular", 89], ["Cirurgia plastica ocular - monocular", 42], ["Cirurgia de glaucoma - trabeculectomia - monocular", 40], ["Capsulotomia a LASER - monocular", 6], ["Iridotomia a LASER - monocular", 72], ["Cirurgia de retina - vitrectomia-monocular", 59], ["Fotocoagulação a LASER - monocular", 3], ["Aplicação de anti-VGEF tratamento quimioterápico (incluindo medicação) - monocular", 1]] },
+            MAI: { nome: "Maio", contratado: "R$ 152.688,00", consumido: "R$ 673.404,23", saldo: "-R$ 5.383,76", procs: [["Pacote consulta", 4201], ["Biometria ultrassônica - binocular", 104], ["Campimetria computadorizada - binocular", 117], ["Retinografia colorida - binocular", 116], ["Microscopia especular de córnea - binocular", 98], ["Topografia computadorizada binocular", 176], ["Paquimetria ultrassônica", 70], ["Retinografia fluorescente (angiografia) - binocular", 6], ["Tomografia de coerência óptica (OCT) - binocular", 344], ["USG de globo ocular - binocular", 42], ["Cirurgia de catarata - monocular", 100], ["Cirurgia refrativa - binocular", 60], ["Cirurgia plastica ocular - monocular", 35], ["Cirurgia de glaucoma - trabeculectomia - monocular", 78], ["Capsulotomia a LASER - monocular", 4], ["Iridotomia a LASER - monocular", 38], ["Cirurgia de retina - vitrectomia-monocular", 61], ["Fotocoagulação a LASER - monocular", 1], ["Aplicação de anti-VGEF tratamento quimioterápico (incluindo medicação) - monocular", 25]] },
+            JUN: { nome: "Junho", contratado: "R$ 152.688,00", consumido: "R$ 634.565,75", saldo: "R$ 33.454,72", procs: [["Pacote consulta", 3578], ["Biometria ultrassônica - binocular", 78], ["Campimetria computadorizada - binocular", 119], ["Retinografia colorida - binocular", 76], ["Microscopia especular de córnea - binocular", 84], ["Topografia computadorizada binocular", 132], ["Paquimetria ultrassônica", 20], ["Retinografia fluorescente (angiografia) - binocular", 6], ["Tomografia de coerência óptica (OCT) - binocular", 319], ["USG de globo ocular - binocular", 36], ["Cirurgia de catarata - monocular", 95], ["Cirurgia refrativa - binocular", 74], ["Cirurgia plastica ocular - monocular", 58], ["Cirurgia de glaucoma - trabeculectomia - monocular", 75], ["Capsulotomia a LASER - monocular", 5], ["Iridotomia a LASER - monocular", 39], ["Cirurgia de retina - vitrectomia-monocular", 63], ["Fotocoagulação a LASER - monocular", 2], ["Aplicação de anti-VGEF tratamento quimioterápico (incluindo medicação) - monocular", 22]] },
+            JUL: { nome: "Julho", contratado: "R$ 152.688,00", consumido: "R$ 655.108,07", saldo: "R$ 12.912,40", procs: [["Pacote consulta", 4177], ["Biometria ultrassônica - binocular", 50], ["Campimetria computadorizada - binocular", 145], ["Retinografia colorida - binocular", 80], ["Microscopia especular de córnea - binocular", 68], ["Topografia computadorizada binocular", 128], ["Paquimetria ultrassônica", 47], ["Retinografia fluorescente (angiografia) - binocular", 7], ["Tomografia de coerência óptica (OCT) - binocular", 220], ["USG de globo ocular - binocular", 39], ["Cirurgia de catarata - monocular", 108], ["Cirurgia refrativa - binocular", 30], ["Cirurgia plastica ocular - monocular", 64], ["Cirurgia de glaucoma - trabeculectomia - monocular", 64], ["Capsulotomia a LASER - monocular", 6], ["Iridotomia a LASER - monocular", 43], ["Cirurgia de retina - vitrectomia-monocular", 65]] },
+            AGO: { nome: "Agosto", contratado: "R$ 152.688,00", consumido: "R$ 647.693,47", saldo: "R$ 20.327,00", procs: [["Pacote consulta", 4124], ["Biometria ultrassônica - binocular", 64], ["Campimetria computadorizada - binocular", 163], ["Retinografia colorida - binocular", 51], ["Microscopia especular de córnea - binocular", 81], ["Topografia computadorizada binocular", 100], ["Paquimetria ultrassônica", 20], ["Retinografia fluorescente (angiografia) - binocular", 5], ["Tomografia de coerência óptica (OCT) - binocular", 267], ["USG de globo ocular - binocular", 53], ["Cirurgia de catarata - monocular", 91], ["Cirurgia refrativa - binocular", 14], ["Cirurgia plastica ocular - monocular", 67], ["Cirurgia de glaucoma - trabeculectomia - monocular", 37], ["Capsulotomia a LASER - monocular", 8], ["Iridotomia a LASER - monocular", 39], ["Cirurgia de retina - vitrectomia-monocular", 59], ["Fotocoagulação a LASER - monocular", 3], ["Aplicação de anti-VGEF tratamento quimioterápico (incluindo medicação) - monocular", 18]] },
+            SET: { nome: "Setembro", contratado: "R$ 152.688,00", consumido: "R$ 637.993,32", saldo: "R$ 30.027,15", procs: [["Pacote consulta", 3938], ["Biometria ultrassônica - binocular", 91], ["Campimetria computadorizada - binocular", 177], ["Retinografia colorida - binocular", 77], ["Microscopia especular de córnea - binocular", 95], ["Topografia computadorizada binocular", 139], ["Paquimetria ultrassônica", 20], ["Retinografia fluorescente (angiografia) - binocular", 10], ["Tomografia de coerência óptica (OCT) - binocular", 359], ["USG de globo ocular - binocular", 34], ["Cirurgia de catarata - monocular", 92], ["Cirurgia refrativa - binocular", 27], ["Cirurgia plastica ocular - monocular", 70], ["Cirurgia de glaucoma - trabeculectomia - monocular", 48], ["Capsulotomia a LASER - monocular", 5], ["Iridotomia a LASER - monocular", 54], ["Cirurgia de retina - vitrectomia-monocular", 57], ["Fotocoagulação a LASER - monocular", 2]] },
+            OUT: { nome: "Outubro", contratado: "R$ 152.688,00", consumido: "R$ 657.065,89", saldo: "R$ 10.954,58", procs: [["Pacote consulta", 4010], ["Biometria ultrassônica - binocular", 75], ["Campimetria computadorizada - binocular", 178], ["Retinografia colorida - binocular", 56], ["Microscopia especular de córnea - binocular", 88], ["Topografia computadorizada binocular", 135], ["Paquimetria ultrassônica", 39], ["Retinografia fluorescente (angiografia) - binocular", 7], ["Tomografia de coerência óptica (OCT) - binocular", 292], ["USG de globo ocular - binocular", 49], ["Cirurgia de catarata - monocular", 103], ["Cirurgia refrativa - binocular", 26], ["Cirurgia plastica ocular - monocular", 74], ["Cirurgia de glaucoma - trabeculectomia - monocular", 46], ["Capsulotomia a LASER - monocular", 7], ["Iridotomia a LASER - monocular", 37], ["Cirurgia de retina - vitrectomia-monocular", 59], ["Fotocoagulação a LASER - monocular", 2], ["Aplicação de anti-VGEF tratamento quimioterápico (incluindo medicação) - monocular", 24]] },
+            NOV: { nome: "Novembro", contratado: "R$ 152.688,00", consumido: "R$ 0,00", saldo: "R$ 0,00", procs: [] },
+            DEZ: { nome: "Dezembro", contratado: "R$ 152.688,00", consumido: "R$ 0,00", saldo: "R$ 0,00", procs: [] }
+        };
+
+        function formatarMoeda(valor) {
+            return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor);
         }
+
+        function renderizarMesSeletor() {
+            const html = Object.keys(dados).map(mes => 
+                `<button class="mes-btn ${mes === 'JAN' ? 'active' : ''}" onclick="selecionarMes('${mes}')">${dados[mes].nome}</button>`
+            ).join('');
+            document.getElementById('mesSeletor').innerHTML = html;
+        }
+
+        function selecionarMes(mes) {
+            document.querySelectorAll('.mes-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderizarMes(mes);
+        }
+
+        function renderizarMes(mes) {
+            const d = dados[mes];
+            
+            let html = `
+                <div class="mes-container">
+                    <div class="mes-titulo">${d.nome}</div>
+                    
+                    <div class="resumo-geral">
+                        <div class="card-resumo">
+                            <div class="card-label">Valor Contratado (Mês)</div>
+                            <div class="card-valor">${d.contratado}</div>
+                        </div>
+                        <div class="card-resumo">
+                            <div class="card-label">Valor Gasto (Mês)</div>
+                            <div class="card-valor">${d.consumido}</div>
+                        </div>
+                        <div class="card-resumo">
+                            <div class="card-label">Saldo</div>
+                            <div class="card-valor" style="color: ${d.saldo.includes('-') ? '#ff6b6b' : '#51cf66'}">${d.saldo}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="servicos-table">
+                        <div class="table-titulo">📊 ANÁLISE POR SERVIÇO</div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Serviço</th>
+                                    <th class="numero">Contratado</th>
+                                    <th class="numero">Utilizado</th>
+                                    <th class="numero">% Utilização</th>
+                                    <th class="numero">Valor Unitário</th>
+                                    <th class="numero">Valor Gasto</th>
+                                    <th>Progresso</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+            `;
+            
+            for (const [proc, qtd] of d.procs) {
+                const contratado = contratos[proc] || 0;
+                const preco = precos[proc] || 0;
+                const percentual = contratado > 0 ? (qtd / contratado * 100).toFixed(1) : 0;
+                const valorGastoProcedimento = preco * qtd;
+                let status = '✓ OK';
+                if (qtd > contratado) status = '<span class="status-acima">⚠️ ACIMA</span>';
+                else if (qtd === contratado) status = '<span class="status-limite">✅ NO LIMITE</span>';
+                
+                html += `
+                    <tr>
+                        <td>${proc}</td>
+                        <td class="numero">${contratado}</td>
+                        <td class="numero"><strong>${qtd}</strong></td>
+                        <td class="numero">${percentual}% ${status}</td>
+                        <td class="numero">${formatarMoeda(preco)}</td>
+                        <td class="numero">${formatarMoeda(valorGastoProcedimento)}</td>
+                        <td>
+                            <div class="barra-progresso">
+                                <div class="barra">
+                                    <div class="barra-preenchida" style="width: ${Math.min(percentual, 100)}%"></div>
+                                </div>
+                                <span class="percentual">${percentual}%</span>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }
+            
+            html += `
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('conteudoMes').innerHTML = html;
+        }
+
+        renderizarMesSeletor();
+        renderizarMes('JAN');
     </script>
 </body>
 </html>
