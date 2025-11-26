@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contratos Médicos</title>
+    <title>Contratos Médicos - Dashboard</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', sans-serif; background: #f8f9fa; color: #1a1a1a; }
@@ -11,45 +11,99 @@
         header h1 { font-size: 48px; margin-bottom: 10px; font-weight: 700; }
         header p { font-size: 16px; opacity: 0.95; }
         .container { max-width: 1200px; margin: 0 auto; padding: 60px 20px; }
-        h2 { font-size: 32px; margin-bottom: 40px; text-align: center; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
+        h2 { font-size: 32px; margin-bottom: 40px; text-align: center; color: #0066cc; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px; }
         .card { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: all 0.3s; border-top: 4px solid #0066cc; }
         .card:hover { transform: translateY(-8px); box-shadow: 0 12px 24px rgba(0,0,0,0.12); }
-        .card h3 { font-size: 22px; margin-bottom: 10px; }
+        .card h3 { font-size: 24px; margin-bottom: 10px; color: #0066cc; }
         .card p { font-size: 13px; color: #666; margin-bottom: 20px; }
-        .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; padding: 15px; background: #f5f7fa; border-radius: 8px; }
+        .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; padding: 15px; background: linear-gradient(135deg, #f0f4ff 0%, #f8f9ff 100%); border-radius: 8px; border-left: 4px solid #0066cc; }
         .stat { text-align: center; }
-        .stat-label { font-size: 11px; color: #999; text-transform: uppercase; margin-bottom: 5px; }
-        .stat-value { font-size: 16px; font-weight: 700; color: #0066cc; }
-        .btn { display: block; width: 100%; text-align: center; background: linear-gradient(135deg, #0066cc, #0088ff); color: white; padding: 12px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 13px; transition: all 0.3s; }
-        .btn:hover { transform: scale(1.02); }
+        .stat-label { font-size: 11px; color: #666; text-transform: uppercase; margin-bottom: 5px; font-weight: 600; }
+        .stat-value { font-size: 18px; font-weight: 700; color: #0066cc; }
+        .btn { display: block; width: 100%; text-align: center; background: linear-gradient(135deg, #0066cc, #0088ff); color: white; padding: 14px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; transition: all 0.3s; border: none; cursor: pointer; }
+        .btn:hover { transform: scale(1.02); box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3); }
+        .resumo-geral { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 12px; margin-bottom: 40px; }
+        .resumo-geral h3 { font-size: 18px; margin-bottom: 20px; }
+        .resumo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .resumo-item { text-align: center; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 8px; }
+        .resumo-label { font-size: 12px; opacity: 0.9; margin-bottom: 5px; }
+        .resumo-valor { font-size: 22px; font-weight: 700; }
         footer { background: #1a1a1a; color: white; padding: 40px 20px; text-align: center; font-size: 13px; margin-top: 60px; }
+        .status { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; margin-top: 10px; }
+        .status.ok { background: #d4edda; color: #155724; }
+        .status.alerta { background: #fff3cd; color: #856404; }
+        .status.critico { background: #f8d7da; color: #721c24; }
     </style>
 </head>
 <body>
     <header>
-        <h1>📋 Contratos Médicos</h1>
-        <p>Gerencie seus contratos de forma centralizada</p>
+        <h1>📋 Dashboard de Contratos Médicos</h1>
+        <p>Acompanhe seus contratos de forma centralizada e em tempo real</p>
     </header>
     
     <div class="container">
-        <h2>Contratos Disponíveis</h2>
+        <div class="resumo-geral">
+            <h3>📊 RESUMO GERAL - CONTRATOS (JAN a OUT/2025)</h3>
+            <div class="resumo-grid">
+                <div class="resumo-item">
+                    <div class="resumo-label">Total Contratado</div>
+                    <div class="resumo-valor">R$ 1.526.880</div>
+                </div>
+                <div class="resumo-item">
+                    <div class="resumo-label">Total Consumido</div>
+                    <div class="resumo-valor">R$ 6.395.574</div>
+                </div>
+                <div class="resumo-item">
+                    <div class="resumo-label">Saldo Acumulado</div>
+                    <div class="resumo-valor" style="color: #ff6b6b;">-R$ 868.293</div>
+                </div>
+                <div class="resumo-item">
+                    <div class="resumo-label">Taxa Média de Uso</div>
+                    <div class="resumo-valor">118%</div>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Contratos por Especialidade</h2>
         <div class="grid">
             <div class="card">
-                <h3>Oftalmologia</h3>
-                <p>Serviços oftalmológicos</p>
+                <h3>👁️ Oftalmologia</h3>
+                <p>Serviços oftalmológicos - Análise detalhada de consumo</p>
                 <div class="stats">
-                    <div class="stat"><div class="stat-label">Contratado</div><div class="stat-value">0</div></div>
-                    <div class="stat"><div class="stat-label">Consumido</div><div class="stat-value">0</div></div>
-                    <div class="stat"><div class="stat-label">Saldo</div><div class="stat-value">0</div></div>
+                    <div class="stat">
+                        <div class="stat-label">Contratado/Mês</div>
+                        <div class="stat-value">R$ 152.688</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Consumido (Média)</div>
+                        <div class="stat-value">R$ 659.557</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">% Utilização</div>
+                        <div class="stat-value">432%</div>
+                    </div>
                 </div>
-                <a href="oftalmologia.html" class="btn">Acessar →</a>
+                <span class="status critico">⚠️ CRÍTICO - Acima do contratado</span>
+                <a href="oftalmologia.html" class="btn">Ver Detalhes →</a>
             </div>
+        </div>
+        
+        <h2 style="margin-top: 60px; margin-bottom: 30px;">Informações Importantes</h2>
+        <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); line-height: 1.8; color: #333;">
+            <p><strong>📌 Sobre este Dashboard:</strong></p>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li>Dados atualizados até outubro de 2025</li>
+                <li>Clique em cada especialidade para ver análise detalhada</li>
+                <li>Compare valor contratado vs. consumido por serviço</li>
+                <li>Acompanhe a taxa de utilização de cada procedimento</li>
+                <li>Identifique procedimentos que excedem o contratado</li>
+            </ul>
         </div>
     </div>
     
     <footer>
-        <p>Dashboard Automático</p>
+        <p>🔄 Dashboard Automático de Contratos Médicos | Atualizado em Nov/2025</p>
     </footer>
 </body>
 </html>
