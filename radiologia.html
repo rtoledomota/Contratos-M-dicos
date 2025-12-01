@@ -9,173 +9,1960 @@
     <title>Radiologia</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Arial; background: #f5f5f5; padding: 20px; }
-        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 8px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        h1 { color: #0066cc; margin-bottom: 30px; text-align: center; }
-        .mes-selector { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; justify-content: center; }
-        .mes-btn { padding: 10px 15px; background: white; border: 2px solid #ddd; border-radius: 5px; cursor: pointer; transition: all 0.3s; font-weight: 600; }
-        .mes-btn.active { background: #0066cc; color: white; border-color: #0066cc; }
-        .mes-btn:hover { border-color: #0066cc; }
-        .mes-container { background: white; border-radius: 8px; padding: 20px; }
-        .mes-titulo { color: #0066cc; font-size: 24px; margin-bottom: 20px; font-weight: 600; }
-        .resumo-geral { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-bottom: 30px; }
-        .card-resumo { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 8px; }
-        .card-label { font-size: 12px; opacity: 0.9; }
-        .card-valor { font-size: 24px; font-weight: 700; margin-top: 10px; }
-        .servicos-table { margin-bottom: 30px; }
-        .table-titulo { color: #0066cc; font-size: 18px; font-weight: 600; margin-bottom: 15px; }
-        table { width: 100%; border-collapse: collapse; }
-        th { background: #f0f0f0; padding: 12px; text-align: left; border-bottom: 2px solid #ddd; font-weight: 600; }
-        td { padding: 12px; border-bottom: 1px solid #ddd; }
-        tr:hover { background: #f9f9f9; }
-        .info-box { background: #e8f4f8; border-left: 4px solid #0066cc; padding: 15px; margin-top: 20px; border-radius: 4px; }
-        .info-box h3 { color: #0066cc; margin-bottom: 10px; }
-        .info-box p { margin: 5px 0; font-size: 14px; }
-        .btn-voltar { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #0066cc; color: white; text-decoration: none; border-radius: 5px; font-weight: 600; transition: all 0.3s; }
-        .btn-voltar:hover { background: #0052a3; }
+        
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            background: #f5f5f5; 
+            padding: 10px;
+        }
+        
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            background: white; 
+            border-radius: 8px; 
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        h1 { 
+            color: #0066cc; 
+            margin-bottom: 10px; 
+            text-align: center;
+            font-size: 28px;
+        }
+        
+        .contract-info {
+            background: #e8f4f8;
+            border-left: 4px solid #0066cc;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .contract-info p {
+            margin: 5px 0;
+        }
+        
+        .mes-selector { 
+            display: flex; 
+            gap: 8px; 
+            margin-bottom: 30px; 
+            flex-wrap: wrap; 
+            justify-content: center;
+        }
+        
+        .mes-btn { 
+            padding: 10px 15px; 
+            background: white; 
+            border: 2px solid #ddd; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            transition: all 0.3s; 
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .mes-btn.active { 
+            background: #0066cc; 
+            color: white; 
+            border-color: #0066cc; 
+        }
+        
+        .mes-btn:hover { 
+            border-color: #0066cc; 
+        }
+        
+        .mes-content {
+            display: none;
+        }
+        
+        .mes-container { 
+            background: white; 
+            border-radius: 8px; 
+            padding: 20px;
+        }
+        
+        .mes-titulo { 
+            color: #0066cc; 
+            font-size: 22px; 
+            margin-bottom: 20px; 
+            font-weight: 600;
+        }
+        
+        .resumo-geral { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 15px; 
+            margin-bottom: 30px;
+        }
+        
+        .card-resumo { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+            padding: 20px; 
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .card-label { 
+            font-size: 12px; 
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+        
+        .card-valor { 
+            font-size: 24px; 
+            font-weight: 700;
+        }
+        
+        .servicos-table { 
+            margin-bottom: 30px;
+        }
+        
+        .table-titulo { 
+            color: #0066cc; 
+            font-size: 18px; 
+            font-weight: 600; 
+            margin-bottom: 15px;
+        }
+        
+        .table-responsive {
+            overflow-x: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        table { 
+            width: 100%; 
+            border-collapse: collapse;
+            background: white;
+        }
+        
+        th { 
+            background: #f0f0f0; 
+            padding: 12px; 
+            text-align: left; 
+            border-bottom: 2px solid #ddd; 
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+        
+        td { 
+            padding: 12px; 
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+        
+        tr:hover { 
+            background: #f9f9f9;
+        }
+        
+        .numero {
+            text-align: right;
+            font-weight: 600;
+        }
+        
+        .total-row {
+            background: #f0f0f0;
+            font-weight: 600;
+        }
+        
+        .btn-voltar { 
+            display: inline-block; 
+            margin-top: 20px; 
+            padding: 12px 20px; 
+            background: #0066cc; 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            font-weight: 600; 
+            transition: all 0.3s;
+        }
+        
+        .btn-voltar:hover { 
+            background: #0052a3;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 24px;
+                margin-bottom: 8px;
+            }
+            
+            .contract-info {
+                padding: 12px;
+                font-size: 12px;
+            }
+            
+            .contract-info p {
+                margin: 4px 0;
+            }
+            
+            .mes-selector {
+                gap: 6px;
+                margin-bottom: 20px;
+            }
+            
+            .mes-btn {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+            
+            .mes-container {
+                padding: 15px;
+            }
+            
+            .mes-titulo {
+                font-size: 20px;
+                margin-bottom: 15px;
+            }
+            
+            .resumo-geral {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 12px;
+                margin-bottom: 20px;
+            }
+            
+            .card-resumo {
+                padding: 15px;
+            }
+            
+            .card-valor {
+                font-size: 20px;
+            }
+            
+            .card-label {
+                font-size: 11px;
+            }
+            
+            th {
+                padding: 10px 8px;
+                font-size: 13px;
+            }
+            
+            td {
+                padding: 10px 8px;
+                font-size: 13px;
+            }
+            
+            .table-titulo {
+                font-size: 16px;
+                margin-bottom: 12px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 12px;
+                border-radius: 4px;
+            }
+            
+            h1 {
+                font-size: 20px;
+                margin-bottom: 6px;
+            }
+            
+            .contract-info {
+                padding: 10px;
+                font-size: 11px;
+            }
+            
+            .contract-info p {
+                margin: 3px 0;
+            }
+            
+            .mes-selector {
+                gap: 4px;
+                margin-bottom: 15px;
+            }
+            
+            .mes-btn {
+                padding: 7px 10px;
+                font-size: 12px;
+            }
+            
+            .mes-container {
+                padding: 12px;
+            }
+            
+            .mes-titulo {
+                font-size: 18px;
+                margin-bottom: 12px;
+            }
+            
+            .resumo-geral {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                margin-bottom: 15px;
+            }
+            
+            .card-resumo {
+                padding: 12px;
+            }
+            
+            .card-valor {
+                font-size: 18px;
+            }
+            
+            .card-label {
+                font-size: 10px;
+            }
+            
+            th {
+                padding: 8px 6px;
+                font-size: 11px;
+            }
+            
+            td {
+                padding: 8px 6px;
+                font-size: 11px;
+            }
+            
+            .table-titulo {
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+            
+            .numero {
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Radiologia - Diagnóstico por Imagem</h1>
         
-        <div class="info-box">
-            <h3>Informações do Contrato</h3>
-            <p><strong>Contrato:</strong> 0775/2020</p>
-            <p><strong>Empresa:</strong> EL DIAGNÓSTICO LTDA</p>
+        <div class="contract-info">
+            <p><strong>Contrato:</strong> 0775/2020 | <strong>Empresa:</strong> EL DIAGNÓSTICO LTDA</p>
             <p><strong>CNPJ:</strong> 18.505.205/0001-94</p>
             <p><strong>Objeto:</strong> PRESTAÇÃO DE SERVIÇOS EM DIAGNÓSTICO POR IMAGEM</p>
         </div>
         
-        <div class="mes-container">
-            <div class="mes-titulo">Resumo Geral</div>
-            
-            <div class="resumo-geral">
-                <div class="card-resumo">
-                    <div class="card-label">Valor Contratado/Mês</div>
-                    <div class="card-valor">R$ 1,801,418.60</div>
+        <div class="mes-selector">
+            <button class="mes-btn active" onclick="mostraMes('Janeiro')">Janeiro</button>
+        <button class="mes-btn " onclick="mostraMes('Fevereiro')">Fevereiro</button>
+        <button class="mes-btn " onclick="mostraMes('Março')">Março</button>
+        <button class="mes-btn " onclick="mostraMes('Abril')">Abril</button>
+        <button class="mes-btn " onclick="mostraMes('Maio')">Maio</button>
+        <button class="mes-btn " onclick="mostraMes('Junho')">Junho</button>
+        <button class="mes-btn " onclick="mostraMes('Julho')">Julho</button>
+        <button class="mes-btn " onclick="mostraMes('Agosto')">Agosto</button>
+        <button class="mes-btn " onclick="mostraMes('Setembro')">Setembro</button>
+        <button class="mes-btn " onclick="mostraMes('Outubro')">Outubro</button>
+        <button class="mes-btn " onclick="mostraMes('Novembro')">Novembro</button>
+        <button class="mes-btn " onclick="mostraMes('Dezembro')">Dezembro</button>
+        
+        </div>
+        
+        
+        <div id="mes-Janeiro" class="mes-content" style="display: block;">
+            <div class="mes-container">
+                <div class="mes-titulo">Janeiro</div>
+                
+                <div class="resumo-geral">
+                    <div class="card-resumo">
+                        <div class="card-label">Valor do Mês</div>
+                        <div class="card-valor">R$ 1,813,672.40</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Total de Exames</div>
+                        <div class="card-valor">12,512</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Procedimentos</div>
+                        <div class="card-valor">12</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Valor/Exame</div>
+                        <div class="card-valor">R$ 144.95</div>
+                    </div>
                 </div>
-                <div class="card-resumo">
-                    <div class="card-label">Valor Contratado/Ano</div>
-                    <div class="card-valor">R$ 21,617,023.20</div>
-                </div>
-                <div class="card-resumo">
-                    <div class="card-label">Exames Mensais</div>
-                    <div class="card-valor">12,512</div>
-                </div>
-                <div class="card-resumo">
-                    <div class="card-label">Exames Anuais</div>
-                    <div class="card-valor">150,144</div>
-                </div>
-            </div>
-            
-            <div class="servicos-table">
-                <div class="table-titulo">Procedimentos Contratados</div>
-                <table>
-                    <thead>
+                
+                <div class="servicos-table">
+                    <div class="table-titulo">Procedimentos</div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Procedimento</th>
+                                    <th class="numero">Qtd/Mês</th>
+                                    <th class="numero">Valor Unit.</th>
+                                    <th class="numero">Valor Mês</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
                         <tr>
-                            <th>Procedimento</th>
-                            <th>Quantidade/Mês</th>
-                            <th>Valor Unitário</th>
-                            <th>Valor Mensal</th>
+                            <td>Raio X</td>
+                            <td class="numero">7,000</td>
+                            <td class="numero">R$ 30.68</td>
+                            <td class="numero">R$ 214,760.00</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        
-        <tr>
-            <td>Raio X</td>
-            <td>7,000</td>
-            <td>R$ 30.68</td>
-            <td>R$ 214,760.00</td>
-        </tr>
-        
-        <tr>
-            <td>Densitometria</td>
-            <td>500</td>
-            <td>R$ 102.25</td>
-            <td>R$ 51,125.00</td>
-        </tr>
-        
-        <tr>
-            <td>Mamografia</td>
-            <td>700</td>
-            <td>R$ 102.25</td>
-            <td>R$ 71,575.00</td>
-        </tr>
-        
-        <tr>
-            <td>Tomografia</td>
-            <td>3,480</td>
-            <td>R$ 292.72</td>
-            <td>R$ 1,018,665.60</td>
-        </tr>
-        
-        <tr>
-            <td>Angiotomografia</td>
-            <td>80</td>
-            <td>R$ 549.54</td>
-            <td>R$ 43,963.20</td>
-        </tr>
-        
-        <tr>
-            <td>Ressonância Magnética</td>
-            <td>520</td>
-            <td>R$ 526.65</td>
-            <td>R$ 273,858.00</td>
-        </tr>
-        
-        <tr>
-            <td>Angioressonância</td>
-            <td>80</td>
-            <td>R$ 700.76</td>
-            <td>R$ 56,060.80</td>
-        </tr>
-        
-        <tr>
-            <td>Biópsia Guiada por Imagem</td>
-            <td>85</td>
-            <td>R$ 607.72</td>
-            <td>R$ 51,656.20</td>
-        </tr>
-        
-        <tr>
-            <td>Sedação para Exames de RNM</td>
-            <td>5</td>
-            <td>R$ 432.60</td>
-            <td>R$ 2,163.00</td>
-        </tr>
-        
-        <tr>
-            <td>Sedação para Exames de TC</td>
-            <td>5</td>
-            <td>R$ 432.60</td>
-            <td>R$ 2,163.00</td>
-        </tr>
-        
-        <tr>
-            <td>Radioscopia em CC</td>
-            <td>60</td>
-            <td>R$ 278.66</td>
-            <td>R$ 16,719.60</td>
-        </tr>
-        
-        <tr>
-            <td>9528</td>
-            <td>10,835</td>
-            <td>R$ 12301.00</td>
-            <td>R$ 10,963.00</td>
-        </tr>
-        
-                        <tr style="background: #f0f0f0; font-weight: 600;">
-                            <td colspan="3">TOTAL:</td>
-                            <td>R$ 1,813,672.40</td>
+            
+                        <tr>
+                            <td>Densitometria</td>
+                            <td class="numero">500</td>
+                            <td class="numero">R$ 102.25</td>
+                            <td class="numero">R$ 51,125.00</td>
                         </tr>
-                    </tbody>
-                </table>
+            
+                        <tr>
+                            <td>Mamografia</td>
+                            <td class="numero">700</td>
+                            <td class="numero">R$ 102.25</td>
+                            <td class="numero">R$ 71,575.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Tomografia</td>
+                            <td class="numero">3,480</td>
+                            <td class="numero">R$ 292.72</td>
+                            <td class="numero">R$ 1,018,665.60</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Angiotomografia</td>
+                            <td class="numero">80</td>
+                            <td class="numero">R$ 549.54</td>
+                            <td class="numero">R$ 43,963.20</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Ressonância Magnética</td>
+                            <td class="numero">520</td>
+                            <td class="numero">R$ 526.65</td>
+                            <td class="numero">R$ 273,858.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Angioressonância</td>
+                            <td class="numero">80</td>
+                            <td class="numero">R$ 700.76</td>
+                            <td class="numero">R$ 56,060.80</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Biópsia Guiada por Imagem</td>
+                            <td class="numero">85</td>
+                            <td class="numero">R$ 607.72</td>
+                            <td class="numero">R$ 51,656.20</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Sedação para Exames de RNM</td>
+                            <td class="numero">5</td>
+                            <td class="numero">R$ 432.60</td>
+                            <td class="numero">R$ 2,163.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Sedação para Exames de TC</td>
+                            <td class="numero">5</td>
+                            <td class="numero">R$ 432.60</td>
+                            <td class="numero">R$ 2,163.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Radioscopia em CC</td>
+                            <td class="numero">60</td>
+                            <td class="numero">R$ 278.66</td>
+                            <td class="numero">R$ 16,719.60</td>
+                        </tr>
+            
+                        <tr>
+                            <td>9528</td>
+                            <td class="numero">10,835</td>
+                            <td class="numero">R$ 12301.00</td>
+                            <td class="numero">R$ 10,963.00</td>
+                        </tr>
+            
+                                <tr class="total-row">
+                                    <td colspan="3"><strong>TOTAL:</strong></td>
+                                    <td class="numero"><strong>R$ 1,813,672.40</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
         
+        <div id="mes-Fevereiro" class="mes-content" style="display: none;">
+            <div class="mes-container">
+                <div class="mes-titulo">Fevereiro</div>
+                
+                <div class="resumo-geral">
+                    <div class="card-resumo">
+                        <div class="card-label">Valor do Mês</div>
+                        <div class="card-valor">R$ 1,813,672.40</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Total de Exames</div>
+                        <div class="card-valor">12,512</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Procedimentos</div>
+                        <div class="card-valor">12</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Valor/Exame</div>
+                        <div class="card-valor">R$ 144.95</div>
+                    </div>
+                </div>
+                
+                <div class="servicos-table">
+                    <div class="table-titulo">Procedimentos</div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Procedimento</th>
+                                    <th class="numero">Qtd/Mês</th>
+                                    <th class="numero">Valor Unit.</th>
+                                    <th class="numero">Valor Mês</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                        <tr>
+                            <td>Raio X</td>
+                            <td class="numero">7,000</td>
+                            <td class="numero">R$ 30.68</td>
+                            <td class="numero">R$ 214,760.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Densitometria</td>
+                            <td class="numero">500</td>
+                            <td class="numero">R$ 102.25</td>
+                            <td class="numero">R$ 51,125.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Mamografia</td>
+                            <td class="numero">700</td>
+                            <td class="numero">R$ 102.25</td>
+                            <td class="numero">R$ 71,575.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Tomografia</td>
+                            <td class="numero">3,480</td>
+                            <td class="numero">R$ 292.72</td>
+                            <td class="numero">R$ 1,018,665.60</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Angiotomografia</td>
+                            <td class="numero">80</td>
+                            <td class="numero">R$ 549.54</td>
+                            <td class="numero">R$ 43,963.20</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Ressonância Magnética</td>
+                            <td class="numero">520</td>
+                            <td class="numero">R$ 526.65</td>
+                            <td class="numero">R$ 273,858.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Angioressonância</td>
+                            <td class="numero">80</td>
+                            <td class="numero">R$ 700.76</td>
+                            <td class="numero">R$ 56,060.80</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Biópsia Guiada por Imagem</td>
+                            <td class="numero">85</td>
+                            <td class="numero">R$ 607.72</td>
+                            <td class="numero">R$ 51,656.20</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Sedação para Exames de RNM</td>
+                            <td class="numero">5</td>
+                            <td class="numero">R$ 432.60</td>
+                            <td class="numero">R$ 2,163.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Sedação para Exames de TC</td>
+                            <td class="numero">5</td>
+                            <td class="numero">R$ 432.60</td>
+                            <td class="numero">R$ 2,163.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Radioscopia em CC</td>
+                            <td class="numero">60</td>
+                            <td class="numero">R$ 278.66</td>
+                            <td class="numero">R$ 16,719.60</td>
+                        </tr>
+            
+                        <tr>
+                            <td>9528</td>
+                            <td class="numero">10,835</td>
+                            <td class="numero">R$ 12301.00</td>
+                            <td class="numero">R$ 10,963.00</td>
+                        </tr>
+            
+                                <tr class="total-row">
+                                    <td colspan="3"><strong>TOTAL:</strong></td>
+                                    <td class="numero"><strong>R$ 1,813,672.40</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="mes-Março" class="mes-content" style="display: none;">
+            <div class="mes-container">
+                <div class="mes-titulo">Março</div>
+                
+                <div class="resumo-geral">
+                    <div class="card-resumo">
+                        <div class="card-label">Valor do Mês</div>
+                        <div class="card-valor">R$ 1,813,672.40</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Total de Exames</div>
+                        <div class="card-valor">12,512</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Procedimentos</div>
+                        <div class="card-valor">12</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Valor/Exame</div>
+                        <div class="card-valor">R$ 144.95</div>
+                    </div>
+                </div>
+                
+                <div class="servicos-table">
+                    <div class="table-titulo">Procedimentos</div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Procedimento</th>
+                                    <th class="numero">Qtd/Mês</th>
+                                    <th class="numero">Valor Unit.</th>
+                                    <th class="numero">Valor Mês</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                        <tr>
+                            <td>Raio X</td>
+                            <td class="numero">7,000</td>
+                            <td class="numero">R$ 30.68</td>
+                            <td class="numero">R$ 214,760.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Densitometria</td>
+                            <td class="numero">500</td>
+                            <td class="numero">R$ 102.25</td>
+                            <td class="numero">R$ 51,125.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Mamografia</td>
+                            <td class="numero">700</td>
+                            <td class="numero">R$ 102.25</td>
+                            <td class="numero">R$ 71,575.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Tomografia</td>
+                            <td class="numero">3,480</td>
+                            <td class="numero">R$ 292.72</td>
+                            <td class="numero">R$ 1,018,665.60</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Angiotomografia</td>
+                            <td class="numero">80</td>
+                            <td class="numero">R$ 549.54</td>
+                            <td class="numero">R$ 43,963.20</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Ressonância Magnética</td>
+                            <td class="numero">520</td>
+                            <td class="numero">R$ 526.65</td>
+                            <td class="numero">R$ 273,858.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Angioressonância</td>
+                            <td class="numero">80</td>
+                            <td class="numero">R$ 700.76</td>
+                            <td class="numero">R$ 56,060.80</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Biópsia Guiada por Imagem</td>
+                            <td class="numero">85</td>
+                            <td class="numero">R$ 607.72</td>
+                            <td class="numero">R$ 51,656.20</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Sedação para Exames de RNM</td>
+                            <td class="numero">5</td>
+                            <td class="numero">R$ 432.60</td>
+                            <td class="numero">R$ 2,163.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Sedação para Exames de TC</td>
+                            <td class="numero">5</td>
+                            <td class="numero">R$ 432.60</td>
+                            <td class="numero">R$ 2,163.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Radioscopia em CC</td>
+                            <td class="numero">60</td>
+                            <td class="numero">R$ 278.66</td>
+                            <td class="numero">R$ 16,719.60</td>
+                        </tr>
+            
+                        <tr>
+                            <td>9528</td>
+                            <td class="numero">10,835</td>
+                            <td class="numero">R$ 12301.00</td>
+                            <td class="numero">R$ 10,963.00</td>
+                        </tr>
+            
+                                <tr class="total-row">
+                                    <td colspan="3"><strong>TOTAL:</strong></td>
+                                    <td class="numero"><strong>R$ 1,813,672.40</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="mes-Abril" class="mes-content" style="display: none;">
+            <div class="mes-container">
+                <div class="mes-titulo">Abril</div>
+                
+                <div class="resumo-geral">
+                    <div class="card-resumo">
+                        <div class="card-label">Valor do Mês</div>
+                        <div class="card-valor">R$ 1,813,672.40</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Total de Exames</div>
+                        <div class="card-valor">12,512</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Procedimentos</div>
+                        <div class="card-valor">12</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Valor/Exame</div>
+                        <div class="card-valor">R$ 144.95</div>
+                    </div>
+                </div>
+                
+                <div class="servicos-table">
+                    <div class="table-titulo">Procedimentos</div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Procedimento</th>
+                                    <th class="numero">Qtd/Mês</th>
+                                    <th class="numero">Valor Unit.</th>
+                                    <th class="numero">Valor Mês</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                        <tr>
+                            <td>Raio X</td>
+                            <td class="numero">7,000</td>
+                            <td class="numero">R$ 30.68</td>
+                            <td class="numero">R$ 214,760.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Densitometria</td>
+                            <td class="numero">500</td>
+                            <td class="numero">R$ 102.25</td>
+                            <td class="numero">R$ 51,125.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Mamografia</td>
+                            <td class="numero">700</td>
+                            <td class="numero">R$ 102.25</td>
+                            <td class="numero">R$ 71,575.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Tomografia</td>
+                            <td class="numero">3,480</td>
+                            <td class="numero">R$ 292.72</td>
+                            <td class="numero">R$ 1,018,665.60</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Angiotomografia</td>
+                            <td class="numero">80</td>
+                            <td class="numero">R$ 549.54</td>
+                            <td class="numero">R$ 43,963.20</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Ressonância Magnética</td>
+                            <td class="numero">520</td>
+                            <td class="numero">R$ 526.65</td>
+                            <td class="numero">R$ 273,858.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Angioressonância</td>
+                            <td class="numero">80</td>
+                            <td class="numero">R$ 700.76</td>
+                            <td class="numero">R$ 56,060.80</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Biópsia Guiada por Imagem</td>
+                            <td class="numero">85</td>
+                            <td class="numero">R$ 607.72</td>
+                            <td class="numero">R$ 51,656.20</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Sedação para Exames de RNM</td>
+                            <td class="numero">5</td>
+                            <td class="numero">R$ 432.60</td>
+                            <td class="numero">R$ 2,163.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Sedação para Exames de TC</td>
+                            <td class="numero">5</td>
+                            <td class="numero">R$ 432.60</td>
+                            <td class="numero">R$ 2,163.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Radioscopia em CC</td>
+                            <td class="numero">60</td>
+                            <td class="numero">R$ 278.66</td>
+                            <td class="numero">R$ 16,719.60</td>
+                        </tr>
+            
+                        <tr>
+                            <td>9528</td>
+                            <td class="numero">10,835</td>
+                            <td class="numero">R$ 12301.00</td>
+                            <td class="numero">R$ 10,963.00</td>
+                        </tr>
+            
+                                <tr class="total-row">
+                                    <td colspan="3"><strong>TOTAL:</strong></td>
+                                    <td class="numero"><strong>R$ 1,813,672.40</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="mes-Maio" class="mes-content" style="display: none;">
+            <div class="mes-container">
+                <div class="mes-titulo">Maio</div>
+                
+                <div class="resumo-geral">
+                    <div class="card-resumo">
+                        <div class="card-label">Valor do Mês</div>
+                        <div class="card-valor">R$ 1,813,672.40</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Total de Exames</div>
+                        <div class="card-valor">12,512</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Procedimentos</div>
+                        <div class="card-valor">12</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Valor/Exame</div>
+                        <div class="card-valor">R$ 144.95</div>
+                    </div>
+                </div>
+                
+                <div class="servicos-table">
+                    <div class="table-titulo">Procedimentos</div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Procedimento</th>
+                                    <th class="numero">Qtd/Mês</th>
+                                    <th class="numero">Valor Unit.</th>
+                                    <th class="numero">Valor Mês</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                        <tr>
+                            <td>Raio X</td>
+                            <td class="numero">7,000</td>
+                            <td class="numero">R$ 30.68</td>
+                            <td class="numero">R$ 214,760.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Densitometria</td>
+                            <td class="numero">500</td>
+                            <td class="numero">R$ 102.25</td>
+                            <td class="numero">R$ 51,125.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Mamografia</td>
+                            <td class="numero">700</td>
+                            <td class="numero">R$ 102.25</td>
+                            <td class="numero">R$ 71,575.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Tomografia</td>
+                            <td class="numero">3,480</td>
+                            <td class="numero">R$ 292.72</td>
+                            <td class="numero">R$ 1,018,665.60</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Angiotomografia</td>
+                            <td class="numero">80</td>
+                            <td class="numero">R$ 549.54</td>
+                            <td class="numero">R$ 43,963.20</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Ressonância Magnética</td>
+                            <td class="numero">520</td>
+                            <td class="numero">R$ 526.65</td>
+                            <td class="numero">R$ 273,858.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Angioressonância</td>
+                            <td class="numero">80</td>
+                            <td class="numero">R$ 700.76</td>
+                            <td class="numero">R$ 56,060.80</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Biópsia Guiada por Imagem</td>
+                            <td class="numero">85</td>
+                            <td class="numero">R$ 607.72</td>
+                            <td class="numero">R$ 51,656.20</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Sedação para Exames de RNM</td>
+                            <td class="numero">5</td>
+                            <td class="numero">R$ 432.60</td>
+                            <td class="numero">R$ 2,163.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Sedação para Exames de TC</td>
+                            <td class="numero">5</td>
+                            <td class="numero">R$ 432.60</td>
+                            <td class="numero">R$ 2,163.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Radioscopia em CC</td>
+                            <td class="numero">60</td>
+                            <td class="numero">R$ 278.66</td>
+                            <td class="numero">R$ 16,719.60</td>
+                        </tr>
+            
+                        <tr>
+                            <td>9528</td>
+                            <td class="numero">10,835</td>
+                            <td class="numero">R$ 12301.00</td>
+                            <td class="numero">R$ 10,963.00</td>
+                        </tr>
+            
+                                <tr class="total-row">
+                                    <td colspan="3"><strong>TOTAL:</strong></td>
+                                    <td class="numero"><strong>R$ 1,813,672.40</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="mes-Junho" class="mes-content" style="display: none;">
+            <div class="mes-container">
+                <div class="mes-titulo">Junho</div>
+                
+                <div class="resumo-geral">
+                    <div class="card-resumo">
+                        <div class="card-label">Valor do Mês</div>
+                        <div class="card-valor">R$ 1,813,672.40</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Total de Exames</div>
+                        <div class="card-valor">12,512</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Procedimentos</div>
+                        <div class="card-valor">12</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Valor/Exame</div>
+                        <div class="card-valor">R$ 144.95</div>
+                    </div>
+                </div>
+                
+                <div class="servicos-table">
+                    <div class="table-titulo">Procedimentos</div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Procedimento</th>
+                                    <th class="numero">Qtd/Mês</th>
+                                    <th class="numero">Valor Unit.</th>
+                                    <th class="numero">Valor Mês</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                        <tr>
+                            <td>Raio X</td>
+                            <td class="numero">7,000</td>
+                            <td class="numero">R$ 30.68</td>
+                            <td class="numero">R$ 214,760.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Densitometria</td>
+                            <td class="numero">500</td>
+                            <td class="numero">R$ 102.25</td>
+                            <td class="numero">R$ 51,125.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Mamografia</td>
+                            <td class="numero">700</td>
+                            <td class="numero">R$ 102.25</td>
+                            <td class="numero">R$ 71,575.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Tomografia</td>
+                            <td class="numero">3,480</td>
+                            <td class="numero">R$ 292.72</td>
+                            <td class="numero">R$ 1,018,665.60</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Angiotomografia</td>
+                            <td class="numero">80</td>
+                            <td class="numero">R$ 549.54</td>
+                            <td class="numero">R$ 43,963.20</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Ressonância Magnética</td>
+                            <td class="numero">520</td>
+                            <td class="numero">R$ 526.65</td>
+                            <td class="numero">R$ 273,858.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Angioressonância</td>
+                            <td class="numero">80</td>
+                            <td class="numero">R$ 700.76</td>
+                            <td class="numero">R$ 56,060.80</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Biópsia Guiada por Imagem</td>
+                            <td class="numero">85</td>
+                            <td class="numero">R$ 607.72</td>
+                            <td class="numero">R$ 51,656.20</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Sedação para Exames de RNM</td>
+                            <td class="numero">5</td>
+                            <td class="numero">R$ 432.60</td>
+                            <td class="numero">R$ 2,163.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Sedação para Exames de TC</td>
+                            <td class="numero">5</td>
+                            <td class="numero">R$ 432.60</td>
+                            <td class="numero">R$ 2,163.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Radioscopia em CC</td>
+                            <td class="numero">60</td>
+                            <td class="numero">R$ 278.66</td>
+                            <td class="numero">R$ 16,719.60</td>
+                        </tr>
+            
+                        <tr>
+                            <td>9528</td>
+                            <td class="numero">10,835</td>
+                            <td class="numero">R$ 12301.00</td>
+                            <td class="numero">R$ 10,963.00</td>
+                        </tr>
+            
+                                <tr class="total-row">
+                                    <td colspan="3"><strong>TOTAL:</strong></td>
+                                    <td class="numero"><strong>R$ 1,813,672.40</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="mes-Julho" class="mes-content" style="display: none;">
+            <div class="mes-container">
+                <div class="mes-titulo">Julho</div>
+                
+                <div class="resumo-geral">
+                    <div class="card-resumo">
+                        <div class="card-label">Valor do Mês</div>
+                        <div class="card-valor">R$ 1,813,672.40</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Total de Exames</div>
+                        <div class="card-valor">12,512</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Procedimentos</div>
+                        <div class="card-valor">12</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Valor/Exame</div>
+                        <div class="card-valor">R$ 144.95</div>
+                    </div>
+                </div>
+                
+                <div class="servicos-table">
+                    <div class="table-titulo">Procedimentos</div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Procedimento</th>
+                                    <th class="numero">Qtd/Mês</th>
+                                    <th class="numero">Valor Unit.</th>
+                                    <th class="numero">Valor Mês</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                        <tr>
+                            <td>Raio X</td>
+                            <td class="numero">7,000</td>
+                            <td class="numero">R$ 30.68</td>
+                            <td class="numero">R$ 214,760.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Densitometria</td>
+                            <td class="numero">500</td>
+                            <td class="numero">R$ 102.25</td>
+                            <td class="numero">R$ 51,125.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Mamografia</td>
+                            <td class="numero">700</td>
+                            <td class="numero">R$ 102.25</td>
+                            <td class="numero">R$ 71,575.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Tomografia</td>
+                            <td class="numero">3,480</td>
+                            <td class="numero">R$ 292.72</td>
+                            <td class="numero">R$ 1,018,665.60</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Angiotomografia</td>
+                            <td class="numero">80</td>
+                            <td class="numero">R$ 549.54</td>
+                            <td class="numero">R$ 43,963.20</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Ressonância Magnética</td>
+                            <td class="numero">520</td>
+                            <td class="numero">R$ 526.65</td>
+                            <td class="numero">R$ 273,858.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Angioressonância</td>
+                            <td class="numero">80</td>
+                            <td class="numero">R$ 700.76</td>
+                            <td class="numero">R$ 56,060.80</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Biópsia Guiada por Imagem</td>
+                            <td class="numero">85</td>
+                            <td class="numero">R$ 607.72</td>
+                            <td class="numero">R$ 51,656.20</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Sedação para Exames de RNM</td>
+                            <td class="numero">5</td>
+                            <td class="numero">R$ 432.60</td>
+                            <td class="numero">R$ 2,163.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Sedação para Exames de TC</td>
+                            <td class="numero">5</td>
+                            <td class="numero">R$ 432.60</td>
+                            <td class="numero">R$ 2,163.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Radioscopia em CC</td>
+                            <td class="numero">60</td>
+                            <td class="numero">R$ 278.66</td>
+                            <td class="numero">R$ 16,719.60</td>
+                        </tr>
+            
+                        <tr>
+                            <td>9528</td>
+                            <td class="numero">10,835</td>
+                            <td class="numero">R$ 12301.00</td>
+                            <td class="numero">R$ 10,963.00</td>
+                        </tr>
+            
+                                <tr class="total-row">
+                                    <td colspan="3"><strong>TOTAL:</strong></td>
+                                    <td class="numero"><strong>R$ 1,813,672.40</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="mes-Agosto" class="mes-content" style="display: none;">
+            <div class="mes-container">
+                <div class="mes-titulo">Agosto</div>
+                
+                <div class="resumo-geral">
+                    <div class="card-resumo">
+                        <div class="card-label">Valor do Mês</div>
+                        <div class="card-valor">R$ 1,813,672.40</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Total de Exames</div>
+                        <div class="card-valor">12,512</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Procedimentos</div>
+                        <div class="card-valor">12</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Valor/Exame</div>
+                        <div class="card-valor">R$ 144.95</div>
+                    </div>
+                </div>
+                
+                <div class="servicos-table">
+                    <div class="table-titulo">Procedimentos</div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Procedimento</th>
+                                    <th class="numero">Qtd/Mês</th>
+                                    <th class="numero">Valor Unit.</th>
+                                    <th class="numero">Valor Mês</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                        <tr>
+                            <td>Raio X</td>
+                            <td class="numero">7,000</td>
+                            <td class="numero">R$ 30.68</td>
+                            <td class="numero">R$ 214,760.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Densitometria</td>
+                            <td class="numero">500</td>
+                            <td class="numero">R$ 102.25</td>
+                            <td class="numero">R$ 51,125.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Mamografia</td>
+                            <td class="numero">700</td>
+                            <td class="numero">R$ 102.25</td>
+                            <td class="numero">R$ 71,575.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Tomografia</td>
+                            <td class="numero">3,480</td>
+                            <td class="numero">R$ 292.72</td>
+                            <td class="numero">R$ 1,018,665.60</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Angiotomografia</td>
+                            <td class="numero">80</td>
+                            <td class="numero">R$ 549.54</td>
+                            <td class="numero">R$ 43,963.20</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Ressonância Magnética</td>
+                            <td class="numero">520</td>
+                            <td class="numero">R$ 526.65</td>
+                            <td class="numero">R$ 273,858.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Angioressonância</td>
+                            <td class="numero">80</td>
+                            <td class="numero">R$ 700.76</td>
+                            <td class="numero">R$ 56,060.80</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Biópsia Guiada por Imagem</td>
+                            <td class="numero">85</td>
+                            <td class="numero">R$ 607.72</td>
+                            <td class="numero">R$ 51,656.20</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Sedação para Exames de RNM</td>
+                            <td class="numero">5</td>
+                            <td class="numero">R$ 432.60</td>
+                            <td class="numero">R$ 2,163.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Sedação para Exames de TC</td>
+                            <td class="numero">5</td>
+                            <td class="numero">R$ 432.60</td>
+                            <td class="numero">R$ 2,163.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Radioscopia em CC</td>
+                            <td class="numero">60</td>
+                            <td class="numero">R$ 278.66</td>
+                            <td class="numero">R$ 16,719.60</td>
+                        </tr>
+            
+                        <tr>
+                            <td>9528</td>
+                            <td class="numero">10,835</td>
+                            <td class="numero">R$ 12301.00</td>
+                            <td class="numero">R$ 10,963.00</td>
+                        </tr>
+            
+                                <tr class="total-row">
+                                    <td colspan="3"><strong>TOTAL:</strong></td>
+                                    <td class="numero"><strong>R$ 1,813,672.40</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="mes-Setembro" class="mes-content" style="display: none;">
+            <div class="mes-container">
+                <div class="mes-titulo">Setembro</div>
+                
+                <div class="resumo-geral">
+                    <div class="card-resumo">
+                        <div class="card-label">Valor do Mês</div>
+                        <div class="card-valor">R$ 1,813,672.40</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Total de Exames</div>
+                        <div class="card-valor">12,512</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Procedimentos</div>
+                        <div class="card-valor">12</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Valor/Exame</div>
+                        <div class="card-valor">R$ 144.95</div>
+                    </div>
+                </div>
+                
+                <div class="servicos-table">
+                    <div class="table-titulo">Procedimentos</div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Procedimento</th>
+                                    <th class="numero">Qtd/Mês</th>
+                                    <th class="numero">Valor Unit.</th>
+                                    <th class="numero">Valor Mês</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                        <tr>
+                            <td>Raio X</td>
+                            <td class="numero">7,000</td>
+                            <td class="numero">R$ 30.68</td>
+                            <td class="numero">R$ 214,760.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Densitometria</td>
+                            <td class="numero">500</td>
+                            <td class="numero">R$ 102.25</td>
+                            <td class="numero">R$ 51,125.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Mamografia</td>
+                            <td class="numero">700</td>
+                            <td class="numero">R$ 102.25</td>
+                            <td class="numero">R$ 71,575.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Tomografia</td>
+                            <td class="numero">3,480</td>
+                            <td class="numero">R$ 292.72</td>
+                            <td class="numero">R$ 1,018,665.60</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Angiotomografia</td>
+                            <td class="numero">80</td>
+                            <td class="numero">R$ 549.54</td>
+                            <td class="numero">R$ 43,963.20</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Ressonância Magnética</td>
+                            <td class="numero">520</td>
+                            <td class="numero">R$ 526.65</td>
+                            <td class="numero">R$ 273,858.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Angioressonância</td>
+                            <td class="numero">80</td>
+                            <td class="numero">R$ 700.76</td>
+                            <td class="numero">R$ 56,060.80</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Biópsia Guiada por Imagem</td>
+                            <td class="numero">85</td>
+                            <td class="numero">R$ 607.72</td>
+                            <td class="numero">R$ 51,656.20</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Sedação para Exames de RNM</td>
+                            <td class="numero">5</td>
+                            <td class="numero">R$ 432.60</td>
+                            <td class="numero">R$ 2,163.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Sedação para Exames de TC</td>
+                            <td class="numero">5</td>
+                            <td class="numero">R$ 432.60</td>
+                            <td class="numero">R$ 2,163.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Radioscopia em CC</td>
+                            <td class="numero">60</td>
+                            <td class="numero">R$ 278.66</td>
+                            <td class="numero">R$ 16,719.60</td>
+                        </tr>
+            
+                        <tr>
+                            <td>9528</td>
+                            <td class="numero">10,835</td>
+                            <td class="numero">R$ 12301.00</td>
+                            <td class="numero">R$ 10,963.00</td>
+                        </tr>
+            
+                                <tr class="total-row">
+                                    <td colspan="3"><strong>TOTAL:</strong></td>
+                                    <td class="numero"><strong>R$ 1,813,672.40</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="mes-Outubro" class="mes-content" style="display: none;">
+            <div class="mes-container">
+                <div class="mes-titulo">Outubro</div>
+                
+                <div class="resumo-geral">
+                    <div class="card-resumo">
+                        <div class="card-label">Valor do Mês</div>
+                        <div class="card-valor">R$ 1,813,672.40</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Total de Exames</div>
+                        <div class="card-valor">12,512</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Procedimentos</div>
+                        <div class="card-valor">12</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Valor/Exame</div>
+                        <div class="card-valor">R$ 144.95</div>
+                    </div>
+                </div>
+                
+                <div class="servicos-table">
+                    <div class="table-titulo">Procedimentos</div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Procedimento</th>
+                                    <th class="numero">Qtd/Mês</th>
+                                    <th class="numero">Valor Unit.</th>
+                                    <th class="numero">Valor Mês</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                        <tr>
+                            <td>Raio X</td>
+                            <td class="numero">7,000</td>
+                            <td class="numero">R$ 30.68</td>
+                            <td class="numero">R$ 214,760.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Densitometria</td>
+                            <td class="numero">500</td>
+                            <td class="numero">R$ 102.25</td>
+                            <td class="numero">R$ 51,125.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Mamografia</td>
+                            <td class="numero">700</td>
+                            <td class="numero">R$ 102.25</td>
+                            <td class="numero">R$ 71,575.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Tomografia</td>
+                            <td class="numero">3,480</td>
+                            <td class="numero">R$ 292.72</td>
+                            <td class="numero">R$ 1,018,665.60</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Angiotomografia</td>
+                            <td class="numero">80</td>
+                            <td class="numero">R$ 549.54</td>
+                            <td class="numero">R$ 43,963.20</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Ressonância Magnética</td>
+                            <td class="numero">520</td>
+                            <td class="numero">R$ 526.65</td>
+                            <td class="numero">R$ 273,858.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Angioressonância</td>
+                            <td class="numero">80</td>
+                            <td class="numero">R$ 700.76</td>
+                            <td class="numero">R$ 56,060.80</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Biópsia Guiada por Imagem</td>
+                            <td class="numero">85</td>
+                            <td class="numero">R$ 607.72</td>
+                            <td class="numero">R$ 51,656.20</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Sedação para Exames de RNM</td>
+                            <td class="numero">5</td>
+                            <td class="numero">R$ 432.60</td>
+                            <td class="numero">R$ 2,163.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Sedação para Exames de TC</td>
+                            <td class="numero">5</td>
+                            <td class="numero">R$ 432.60</td>
+                            <td class="numero">R$ 2,163.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Radioscopia em CC</td>
+                            <td class="numero">60</td>
+                            <td class="numero">R$ 278.66</td>
+                            <td class="numero">R$ 16,719.60</td>
+                        </tr>
+            
+                        <tr>
+                            <td>9528</td>
+                            <td class="numero">10,835</td>
+                            <td class="numero">R$ 12301.00</td>
+                            <td class="numero">R$ 10,963.00</td>
+                        </tr>
+            
+                                <tr class="total-row">
+                                    <td colspan="3"><strong>TOTAL:</strong></td>
+                                    <td class="numero"><strong>R$ 1,813,672.40</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="mes-Novembro" class="mes-content" style="display: none;">
+            <div class="mes-container">
+                <div class="mes-titulo">Novembro</div>
+                
+                <div class="resumo-geral">
+                    <div class="card-resumo">
+                        <div class="card-label">Valor do Mês</div>
+                        <div class="card-valor">R$ 1,813,672.40</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Total de Exames</div>
+                        <div class="card-valor">12,512</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Procedimentos</div>
+                        <div class="card-valor">12</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Valor/Exame</div>
+                        <div class="card-valor">R$ 144.95</div>
+                    </div>
+                </div>
+                
+                <div class="servicos-table">
+                    <div class="table-titulo">Procedimentos</div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Procedimento</th>
+                                    <th class="numero">Qtd/Mês</th>
+                                    <th class="numero">Valor Unit.</th>
+                                    <th class="numero">Valor Mês</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                        <tr>
+                            <td>Raio X</td>
+                            <td class="numero">7,000</td>
+                            <td class="numero">R$ 30.68</td>
+                            <td class="numero">R$ 214,760.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Densitometria</td>
+                            <td class="numero">500</td>
+                            <td class="numero">R$ 102.25</td>
+                            <td class="numero">R$ 51,125.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Mamografia</td>
+                            <td class="numero">700</td>
+                            <td class="numero">R$ 102.25</td>
+                            <td class="numero">R$ 71,575.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Tomografia</td>
+                            <td class="numero">3,480</td>
+                            <td class="numero">R$ 292.72</td>
+                            <td class="numero">R$ 1,018,665.60</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Angiotomografia</td>
+                            <td class="numero">80</td>
+                            <td class="numero">R$ 549.54</td>
+                            <td class="numero">R$ 43,963.20</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Ressonância Magnética</td>
+                            <td class="numero">520</td>
+                            <td class="numero">R$ 526.65</td>
+                            <td class="numero">R$ 273,858.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Angioressonância</td>
+                            <td class="numero">80</td>
+                            <td class="numero">R$ 700.76</td>
+                            <td class="numero">R$ 56,060.80</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Biópsia Guiada por Imagem</td>
+                            <td class="numero">85</td>
+                            <td class="numero">R$ 607.72</td>
+                            <td class="numero">R$ 51,656.20</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Sedação para Exames de RNM</td>
+                            <td class="numero">5</td>
+                            <td class="numero">R$ 432.60</td>
+                            <td class="numero">R$ 2,163.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Sedação para Exames de TC</td>
+                            <td class="numero">5</td>
+                            <td class="numero">R$ 432.60</td>
+                            <td class="numero">R$ 2,163.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Radioscopia em CC</td>
+                            <td class="numero">60</td>
+                            <td class="numero">R$ 278.66</td>
+                            <td class="numero">R$ 16,719.60</td>
+                        </tr>
+            
+                        <tr>
+                            <td>9528</td>
+                            <td class="numero">10,835</td>
+                            <td class="numero">R$ 12301.00</td>
+                            <td class="numero">R$ 10,963.00</td>
+                        </tr>
+            
+                                <tr class="total-row">
+                                    <td colspan="3"><strong>TOTAL:</strong></td>
+                                    <td class="numero"><strong>R$ 1,813,672.40</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="mes-Dezembro" class="mes-content" style="display: none;">
+            <div class="mes-container">
+                <div class="mes-titulo">Dezembro</div>
+                
+                <div class="resumo-geral">
+                    <div class="card-resumo">
+                        <div class="card-label">Valor do Mês</div>
+                        <div class="card-valor">R$ 1,813,672.40</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Total de Exames</div>
+                        <div class="card-valor">12,512</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Procedimentos</div>
+                        <div class="card-valor">12</div>
+                    </div>
+                    <div class="card-resumo">
+                        <div class="card-label">Valor/Exame</div>
+                        <div class="card-valor">R$ 144.95</div>
+                    </div>
+                </div>
+                
+                <div class="servicos-table">
+                    <div class="table-titulo">Procedimentos</div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Procedimento</th>
+                                    <th class="numero">Qtd/Mês</th>
+                                    <th class="numero">Valor Unit.</th>
+                                    <th class="numero">Valor Mês</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                        <tr>
+                            <td>Raio X</td>
+                            <td class="numero">7,000</td>
+                            <td class="numero">R$ 30.68</td>
+                            <td class="numero">R$ 214,760.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Densitometria</td>
+                            <td class="numero">500</td>
+                            <td class="numero">R$ 102.25</td>
+                            <td class="numero">R$ 51,125.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Mamografia</td>
+                            <td class="numero">700</td>
+                            <td class="numero">R$ 102.25</td>
+                            <td class="numero">R$ 71,575.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Tomografia</td>
+                            <td class="numero">3,480</td>
+                            <td class="numero">R$ 292.72</td>
+                            <td class="numero">R$ 1,018,665.60</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Angiotomografia</td>
+                            <td class="numero">80</td>
+                            <td class="numero">R$ 549.54</td>
+                            <td class="numero">R$ 43,963.20</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Ressonância Magnética</td>
+                            <td class="numero">520</td>
+                            <td class="numero">R$ 526.65</td>
+                            <td class="numero">R$ 273,858.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Angioressonância</td>
+                            <td class="numero">80</td>
+                            <td class="numero">R$ 700.76</td>
+                            <td class="numero">R$ 56,060.80</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Biópsia Guiada por Imagem</td>
+                            <td class="numero">85</td>
+                            <td class="numero">R$ 607.72</td>
+                            <td class="numero">R$ 51,656.20</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Sedação para Exames de RNM</td>
+                            <td class="numero">5</td>
+                            <td class="numero">R$ 432.60</td>
+                            <td class="numero">R$ 2,163.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Sedação para Exames de TC</td>
+                            <td class="numero">5</td>
+                            <td class="numero">R$ 432.60</td>
+                            <td class="numero">R$ 2,163.00</td>
+                        </tr>
+            
+                        <tr>
+                            <td>Radioscopia em CC</td>
+                            <td class="numero">60</td>
+                            <td class="numero">R$ 278.66</td>
+                            <td class="numero">R$ 16,719.60</td>
+                        </tr>
+            
+                        <tr>
+                            <td>9528</td>
+                            <td class="numero">10,835</td>
+                            <td class="numero">R$ 12301.00</td>
+                            <td class="numero">R$ 10,963.00</td>
+                        </tr>
+            
+                                <tr class="total-row">
+                                    <td colspan="3"><strong>TOTAL:</strong></td>
+                                    <td class="numero"><strong>R$ 1,813,672.40</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
         <a href="index.html" class="btn-voltar">← Voltar</a>
     </div>
+    
+    <script>
+        function mostraMes(mes) {
+            document.querySelectorAll('.mes-content').forEach(el => {
+                el.style.display = 'none';
+            });
+            document.querySelectorAll('.mes-btn').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            document.getElementById('mes-' + mes).style.display = 'block';
+            event.target.classList.add('active');
+        }
+    </script>
 </body>
 </html>
