@@ -3,106 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oftalmologia - Contratos Médicos</title>
+    <title>Oftalmologia - Custos Mensais por Procedimento</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; }
         h1 { color: #333; text-align: center; }
-        table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
-        th { background-color: #4CAF50; color: white; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); overflow-x: auto; display: block; }
+        th, td { padding: 8px; text-align: left; border-bottom: 1px solid #ddd; white-space: nowrap; }
+        th { background-color: #4CAF50; color: white; font-size: 0.9em; }
         tr:hover { background-color: #f5f5f5; }
         .total { font-weight: bold; background-color: #e8f5e8; }
         .resumo { background: #fff; padding: 20px; margin: 20px 0; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .loading { text-align: center; color: #666; font-style: italic; }
+        .error { color: #d32f2f; }
+        .col-procedimento { min-width: 120px; } /* Para colunas longas */
     </style>
 </head>
 <body>
-    <h1>Contratos Médicos - Oftalmologia</h1>
+    <h1>Custos Mensais - Oftalmologia</h1>
     
-    <div class="resumo">
-        <h2>Resumo Geral</h2>
-        <p><strong>Contratos Ativos:</strong> 12</p>
-        <p><strong>Valor Total Mensal:</strong> `R$ 152.500`</p>
-        <p><strong>Valor Total Anual Estimado:</strong> `R$ 1.830.000`</p>
-        <p><strong>Data da Última Atualização:</strong> 08/12/2025</p>
+    <div class="resumo" id="resumo">
+        <h2>Resumo Geral (Carregando...)</h2>
+        <div class="loading">Conectando à planilha...</div>
     </div>
     
-    <h2>Contratos Ativos</h2>
-    <table>
+    <h2>Custos por Mês e Procedimento</h2>
+    <table id="tabela-custos">
         <thead>
             <tr>
-                <th>Hospital/Prestador</th>
-                <th>Número do Contrato</th>
-                <th>Valor Mensal (R$)</th>
-                <th>Data de Início</th>
-                <th>Data de Fim</th>
-                <th>Status</th>
-                <th>Observações</th>
+                <th>Mês</th>
+                <th>Custo Geral</th>
+                <th>Consultas</th>
+                <th>Biometria</th>
+                <th>Campo Visual</th>
+                <th>Retinografia Colorida</th>
+                <th>Microscopia Especular</th>
+                <th>Topografia</th>
+                <th>Paquimetria US</th>
+                <th>Angiografia</th>
+                <th>Tomografia OCT</th>
+                <th>Ecografia Ocular</th>
+                <th>Catarata</th>
+                <th>Refrativa</th>
+                <th>Plástica Ocular</th>
+                <th>Glaucoma - Trab</th>
+                <th>Capsulotomia Laser</th>
+                <th>Iridotomia Laser</th>
+                <th>Retina - Vitrectomia</th>
+                <th>Fotocoagulação Laser</th>
+                <th>Anti-VEGF</th>
+                <th>Estrabismo</th>
+                <th>Pterígio</th>
+                <th>Fixo</th>
+                <th>Total</th>
+                <th>Diferença</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Hospital A</td>
-                <td>CON-001/2025</td>
-                <td>`R$ 15.000`</td>
-                <td>01/01/2025</td>
-                <td>31/12/2025</td>
-                <td>Ativo</td>
-                <td>Renovação anual</td>
-            </tr>
-            <tr>
-                <td>Clínica B</td>
-                <td>CON-002/2025</td>
-                <td>`R$ 12.500`</td>
-                <td>15/02/2025</td>
-                <td>14/02/2026</td>
-                <td>Ativo</td>
-                <td>Ajuste de valor +10%</td>
-            </tr>
-            <!-- Adicionei todas as linhas da planilha aqui; exemplo com 2, mas no real seriam todas as ~12 ativas -->
-            <tr>
-                <td>Hospital Z</td>
-                <td>CON-012/2025</td>
-                <td>`R$ 8.000`</td>
-                <td>01/11/2025</td>
-                <td>31/10/2026</td>
-                <td>Ativo</td>
-                <td>Novo contrato</td>
-            </tr>
+            <tr><td colspan="26" class="loading">Carregando dados da planilha...</td></tr>
         </tbody>
         <tfoot>
             <tr class="total">
-                <td colspan="2"><strong>Total</strong></td>
-                <td><strong>`R$ 152.500`</strong></td>
-                <td colspan="4"></td>
+                <td colspan="2"><strong>Total Geral</strong></td>
+                <td id="total-consultas">0</td>
+                <td id="total-biometria">0</td>
+                <!-- Repita para outras colunas, mas para brevidade, calcule no script -->
+                <td colspan="20"><strong>Total Mensal Médio: Carregando...</strong></td>
             </tr>
         </tfoot>
     </table>
     
-    <h2>Contratos Inativos ou Encerrados</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Hospital/Prestador</th>
-                <th>Número do Contrato</th>
-                <th>Valor Mensal (R$)</th>
-                <th>Data de Fim</th>
-                <th>Motivo</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Dados inativos da planilha; exemplo -->
-            <tr>
-                <td>Clínica C</td>
-                <td>CON-015/2024</td>
-                <td>`R$ 10.000`</td>
-                <td>31/12/2024</td>
-                <td>Não renovado</td>
-            </tr>
-        </tbody>
-    </table>
+    <script>
+        // Configurações - SUBSTITUA PELA SUA CHAVE DE API SIMPLES
+        const API_KEY = 'AIzaSyB...';  // Sua chave simples (NÃO a private_key!)
+        const SHEET_ID = '1mtfsxAwZeYdwqel-FaqoMODzgQdJUfu6rQPQqSPVW4g';
+        const RANGE = 'Folha1!A1:AB';  // Ajuste se o nome da aba for diferente (ex.: A:AB para colunas A a AB)
+
+        async function carregarDados() {
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY}`;
+            
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
+                
+                const data = await response.json();
+                const values = data.values || [];
+                
+                if (values.length === 0) {
+                    throw new Error('Nenhum dado na planilha.');
+                }
+                
+                // Headers na linha 0
+                const headers = values[0];
+                
+                // Linhas de dados (a partir da linha 1), filtra linhas com mês válido
+                const meses = values.slice(1).filter(row => row[0] && row[0].toString().trim() !== '');  // Mês na coluna A (índice 0)
+                
+                // Calcula totais por coluna (índice 2=Consultas, 3=Biometria, ..., 23=Total, 24=Diferença)
+                let totalConsultas = 0, totalBiometria = 0, totalGeral = 0;  // Exemplo para algumas
+                meses.forEach(row => {
+                    totalConsultas += parseFloat(row[2] || 0);
+                    totalBiometria += parseFloat(row[3] || 0);
+                    // Adicione para outras colunas...
+                    totalGeral += parseFloat(row[23] || 0);  // Total na coluna X (índice 23)
+                });
+                const mediaMensal = totalGeral / meses.length;
+                
+                // Atualiza resumo
+                document.getElementById('resumo').innerHTML = `
+                    <h2>Resumo Geral</h2>
+                    <p><strong>Meses Analisados:</strong> ${meses.length}</p>
+                    <p><strong>Total Geral de Custos:</strong> <code>R$ ${totalGeral.toLocaleString('pt-BR')}</code></p>
+                    <p><strong>Média Mensal:</strong> <code>R$ ${mediaMensal.toLocaleString('pt-BR')}</code></p>
+                    <p><strong>Data da Última Atualização:</strong> ${new Date().toLocaleDateString('pt-BR')}</p>
+                `;
+                
+                // Preenche tabela
+                const tbody = document.querySelector('#tabela-custos tbody');
+                tbody.innerHTML = '';
+                
+                meses.forEach(row => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${row[0] || ''}</td>
+                        <td><code>R$ ${parseFloat(row[1] || 0).toLocaleString('pt-BR')}</code></td>
+                        <td><code>R$ ${parseFloat(row[2] || 0).toLocaleString('pt-BR')}</code></td>
+                        <td><code>R$ ${parseFloat(row[3] || 0).toLocaleString('pt-BR')}</code></td>
+                        <td><code>R$ ${parseFloat(row[4] || 0).toLocaleString('pt-BR')}</code></td>
+                        <td><code>R$ ${parseFloat(row[5] || 0).toLocaleString('pt-BR')}</code></td>
+                        <td><code>R$ ${parseFloat(row[6] || 0).toLocaleString('pt-BR')}</code></td>
+                        <td><code>R$ ${parseFloat(row[7] || 0).toLocaleString('pt-BR')}</code></td>
+                        <td><code>R$ ${parseFloat(row[8] || 0).toLocaleString('pt-BR')}</code></td>
+                        <td><code>R$ ${parseFloat(row[9] || 0).toLocaleString('pt-BR')}</code></td>
+                        <td><code>R$ ${parseFloat(row[10] || 0).toLocaleString('pt-BR')}</code></td>
+                        <td><code>R$ ${parseFloat(row[11] || 0).toLocaleString('pt-BR')}</code></td>
+                        <td><code>R$ ${parseFloat(row[12] || 0).toLocaleString('pt-BR')}</code></td>
+                        <td><code>R$ ${parseFloat(row[13] || 0).toLocaleString('pt-BR')}</code></td>
+                        <td><code>R$ ${parseFloat(row[14] || 0).toLocaleString('pt-BR')}</code></td>
+                        <td><code>R$ ${parseFloat(row[15] || 0).toLocaleString('pt-BR')}</code></td>
+                        <td><code>R$ ${parseFloat(row[16] || 0).toLocaleString('pt-BR')}</code></td>
+                        <td><code>R$ ${parseFloat(row[17] || 0).toLocaleString('pt-BR')}</code></td>
+                        <td><code>R$ ${parseFloat(row[18] || 0).toLocaleString('pt-BR')}</code></td>
+                        <td><code>R$ ${parseFloat(row[19] || 0).toLocaleString('pt-BR')}</code></td>
+                        <td><code>R$ ${parseFloat(row[20] || 0).toLocaleString('pt-BR')}</code></td>
+                        <td><code>R$ ${parseFloat(row[21] || 0).toLocaleString('pt-BR')}</code></td>
+                        <td><code>R$ ${parseFloat(row[22] || 0).toLocaleString('pt-BR')}</code></td>
+                        <td><code>R$ ${parseFloat(row[23] || 0).toLocaleString('pt-BR')}</code></td>
+                        <td><code>R$ ${parseFloat(row[24] || 0).toLocaleString('pt-BR')}</code></td>
+                        <td><code>R$ ${parseFloat(row[25] || 0).toLocaleString('pt-BR')}</code></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+                
+                // Atualiza rodapé (exemplo para algumas totais)
+                document.getElementById('total-consultas').textContent = totalConsultas.toLocaleString('pt-BR');
+                // Adicione IDs para outras colunas e atualize similarmente
+                document.querySelector('tfoot td:last-child').textContent = `Total Mensal Médio: <code>R$ ${mediaMensal.toLocaleString('pt-BR')}</code>`;
+                
+            } catch (error) {
+                console.error('Erro:', error);
+                document.getElementById('resumo').innerHTML = `<h2>Erro na Conexão</h2><p class="error">${error.message}. Verifique a chave e o compartilhamento público da planilha.</p>`;
+                document.querySelector('#tabela-custos tbody').innerHTML = `<tr><td colspan="26" class="error">Erro ao carregar. Torne a planilha pública ou verifique a chave.</td></tr>`;
+            }
+        }
+        
+        window.onload = carregarDados;
+    </script>
     
     <footer style="text-align: center; margin-top: 40px; color: #666;">
-        <p>Dashboard gerado com base na planilha atualizada. Para mais detalhes, consulte a fonte de dados.</p>
+        <p>Dashboard de custos oftalmológicos conectado à planilha via API.</p>
     </footer>
 </body>
 </html>
