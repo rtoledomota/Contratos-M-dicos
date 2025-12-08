@@ -8,14 +8,14 @@
         body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; }
         h1 { color: #333; text-align: center; }
         table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); overflow-x: auto; display: block; }
-        th, td { padding: 8px; text-align: left; border-bottom: 1px solid #ddd; white-space: nowrap; }
-        th { background-color: #4CAF50; color: white; font-size: 0.9em; }
+        th, td { padding: 8px; text-align: right; border-bottom: 1px solid #ddd; white-space: nowrap; font-size: 0.85em; }
+        th { background-color: #4CAF50; color: white; text-align: center; font-size: 0.8em; position: sticky; left: 0; z-index: 1; }
         tr:hover { background-color: #f5f5f5; }
-        .total { font-weight: bold; background-color: #e8f5e8; }
+        .total { font-weight: bold; background-color: #e8f5e8; text-align: center; }
         .resumo { background: #fff; padding: 20px; margin: 20px 0; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .loading { text-align: center; color: #666; font-style: italic; }
-        .error { color: #d32f2f; }
-        .col-procedimento { min-width: 120px; } /* Para colunas longas */
+        .error { color: #d32f2f; text-align: center; }
+        .diferenca { background-color: #fff3cd; } /* Destaque para coluna Diferença */
     </style>
 </head>
 <body>
@@ -23,154 +23,192 @@
     
     <div class="resumo" id="resumo">
         <h2>Resumo Geral (Carregando...)</h2>
-        <div class="loading">Conectando à planilha...</div>
+        <div class="loading">Conectando à planilha com a API...</div>
     </div>
     
     <h2>Custos por Mês e Procedimento</h2>
-    <table id="tabela-custos">
-        <thead>
-            <tr>
-                <th>Mês</th>
-                <th>Custo Geral</th>
-                <th>Consultas</th>
-                <th>Biometria</th>
-                <th>Campo Visual</th>
-                <th>Retinografia Colorida</th>
-                <th>Microscopia Especular</th>
-                <th>Topografia</th>
-                <th>Paquimetria US</th>
-                <th>Angiografia</th>
-                <th>Tomografia OCT</th>
-                <th>Ecografia Ocular</th>
-                <th>Catarata</th>
-                <th>Refrativa</th>
-                <th>Plástica Ocular</th>
-                <th>Glaucoma - Trab</th>
-                <th>Capsulotomia Laser</th>
-                <th>Iridotomia Laser</th>
-                <th>Retina - Vitrectomia</th>
-                <th>Fotocoagulação Laser</th>
-                <th>Anti-VEGF</th>
-                <th>Estrabismo</th>
-                <th>Pterígio</th>
-                <th>Fixo</th>
-                <th>Total</th>
-                <th>Diferença</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td colspan="26" class="loading">Carregando dados da planilha...</td></tr>
-        </tbody>
-        <tfoot>
-            <tr class="total">
-                <td colspan="2"><strong>Total Geral</strong></td>
-                <td id="total-consultas">0</td>
-                <td id="total-biometria">0</td>
-                <!-- Repita para outras colunas, mas para brevidade, calcule no script -->
-                <td colspan="20"><strong>Total Mensal Médio: Carregando...</strong></td>
-            </tr>
-        </tfoot>
-    </table>
+    <div style="overflow-x: auto;">
+        <table id="tabela-custos">
+            <thead>
+                <tr>
+                    <th>Mês</th>
+                    <th>Custo Geral</th>
+                    <th>Consultas</th>
+                    <th>Biometria</th>
+                    <th>Campo Visual</th>
+                    <th>Retinografia Colorida</th>
+                    <th>Microscopia Especular</th>
+                    <th>Topografia</th>
+                    <th>Paquimetria US</th>
+                    <th>Angiografia</th>
+                    <th>Tomografia OCT</th>
+                    <th>Ecografia Ocular</th>
+                    <th>Cirurgia Catarata</th>
+                    <th>Cirurgia Refrativa</th>
+                    <th>Plástica Ocular</th>
+                    <th>Glaucoma - Trab</th>
+                    <th>Capsulotomia Laser</th>
+                    <th>Iridotomia Laser</th>
+                    <th>Retina - Vitrectomia</th>
+                    <th>Fotocoagulação Laser</th>
+                    <th>Anti-VEGF</th>
+                    <th>Estrabismo</th>
+                    <th>Pterígio</th>
+                    <th>Fixo</th>
+                    <th>Total</th>
+                    <th class="diferenca">Diferença</th>
+                </tr>
+            </thead>
+            <tbody id="tbody-custos">
+                <tr><td colspan="26" class="loading">Carregando dados da planilha...</td></tr>
+            </tbody>
+            <tfoot id="tfoot-totals">
+                <tr class="total">
+                    <td><strong>Total Geral</strong></td>
+                    <td id="total-custo">0</td>
+                    <td id="total-consultas">0</td>
+                    <td id="total-biometria">0</td>
+                    <td id="total-campo">0</td>
+                    <td id="total-retino">0</td>
+                    <td id="total-micro">0</td>
+                    <td id="total-topo">0</td>
+                    <td id="total-paq">0</td>
+                    <td id="total-angio">0</td>
+                    <td id="total-oct">0</td>
+                    <td id="total-eco">0</td>
+                    <td id="total-catarata">0</td>
+                    <td id="total-refrativa">0</td>
+                    <td id="total-plastica">0</td>
+                    <td id="total-glaucoma">0</td>
+                    <td id="total-capsulo">0</td>
+                    <td id="total-irido">0</td>
+                    <td id="total-vitrect">0</td>
+                    <td id="total-foto">0</td>
+                    <td id="total-antivegf">0</td>
+                    <td id="total-estrab">0</td>
+                    <td id="total-pterigio">0</td>
+                    <td id="total-fixo">0</td>
+                    <td id="total-geral"><strong>0</strong></td>
+                    <td id="total-dif"><strong>0</strong></td>
+                </tr>
+                <tr class="total">
+                    <td colspan="25"><strong>Média Mensal Geral: Carregando...</strong></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
     
     <script>
-        // Configurações - SUBSTITUA PELA SUA CHAVE DE API SIMPLES
-        const API_KEY = 'AIzaSyB...';  // Sua chave simples (NÃO a private_key!)
+        // Chave de API correta integrada
+        const API_KEY = '6c0d440e5575308c6f694fc0c8a3e7baf365c92a';
         const SHEET_ID = '1mtfsxAwZeYdwqel-FaqoMODzgQdJUfu6rQPQqSPVW4g';
-        const RANGE = 'Folha1!A1:AB';  // Ajuste se o nome da aba for diferente (ex.: A:AB para colunas A a AB)
+        const RANGE = 'Folha1!A1:AB';  // Ajuste se nome da aba for diferente
+
+        // Função auxiliar para limpar e converter valores (ex.: 'R$ 1.500,00' -> 1500)
+        function parseValor(val) {
+            if (!val) return 0;
+            const cleaned = val.toString().replace(/[^\d,]/g, '').replace(',', '.');  // Remove não-números, converte vírgula
+            return parseFloat(cleaned) || 0;
+        }
 
         async function carregarDados() {
             const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY}`;
             
             try {
                 const response = await fetch(url);
-                if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
+                if (!response.ok) throw new Error(`Erro HTTP: ${response.status} - Verifique se a planilha está pública.`);
                 
                 const data = await response.json();
                 const values = data.values || [];
                 
-                if (values.length === 0) {
-                    throw new Error('Nenhum dado na planilha.');
+                if (values.length < 2) {
+                    throw new Error('Planilha vazia ou sem dados válidos.');
                 }
                 
-                // Headers na linha 0
+                // Headers (linha 0)
                 const headers = values[0];
                 
-                // Linhas de dados (a partir da linha 1), filtra linhas com mês válido
-                const meses = values.slice(1).filter(row => row[0] && row[0].toString().trim() !== '');  // Mês na coluna A (índice 0)
+                // Dados (linhas a partir de 1), filtra linhas com mês (coluna A, índice 0)
+                const meses = values.slice(1).filter(row => row[0] && row[0].toString().trim() !== '');
                 
-                // Calcula totais por coluna (índice 2=Consultas, 3=Biometria, ..., 23=Total, 24=Diferença)
-                let totalConsultas = 0, totalBiometria = 0, totalGeral = 0;  // Exemplo para algumas
+                if (meses.length === 0) {
+                    throw new Error('Nenhuma linha de dados encontrada após o cabeçalho.');
+                }
+                
+                // Calcula totais por coluna (índice 1=Custo Geral, 2=Consultas, ..., 24=Total, 25=Diferença)
+                let totais = new Array(26).fill(0);  // Array para 26 colunas (A a Z, AA)
+                let totalGeral = 0;
+                let totalDif = 0;
+                
                 meses.forEach(row => {
-                    totalConsultas += parseFloat(row[2] || 0);
-                    totalBiometria += parseFloat(row[3] || 0);
-                    // Adicione para outras colunas...
-                    totalGeral += parseFloat(row[23] || 0);  // Total na coluna X (índice 23)
+                    row.forEach((val, idx) => {
+                        if (idx >= 1 && idx <= 25) {  // Ignora Mês (0)
+                            const numVal = parseValor(val);
+                            totais[idx] += numVal;
+                            if (idx === 24) totalGeral += numVal;  // Total na coluna Y (24)
+                            if (idx === 25) totalDif += numVal;  // Diferença na coluna Z (25)
+                        }
+                    });
                 });
-                const mediaMensal = totalGeral / meses.length;
+                
+                const numMeses = meses.length;
+                const mediaMensal = totalGeral / numMeses;
                 
                 // Atualiza resumo
                 document.getElementById('resumo').innerHTML = `
                     <h2>Resumo Geral</h2>
-                    <p><strong>Meses Analisados:</strong> ${meses.length}</p>
+                    <p><strong>Meses Analisados:</strong> ${numMeses}</p>
                     <p><strong>Total Geral de Custos:</strong> <code>R$ ${totalGeral.toLocaleString('pt-BR')}</code></p>
                     <p><strong>Média Mensal:</strong> <code>R$ ${mediaMensal.toLocaleString('pt-BR')}</code></p>
+                    <p><strong>Soma das Diferenças:</strong> <code>R$ ${totalDif.toLocaleString('pt-BR')}</code></p>
                     <p><strong>Data da Última Atualização:</strong> ${new Date().toLocaleDateString('pt-BR')}</p>
                 `;
                 
-                // Preenche tabela
-                const tbody = document.querySelector('#tabela-custos tbody');
+                // Preenche corpo da tabela
+                const tbody = document.getElementById('tbody-custos');
                 tbody.innerHTML = '';
                 
                 meses.forEach(row => {
                     const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td>${row[0] || ''}</td>
-                        <td><code>R$ ${parseFloat(row[1] || 0).toLocaleString('pt-BR')}</code></td>
-                        <td><code>R$ ${parseFloat(row[2] || 0).toLocaleString('pt-BR')}</code></td>
-                        <td><code>R$ ${parseFloat(row[3] || 0).toLocaleString('pt-BR')}</code></td>
-                        <td><code>R$ ${parseFloat(row[4] || 0).toLocaleString('pt-BR')}</code></td>
-                        <td><code>R$ ${parseFloat(row[5] || 0).toLocaleString('pt-BR')}</code></td>
-                        <td><code>R$ ${parseFloat(row[6] || 0).toLocaleString('pt-BR')}</code></td>
-                        <td><code>R$ ${parseFloat(row[7] || 0).toLocaleString('pt-BR')}</code></td>
-                        <td><code>R$ ${parseFloat(row[8] || 0).toLocaleString('pt-BR')}</code></td>
-                        <td><code>R$ ${parseFloat(row[9] || 0).toLocaleString('pt-BR')}</code></td>
-                        <td><code>R$ ${parseFloat(row[10] || 0).toLocaleString('pt-BR')}</code></td>
-                        <td><code>R$ ${parseFloat(row[11] || 0).toLocaleString('pt-BR')}</code></td>
-                        <td><code>R$ ${parseFloat(row[12] || 0).toLocaleString('pt-BR')}</code></td>
-                        <td><code>R$ ${parseFloat(row[13] || 0).toLocaleString('pt-BR')}</code></td>
-                        <td><code>R$ ${parseFloat(row[14] || 0).toLocaleString('pt-BR')}</code></td>
-                        <td><code>R$ ${parseFloat(row[15] || 0).toLocaleString('pt-BR')}</code></td>
-                        <td><code>R$ ${parseFloat(row[16] || 0).toLocaleString('pt-BR')}</code></td>
-                        <td><code>R$ ${parseFloat(row[17] || 0).toLocaleString('pt-BR')}</code></td>
-                        <td><code>R$ ${parseFloat(row[18] || 0).toLocaleString('pt-BR')}</code></td>
-                        <td><code>R$ ${parseFloat(row[19] || 0).toLocaleString('pt-BR')}</code></td>
-                        <td><code>R$ ${parseFloat(row[20] || 0).toLocaleString('pt-BR')}</code></td>
-                        <td><code>R$ ${parseFloat(row[21] || 0).toLocaleString('pt-BR')}</code></td>
-                        <td><code>R$ ${parseFloat(row[22] || 0).toLocaleString('pt-BR')}</code></td>
-                        <td><code>R$ ${parseFloat(row[23] || 0).toLocaleString('pt-BR')}</code></td>
-                        <td><code>R$ ${parseFloat(row[24] || 0).toLocaleString('pt-BR')}</code></td>
-                        <td><code>R$ ${parseFloat(row[25] || 0).toLocaleString('pt-BR')}</code></td>
-                    `;
+                    let html = '<td>' + (row[0] || '') + '</td>';  // Mês
+                    for (let i = 1; i < row.length; i++) {  // Colunas 1 a 25
+                        const val = parseValor(row[i]);
+                        const classe = (i === 25) ? ' class="diferenca"' : '';  // Destaque Diferença
+                        html += `<td${classe}><code>R$ ${val.toLocaleString('pt-BR')}</code></td>`;
+                    }
+                    tr.innerHTML = html;
                     tbody.appendChild(tr);
                 });
                 
-                // Atualiza rodapé (exemplo para algumas totais)
-                document.getElementById('total-consultas').textContent = totalConsultas.toLocaleString('pt-BR');
-                // Adicione IDs para outras colunas e atualize similarmente
-                document.querySelector('tfoot td:last-child').textContent = `Total Mensal Médio: <code>R$ ${mediaMensal.toLocaleString('pt-BR')}</code>`;
+                // Atualiza rodapé com totais
+                document.getElementById('tfoot-totals').innerHTML = `
+                    <tr class="total">
+                        <td><strong>Total Geral</strong></td>
+                        ${totais.slice(1).map((total, idx) => `<td id="total-${idx}"><strong><code>R$ ${total.toLocaleString('pt-BR')}</code></strong></td>`).join('')}
+                    </tr>
+                    <tr class="total">
+                        <td colspan="25"><strong>Média Mensal Geral: <code>R$ ${mediaMensal.toLocaleString('pt-BR')}</code></strong></td>
+                        <td></td>
+                    </tr>
+                `;
                 
             } catch (error) {
-                console.error('Erro:', error);
-                document.getElementById('resumo').innerHTML = `<h2>Erro na Conexão</h2><p class="error">${error.message}. Verifique a chave e o compartilhamento público da planilha.</p>`;
-                document.querySelector('#tabela-custos tbody').innerHTML = `<tr><td colspan="26" class="error">Erro ao carregar. Torne a planilha pública ou verifique a chave.</td></tr>`;
+                console.error('Erro detalhado:', error);
+                document.getElementById('resumo').innerHTML = `<h2>Erro na Conexão</h2><p class="error">${error.message}<br><small>Dica: Torne a planilha pública ou verifique a chave no Google Cloud Console.</small></p>`;
+                document.getElementById('tbody-custos').innerHTML = `<tr><td colspan="26" class="error">Falha ao carregar dados. Recarregue a página ou confira o console (F12).</td></tr>`;
             }
         }
         
+        // Carrega ao inicializar
         window.onload = carregarDados;
+        
+        // Opcional: Recarrega a cada 30 minutos
+        // setInterval(carregarDados, 1800000);
     </script>
     
     <footer style="text-align: center; margin-top: 40px; color: #666;">
-        <p>Dashboard de custos oftalmológicos conectado à planilha via API.</p>
+        <p>Dashboard de custos oftalmológicos atualizado via Google Sheets API. Chave integrada com sucesso.</p>
     </footer>
 </body>
 </html>
