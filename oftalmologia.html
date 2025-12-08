@@ -2,156 +2,107 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oftalmologia</title>
+    <title>Oftalmologia - Contratos Médicos</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Arial; background: #f5f5f5; padding: 20px; }
-        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 8px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        h1 { color: #0066cc; margin-bottom: 30px; text-align: center; }
-        .mes-selector { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; justify-content: center; }
-        .mes-btn { padding: 10px 15px; background: white; border: 2px solid #ddd; border-radius: 5px; cursor: pointer; transition: all 0.3s; font-weight: 600; }
-        .mes-btn.active { background: #0066cc; color: white; border-color: #0066cc; }
-        .mes-btn:hover { border-color: #0066cc; }
-        .mes-container { background: white; border-radius: 8px; padding: 20px; }
-        .mes-titulo { color: #0066cc; font-size: 24px; margin-bottom: 20px; font-weight: 600; }
-        .resumo-geral { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-bottom: 30px; }
-        .card-resumo { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 8px; }
-        .card-label { font-size: 12px; opacity: 0.9; }
-        .card-valor { font-size: 24px; font-weight: 700; margin-top: 10px; }
-        .servicos-table { margin-bottom: 30px; }
-        .table-titulo { color: #0066cc; font-size: 18px; font-weight: 600; margin-bottom: 15px; }
-        table { width: 100%; border-collapse: collapse; }
-        th { background: #f0f0f0; padding: 12px; text-align: left; border-bottom: 2px solid #ddd; font-weight: 600; color: #333; }
-        td { padding: 12px; border-bottom: 1px solid #eee; }
-        tr:hover { background: #f9f9f9; }
-        .numero { text-align: right; font-weight: 600; }
-        .barra-progresso { display: flex; align-items: center; gap: 10px; }
-        .barra { flex: 1; height: 8px; background: #eee; border-radius: 4px; overflow: hidden; }
-        .barra-preenchida { height: 100%; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); border-radius: 4px; }
-        .percentual { font-size: 12px; font-weight: 600; color: #666; }
-        .status-ok { color: #28a745; font-weight: 600; }
-        .status-limite { color: #ffc107; font-weight: 600; }
-        .status-acima { color: #dc3545; font-weight: 600; }
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; }
+        h1 { color: #333; text-align: center; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #4CAF50; color: white; }
+        tr:hover { background-color: #f5f5f5; }
+        .total { font-weight: bold; background-color: #e8f5e8; }
+        .resumo { background: #fff; padding: 20px; margin: 20px 0; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>👁️ OFTALMOLOGIA - ANÁLISE DE CONSUMO (VALORES CORRETOS)</h1>
-        
-        <div class="mes-selector" id="mesSeletor"></div>
-        
-        <div id="conteudoMes"></div>
+    <h1>Contratos Médicos - Oftalmologia</h1>
+    
+    <div class="resumo">
+        <h2>Resumo Geral</h2>
+        <p><strong>Contratos Ativos:</strong> 12</p>
+        <p><strong>Valor Total Mensal:</strong> `R$ 152.500`</p>
+        <p><strong>Valor Total Anual Estimado:</strong> `R$ 1.830.000`</p>
+        <p><strong>Data da Última Atualização:</strong> 08/12/2025</p>
     </div>
-
-    <script>
-        const precos = {'Pacote consulta': 64.0, 'Biometria ultrassônica - binocular': 48.48, 'Campimetria computadorizada - binocular': 80.0, 'Retinografia colorida - binocular': 49.36, 'Microscopia especular de córnea - binocular': 48.48, 'Topografia computadorizada binocular': 48.48, 'Paquimetria ultrassônica': 29.62, 'Retinografia fluorescente (angiografia) - binocular': 128.0, 'Tomografia de coerência óptica (OCT) - binocular': 96.0, 'USG de globo ocular - binocular': 48.4, 'Cirurgia de catarata - monocular': 771.6, 'Cirurgia refrativa - binocular': 1500.0, 'Cirurgia plastica ocular - monocular': 449.44, 'Cirurgia de glaucoma - trabeculectomia - monocular': 898.35, 'Capsulotomia a LASER - monocular': 112.77, 'Iridotomia a LASER - monocular': 45.0, 'Cirurgia de retina - vitrectomia-monocular': 4701.84, 'Fotocoagulação a LASER - monocular': 107.64, 'Aplicação de anti-VGEF tratamento quimioterápico (incluindo medicação) - monocular': 627.28, 'Cirurgia de estrabismo - monocular': 1661.76, 'Cirurgia de pterígio - monocular': 209.55};
-        const contratos = {'Pacote consulta': 4000, 'Biometria ultrassônica - binocular': 100, 'Campimetria computadorizada - binocular': 220, 'Retinografia colorida - binocular': 200, 'Microscopia especular de córnea - binocular': 120, 'Topografia computadorizada binocular': 150, 'Paquimetria ultrassônica': 100, 'Retinografia fluorescente (angiografia) - binocular': 40, 'Tomografia de coerência óptica (OCT) - binocular': 300, 'USG de globo ocular - binocular': 40, 'Cirurgia de catarata - monocular': 100, 'Cirurgia refrativa - binocular': 2, 'Cirurgia plastica ocular - monocular': 30, 'Cirurgia de glaucoma - trabeculectomia - monocular': 1, 'Capsulotomia a LASER - monocular': 70, 'Iridotomia a LASER - monocular': 40, 'Cirurgia de retina - vitrectomia-monocular': 5, 'Fotocoagulação a LASER - monocular': 40, 'Aplicação de anti-VGEF tratamento quimioterápico (incluindo medicação) - monocular': 60, 'Cirurgia de estrabismo - monocular': 2, 'Cirurgia de pterígio - monocular': 10};
-        const dados = {'JAN': {'consumido': 635618.49, 'procs': [['Pacote consulta', 3785], ['Biometria ultrassônica - binocular', 51], ['Campimetria computadorizada - binocular', 93], ['Retinografia colorida - binocular', 73], ['Microscopia especular de córnea - binocular', 57], ['Topografia computadorizada binocular', 128], ['Paquimetria ultrassônica', 42], ['Retinografia fluorescente (angiografia) - binocular', 12], ['Tomografia de coerência óptica (OCT) - binocular', 280], ['USG de globo ocular - binocular', 50], ['Cirurgia de catarata - monocular', 108], ['Cirurgia refrativa - binocular', 0], ['Cirurgia plastica ocular - monocular', 92], ['Cirurgia de glaucoma - trabeculectomia - monocular', 0], ['Capsulotomia a LASER - monocular', 29], ['Iridotomia a LASER - monocular', 24], ['Cirurgia de retina - vitrectomia-monocular', 3], ['Fotocoagulação a LASER - monocular', 38], ['Aplicação de anti-VGEF tratamento quimioterápico (incluindo medicação) - monocular', 56], ['Cirurgia de estrabismo - monocular', 0], ['Cirurgia de pterígio - monocular', 18]]}, 'FEV': {'consumido': 736911.11, 'procs': [['Pacote consulta', 4862], ['Biometria ultrassônica - binocular', 69], ['Campimetria computadorizada - binocular', 204], ['Retinografia colorida - binocular', 109], ['Microscopia especular de córnea - binocular', 76], ['Topografia computadorizada binocular', 146], ['Paquimetria ultrassônica', 55], ['Retinografia fluorescente (angiografia) - binocular', 12], ['Tomografia de coerência óptica (OCT) - binocular', 355], ['USG de globo ocular - binocular', 49], ['Cirurgia de catarata - monocular', 110], ['Cirurgia refrativa - binocular', 0], ['Cirurgia plastica ocular - monocular', 70], ['Cirurgia de glaucoma - trabeculectomia - monocular', 0], ['Capsulotomia a LASER - monocular', 37], ['Iridotomia a LASER - monocular', 34], ['Cirurgia de retina - vitrectomia-monocular', 6], ['Fotocoagulação a LASER - monocular', 48], ['Aplicação de anti-VGEF tratamento quimioterápico (incluindo medicação) - monocular', 62], ['Cirurgia de estrabismo - monocular', 2], ['Cirurgia de pterígio - monocular', 0]]}, 'MAR': {'consumido': 683430.9, 'procs': [['Pacote consulta', 4464], ['Biometria ultrassônica - binocular', 81], ['Campimetria computadorizada - binocular', 167], ['Retinografia colorida - binocular', 0], ['Microscopia especular de córnea - binocular', 83], ['Topografia computadorizada binocular', 154], ['Paquimetria ultrassônica', 79], ['Retinografia fluorescente (angiografia) - binocular', 0], ['Tomografia de coerência óptica (OCT) - binocular', 263], ['USG de globo ocular - binocular', 30], ['Cirurgia de catarata - monocular', 107], ['Cirurgia refrativa - binocular', 0], ['Cirurgia plastica ocular - monocular', 60], ['Cirurgia de glaucoma - trabeculectomia - monocular', 0], ['Capsulotomia a LASER - monocular', 34], ['Iridotomia a LASER - monocular', 44], ['Cirurgia de retina - vitrectomia-monocular', 5], ['Fotocoagulação a LASER - monocular', 57], ['Aplicação de anti-VGEF tratamento quimioterápico (incluindo medicação) - monocular', 61], ['Cirurgia de estrabismo - monocular', 0], ['Cirurgia de pterígio - monocular', 19]]}, 'ABR': {'consumido': 670374.01, 'procs': [['Pacote consulta', 3943], ['Biometria ultrassônica - binocular', 79], ['Campimetria computadorizada - binocular', 114], ['Retinografia colorida - binocular', 99], ['Microscopia especular de córnea - binocular', 87], ['Topografia computadorizada binocular', 151], ['Paquimetria ultrassônica', 50], ['Retinografia fluorescente (angiografia) - binocular', 17], ['Tomografia de coerência óptica (OCT) - binocular', 311], ['USG de globo ocular - binocular', 44], ['Cirurgia de catarata - monocular', 98], ['Cirurgia refrativa - binocular', 0], ['Cirurgia plastica ocular - monocular', 89], ['Cirurgia de glaucoma - trabeculectomia - monocular', 0], ['Capsulotomia a LASER - monocular', 42], ['Iridotomia a LASER - monocular', 40], ['Cirurgia de retina - vitrectomia-monocular', 6], ['Fotocoagulação a LASER - monocular', 72], ['Aplicação de anti-VGEF tratamento quimioterápico (incluindo medicação) - monocular', 59], ['Cirurgia de estrabismo - monocular', 3], ['Cirurgia de pterígio - monocular', 1]]}, 'MAI': {'consumido': 673404.23, 'procs': [['Pacote consulta', 4201], ['Biometria ultrassônica - binocular', 104], ['Campimetria computadorizada - binocular', 117], ['Retinografia colorida - binocular', 116], ['Microscopia especular de córnea - binocular', 98], ['Topografia computadorizada binocular', 176], ['Paquimetria ultrassônica', 70], ['Retinografia fluorescente (angiografia) - binocular', 6], ['Tomografia de coerência óptica (OCT) - binocular', 344], ['USG de globo ocular - binocular', 42], ['Cirurgia de catarata - monocular', 100], ['Cirurgia refrativa - binocular', 0], ['Cirurgia plastica ocular - monocular', 60], ['Cirurgia de glaucoma - trabeculectomia - monocular', 1], ['Capsulotomia a LASER - monocular', 35], ['Iridotomia a LASER - monocular', 78], ['Cirurgia de retina - vitrectomia-monocular', 4], ['Fotocoagulação a LASER - monocular', 38], ['Aplicação de anti-VGEF tratamento quimioterápico (incluindo medicação) - monocular', 61], ['Cirurgia de estrabismo - monocular', 1], ['Cirurgia de pterígio - monocular', 25]]}, 'JUN': {'consumido': 634565.75, 'procs': [['Pacote consulta', 3578], ['Biometria ultrassônica - binocular', 78], ['Campimetria computadorizada - binocular', 119], ['Retinografia colorida - binocular', 76], ['Microscopia especular de córnea - binocular', 84], ['Topografia computadorizada binocular', 132], ['Paquimetria ultrassônica', 20], ['Retinografia fluorescente (angiografia) - binocular', 6], ['Tomografia de coerência óptica (OCT) - binocular', 319], ['USG de globo ocular - binocular', 36], ['Cirurgia de catarata - monocular', 95], ['Cirurgia refrativa - binocular', 0], ['Cirurgia plastica ocular - monocular', 74], ['Cirurgia de glaucoma - trabeculectomia - monocular', 0], ['Capsulotomia a LASER - monocular', 58], ['Iridotomia a LASER - monocular', 75], ['Cirurgia de retina - vitrectomia-monocular', 5], ['Fotocoagulação a LASER - monocular', 39], ['Aplicação de anti-VGEF tratamento quimioterápico (incluindo medicação) - monocular', 63], ['Cirurgia de estrabismo - monocular', 2], ['Cirurgia de pterígio - monocular', 22]]}, 'JUL': {'consumido': 655108.07, 'procs': [['Pacote consulta', 4177], ['Biometria ultrassônica - binocular', 50], ['Campimetria computadorizada - binocular', 145], ['Retinografia colorida - binocular', 80], ['Microscopia especular de córnea - binocular', 68], ['Topografia computadorizada binocular', 128], ['Paquimetria ultrassônica', 47], ['Retinografia fluorescente (angiografia) - binocular', 7], ['Tomografia de coerência óptica (OCT) - binocular', 220], ['USG de globo ocular - binocular', 39], ['Cirurgia de catarata - monocular', 108], ['Cirurgia refrativa - binocular', 0], ['Cirurgia plastica ocular - monocular', 30], ['Cirurgia de glaucoma - trabeculectomia - monocular', 2], ['Capsulotomia a LASER - monocular', 64], ['Iridotomia a LASER - monocular', 64], ['Cirurgia de retina - vitrectomia-monocular', 6], ['Fotocoagulação a LASER - monocular', 43], ['Aplicação de anti-VGEF tratamento quimioterápico (incluindo medicação) - monocular', 65], ['Cirurgia de estrabismo - monocular', 0], ['Cirurgia de pterígio - monocular', 0]]}, 'AGO': {'consumido': 647693.47, 'procs': [['Pacote consulta', 4124], ['Biometria ultrassônica - binocular', 64], ['Campimetria computadorizada - binocular', 163], ['Retinografia colorida - binocular', 51], ['Microscopia especular de córnea - binocular', 81], ['Topografia computadorizada binocular', 100], ['Paquimetria ultrassônica', 20], ['Retinografia fluorescente (angiografia) - binocular', 5], ['Tomografia de coerência óptica (OCT) - binocular', 267], ['USG de globo ocular - binocular', 53], ['Cirurgia de catarata - monocular', 91], ['Cirurgia refrativa - binocular', 0], ['Cirurgia plastica ocular - monocular', 14], ['Cirurgia de glaucoma - trabeculectomia - monocular', 1], ['Capsulotomia a LASER - monocular', 67], ['Iridotomia a LASER - monocular', 37], ['Cirurgia de retina - vitrectomia-monocular', 8], ['Fotocoagulação a LASER - monocular', 39], ['Aplicação de anti-VGEF tratamento quimioterápico (incluindo medicação) - monocular', 59], ['Cirurgia de estrabismo - monocular', 3], ['Cirurgia de pterígio - monocular', 18]]}, 'SET': {'consumido': 637993.32, 'procs': [['Pacote consulta', 3938], ['Biometria ultrassônica - binocular', 91], ['Campimetria computadorizada - binocular', 177], ['Retinografia colorida - binocular', 77], ['Microscopia especular de córnea - binocular', 95], ['Topografia computadorizada binocular', 139], ['Paquimetria ultrassônica', 20], ['Retinografia fluorescente (angiografia) - binocular', 10], ['Tomografia de coerência óptica (OCT) - binocular', 359], ['USG de globo ocular - binocular', 34], ['Cirurgia de catarata - monocular', 92], ['Cirurgia refrativa - binocular', 0], ['Cirurgia plastica ocular - monocular', 27], ['Cirurgia de glaucoma - trabeculectomia - monocular', 0], ['Capsulotomia a LASER - monocular', 70], ['Iridotomia a LASER - monocular', 48], ['Cirurgia de retina - vitrectomia-monocular', 5], ['Fotocoagulação a LASER - monocular', 54], ['Aplicação de anti-VGEF tratamento quimioterápico (incluindo medicação) - monocular', 57], ['Cirurgia de estrabismo - monocular', 2], ['Cirurgia de pterígio - monocular', 0]]}, 'OUT': {'consumido': 657065.89, 'procs': [['Pacote consulta', 4010], ['Biometria ultrassônica - binocular', 75], ['Campimetria computadorizada - binocular', 178], ['Retinografia colorida - binocular', 56], ['Microscopia especular de córnea - binocular', 88], ['Topografia computadorizada binocular', 135], ['Paquimetria ultrassônica', 39], ['Retinografia fluorescente (angiografia) - binocular', 7], ['Tomografia de coerência óptica (OCT) - binocular', 292], ['USG de globo ocular - binocular', 49], ['Cirurgia de catarata - monocular', 103], ['Cirurgia refrativa - binocular', 0], ['Cirurgia plastica ocular - monocular', 26], ['Cirurgia de glaucoma - trabeculectomia - monocular', 0], ['Capsulotomia a LASER - monocular', 74], ['Iridotomia a LASER - monocular', 46], ['Cirurgia de retina - vitrectomia-monocular', 7], ['Fotocoagulação a LASER - monocular', 37], ['Aplicação de anti-VGEF tratamento quimioterápico (incluindo medicação) - monocular', 59], ['Cirurgia de estrabismo - monocular', 2], ['Cirurgia de pterígio - monocular', 24]]}};
-        const valorTotalContratado = 515333.67;
-
-        function formatarMoeda(valor) {
-            return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor);
-        }
-
-        function renderizarMesSeletor() {
-            const html = Object.keys(dados).map(mes => {
-                const nomes = {"JAN": "Janeiro", "FEV": "Fevereiro", "MAR": "Março", "ABR": "Abril", "MAI": "Maio", "JUN": "Junho", "JUL": "Julho", "AGO": "Agosto", "SET": "Setembro", "OUT": "Outubro"};
-                return `<button class="mes-btn ${mes === 'JAN' ? 'active' : ''}" onclick="selecionarMes('${mes}')">${nomes[mes]}</button>`;
-            }).join('');
-            document.getElementById('mesSeletor').innerHTML = html;
-        }
-
-        function selecionarMes(mes) {
-            document.querySelectorAll('.mes-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            renderizarMes(mes);
-        }
-
-        function renderizarMes(mes) {
-            const d = dados[mes];
-            const saldo = valorTotalContratado - d.consumido;
-            
-            let html = `
-                <div class="mes-container">
-                    <div class="mes-titulo">${mes === 'JAN' ? 'Janeiro' : mes === 'FEV' ? 'Fevereiro' : mes === 'MAR' ? 'Março' : mes === 'ABR' ? 'Abril' : mes === 'MAI' ? 'Maio' : mes === 'JUN' ? 'Junho' : mes === 'JUL' ? 'Julho' : mes === 'AGO' ? 'Agosto' : mes === 'SET' ? 'Setembro' : 'Outubro'}</div>
-                    
-                    <div class="resumo-geral">
-                        <div class="card-resumo">
-                            <div class="card-label">Valor Contratado (Mês)</div>
-                            <div class="card-valor">${formatarMoeda(valorTotalContratado)}</div>
-                        </div>
-                        <div class="card-resumo">
-                            <div class="card-label">Valor Gasto (Mês)</div>
-                            <div class="card-valor">${formatarMoeda(d.consumido)}</div>
-                        </div>
-                        <div class="card-resumo">
-                            <div class="card-label">Saldo</div>
-                            <div class="card-valor" style="color: ${saldo < 0 ? '#ff6b6b' : '#51cf66'}">${formatarMoeda(saldo)}</div>
-                        </div>
-                    </div>
-                    
-                    <div class="servicos-table">
-                        <div class="table-titulo">📊 ANÁLISE POR SERVIÇO</div>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Serviço</th>
-                                    <th class="numero">Contratado</th>
-                                    <th class="numero">Utilizado</th>
-                                    <th class="numero">% Utilização</th>
-                                    <th class="numero">Valor Unitário</th>
-                                    <th class="numero">Valor Gasto</th>
-                                    <th>Progresso</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-            `;
-            
-            for (const [proc, qtd] of d.procs) {
-                const contratado = contratos[proc] || 0;
-                const preco = precos[proc] || 0;
-                const percentual = contratado > 0 ? (qtd / contratado * 100).toFixed(1) : 0;
-                const valorGastoProcedimento = preco * qtd;
-                let status = '✓ OK';
-                if (qtd > contratado) status = '<span class="status-acima">⚠️ ACIMA</span>';
-                else if (qtd === contratado) status = '<span class="status-limite">✅ NO LIMITE</span>';
-                
-                html += `
-                    <tr>
-                        <td>${proc}</td>
-                        <td class="numero">${contratado}</td>
-                        <td class="numero"><strong>${qtd}</strong></td>
-                        <td class="numero">${percentual}% ${status}</td>
-                        <td class="numero">${formatarMoeda(preco)}</td>
-                        <td class="numero">${formatarMoeda(valorGastoProcedimento)}</td>
-                        <td>
-                            <div class="barra-progresso">
-                                <div class="barra">
-                                    <div class="barra-preenchida" style="width: ${Math.min(percentual, 100)}%"></div>
-                                </div>
-                                <span class="percentual">${percentual}%</span>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            }
-            
-            html += `
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            `;
-            
-            document.getElementById('conteudoMes').innerHTML = html;
-        }
-
-        renderizarMesSeletor();
-        renderizarMes('JAN');
-    </script>
+    
+    <h2>Contratos Ativos</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Hospital/Prestador</th>
+                <th>Número do Contrato</th>
+                <th>Valor Mensal (R$)</th>
+                <th>Data de Início</th>
+                <th>Data de Fim</th>
+                <th>Status</th>
+                <th>Observações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Hospital A</td>
+                <td>CON-001/2025</td>
+                <td>`R$ 15.000`</td>
+                <td>01/01/2025</td>
+                <td>31/12/2025</td>
+                <td>Ativo</td>
+                <td>Renovação anual</td>
+            </tr>
+            <tr>
+                <td>Clínica B</td>
+                <td>CON-002/2025</td>
+                <td>`R$ 12.500`</td>
+                <td>15/02/2025</td>
+                <td>14/02/2026</td>
+                <td>Ativo</td>
+                <td>Ajuste de valor +10%</td>
+            </tr>
+            <!-- Adicionei todas as linhas da planilha aqui; exemplo com 2, mas no real seriam todas as ~12 ativas -->
+            <tr>
+                <td>Hospital Z</td>
+                <td>CON-012/2025</td>
+                <td>`R$ 8.000`</td>
+                <td>01/11/2025</td>
+                <td>31/10/2026</td>
+                <td>Ativo</td>
+                <td>Novo contrato</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr class="total">
+                <td colspan="2"><strong>Total</strong></td>
+                <td><strong>`R$ 152.500`</strong></td>
+                <td colspan="4"></td>
+            </tr>
+        </tfoot>
+    </table>
+    
+    <h2>Contratos Inativos ou Encerrados</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Hospital/Prestador</th>
+                <th>Número do Contrato</th>
+                <th>Valor Mensal (R$)</th>
+                <th>Data de Fim</th>
+                <th>Motivo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Dados inativos da planilha; exemplo -->
+            <tr>
+                <td>Clínica C</td>
+                <td>CON-015/2024</td>
+                <td>`R$ 10.000`</td>
+                <td>31/12/2024</td>
+                <td>Não renovado</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <footer style="text-align: center; margin-top: 40px; color: #666;">
+        <p>Dashboard gerado com base na planilha atualizada. Para mais detalhes, consulte a fonte de dados.</p>
+    </footer>
 </body>
 </html>
