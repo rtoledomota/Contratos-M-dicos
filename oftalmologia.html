@@ -5,112 +5,109 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oftalmologia - Custos Mensais por Procedimento</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; background-color: #f8f9fa; line-height: 1.4; }
-        h1 { color: #2c3e50; text-align: center; margin-bottom: 30px; font-size: 2em; }
-        h2 { color: #34495e; border-bottom: 2px solid #4CAF50; padding-bottom: 10px; margin-top: 40px; }
-        .resumo { background: linear-gradient(135deg, #ffffff, #f8f9fa); padding: 20px; margin: 20px 0; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 5px solid #4CAF50; }
-        .resumo p { margin: 10px 0; font-size: 1.1em; }
-        .loading { text-align: center; color: #7f8c8d; font-style: italic; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-        .error { color: #e74c3c; text-align: center; background: #fdf2f2; padding: 10px; border-radius: 8px; border-left: 5px solid #e74c3c; }
-        .tabela-container { overflow-x: auto; margin: 20px 0; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); background: white; }
-        table { width: 100%; border-collapse: collapse; min-width: 1200px; }
-        th, td { padding: 12px 8px; text-align: right; border-bottom: 1px solid #dee2e6; white-space: nowrap; font-size: 0.9em; }
-        th { background: linear-gradient(135deg, #4CAF50, #45a049); color: white; font-weight: 600; position: sticky; top: 0; z-index: 2; white-space: nowrap; min-width: 80px; }
-        th:first-child, td:first-child { text-align: left; min-width: 100px; position: sticky; left: 0; background: #f8f9fa; z-index: 3; font-weight: 600; }
-        tr:nth-child(even) { background-color: #f8f9fa; }
-        tr:hover { background-color: #e3f2fd; }
-        .total { font-weight: bold; background: linear-gradient(135deg, #e8f5e8, #c8e6c9) !important; color: #2e7d32; }
-        .diferenca { background-color: #fff3cd !important; color: #856404; font-weight: bold; }
-        code { background: #f1f3f4; padding: 2px 4px; border-radius: 4px; font-family: monospace; font-size: 0.85em; }
-        .resumo-servicos { margin-top: 40px; }
-        .sync-button { background: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; margin: 10px 0; font-size: 1em; transition: background 0.3s; }
-        .sync-button:hover { background: #45a049; }
-        .sync-button:disabled { background: #bdc3c7; cursor: not-allowed; }
-        @media (max-width: 768px) { body { padding: 10px; } h1 { font-size: 1.5em; } th, td { padding: 6px 4px; font-size: 0.8em; min-width: 60px; } th:not(:first-child):not(:last-child):not(.diferenca) { display: none; } .total td { display: table-cell; } }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #ffffff; line-height: 1.4; }
+        h1 { color: #2679c2; text-align: center; font-size: 2em; font-weight: bold; margin-bottom: 20px; }
+        .contrato-block { background-color: #e9f2fa; border-bottom: 2px solid #b5d0e8; padding: 15px; margin: 0 0 20px 0; font-size: 1em; }
+        .contrato-block strong { font-weight: bold; }
+        .month-tabs { display: flex; margin-bottom: 20px; }
+        .month-tab { padding: 10px 15px; margin-right: 5px; border: 1px solid #ddd; background-color: #f0f0f0; color: #000; cursor: pointer; font-weight: normal; border-radius: 5px 5px 0 0; }
+        .month-tab.active { background-color: #2196f3; color: white; font-weight: bold; }
+        .summary-cards { display: flex; justify-content: space-between; margin-bottom: 30px; }
+        .summary-card { flex: 1; margin: 0 5px; padding: 20px; background: linear-gradient(to bottom, #7a4eab, #9c5cd7); color: white; text-align: center; border-radius: 8px; font-weight: bold; }
+        .summary-card h3 { font-size: 0.9em; margin: 0 0 10px 0; opacity: 0.9; }
+        .summary-card .value { font-size: 2em; margin: 0; }
+        .procedimentos-title { color: #2679c2; font-size: 1.5em; font-weight: bold; margin: 30px 0 15px 0; }
+        .tabela-container { overflow-x: auto; margin-bottom: 30px; border: 1px solid #ddd; border-radius: 0 0 5px 5px; }
+        table { width: 100%; border-collapse: collapse; min-width: 1000px; }
+        th, td { padding: 10px; text-align: right; border-bottom: 1px solid #e0e0e0; font-size: 0.9em; }
+        th { background-color: #f5f5f5; color: #555; font-weight: bold; text-align: center; white-space: nowrap; min-width: 120px; }
+        th:first-child { text-align: left; position: sticky; left: 0; background: #f5f5f5; z-index: 2; }
+        tr:nth-child(even) { background-color: #fafafa; }
+        tr:hover { background-color: #f0f8ff; }
+        .total-row td { font-weight: bold; background-color: #f0f8ff; border-top: 2px solid #ddd; }
+        .diferenca { background-color: #fff3cd; font-weight: bold; color: #856404; }
+        code { color: #d32f2f; font-weight: bold; }
+        .sync-button { background: #2196f3; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 10px 0; font-weight: bold; }
+        .sync-button:hover { background: #1976d2; }
+        .loading { text-align: center; color: #666; font-style: italic; }
+        .error { color: #d32f2f; text-align: center; }
+        @media (max-width: 768px) { .summary-cards { flex-direction: column; } .month-tabs { flex-wrap: wrap; } th:not(:first-child):not(:last-child) { display: none; } }
     </style>
 </head>
 <body>
-    <h1>Custos Mensais - Oftalmologia</h1>
+    <h1>Oftalmologia - Custos Mensais por Procedimento</h1>
     
-    <div class="resumo" id="resumo">
-        <h2>Resumo Geral (Carregando...)</h2>
-        <div class="loading" id="loading-resumo">Conectando à planilha via Apps Script...</div>
-        <button class="sync-button" id="sync-btn" onclick="sincronizarHTML()">🔄 Sincronizar Dados Agora</button>
+    <div class="contrato-block" id="contrato-block">
+        <strong>Contrato:</strong> 0775/2020 | <strong>Empresa:</strong> EL DIAGNÓSTICO LTDA<br>
+        <strong>CNPJ:</strong> 18.505.205/0001-94<br>
+        <strong>Objeto:</strong> PRESTAÇÃO DE SERVIÇOS EM OFTALMOLOGIA
     </div>
     
-    <h2>Custos por Mês e Procedimento</h2>
+    <div class="month-tabs">
+        <div class="month-tab active" onclick="switchMonth('dezembro')">Dezembro</div>
+        <div class="month-tab" onclick="switchMonth('janeiro')">Janeiro</div>
+        <div class="month-tab" onclick="switchMonth('fevereiro')">Fevereiro</div>
+        <div class="month-tab" onclick="switchMonth('marco')">Março</div>
+        <div class="month-tab" onclick="switchMonth('abril')">Abril</div>
+        <div class="month-tab" onclick="switchMonth('maio')">Maio</div>
+        <div class="month-tab" onclick="switchMonth('junho')">Junho</div>
+        <div class="month-tab" onclick="switchMonth('julho')">Julho</div>
+        <div class="month-tab" onclick="switchMonth('agosto')">Agosto</div>
+        <div class="month-tab" onclick="switchMonth('setembro')">Setembro</div>
+        <div class="month-tab" onclick="switchMonth('outubro')">Outubro</div>
+        <div class="month-tab" onclick="switchMonth('novembro')">Novembro</div>
+    </div>
+    
+    <h2 id="month-title">Dezembro</h2>
+    
+    <div class="summary-cards">
+        <div class="summary-card">
+            <h3>Contratado/Mês</h3>
+            <div class="value" id="contratado-mes">R$ 0</div>
+        </div>
+        <div class="summary-card">
+            <h3>Consumido</h3>
+            <div class="value" id="consumido">R$ 0</div>
+        </div>
+        <div class="summary-card">
+            <h3>% Utilização</h3>
+            <div class="value" id="utilizacao">0%</div>
+        </div>
+    </div>
+    
+    <h2 class="procedimentos-title">Procedimentos Contratados</h2>
+    
     <div class="tabela-container">
-        <table id="tabela-custos">
+        <table id="tabela-procedimentos">
             <thead>
                 <tr>
-                    <th title="Mês do Ano">Mês</th>
-                    <th title="Custo Geral Mensal">Custo Geral</th>
-                    <th title="Consultas">Consultas</th>
-                    <th title="Biometria">Biometria</th>
-                    <th title="Campo Visual">Campo Visual</th>
-                    <th title="Retinografia Colorida">Retino Colorida</th>
-                    <th title="Microscopia Especular de Córnea">Micro Especular</th>
-                    <th title="Topografia">Topografia</th>
-                    <th title="Paquimetria Ultrassônica">Paquimetria US</th>
-                    <th title="Angiografia">Angiografia</th>
-                    <th title="Tomografia de Coerência Óptica">Tomografia OCT</th>
-                    <th title="Ecografia de Globo Ocular">Ecografia Ocular</th>
-                    <th title="Cirurgia de Catarata">Catarata</th>
-                    <th title="Cirurgia Refrativa">Refrativa</th>
-                    <th title="Plástica Ocular">Plástica Ocular</th>
-                    <th title="Cirurgia de Glaucoma - Traquelectomia">Glaucoma - Trab</th>
-                    <th title="Capsulotomia a Laser">Capsulotomia Laser</th>
-                    <th title="Iridotomia a Laser">Iridotomia Laser</th>
-                    <th title="Cirurgia de Retina - Vitrectomia">Retina - Vitrectomia</th>
-                    <th title="Fotocoagulação a Laser">Fotocoag Laser</th>
-                    <th title="Aplicação de Anti-VEGF">Anti-VEGF</th>
-                    <th title="Cirurgia de Estrabismo">Estrabismo</th>
-                    <th title="Pterígio">Pterígio</th>
-                    <th title="Fixo">Fixo</th>
-                    <th title="Total Mensal">Total</th>
-                    <th title="Diferença Mensal" class="diferenca">Diferença</th>
+                    <th>Procedimento</th>
+                    <th>Valor Unit.</th>
+                    <th>Qtd Contratada</th>
+                    <th>Realizados</th>
+                    <th>Valor Total</th>
                 </tr>
             </thead>
-            <tbody id="tbody-custos">
-                <tr><td colspan="26" class="loading">Carregando dados mensais...</td></tr>
+            <tbody id="tbody-procedimentos">
+                <tr><td colspan="5" class="loading">Carregando procedimentos...</td></tr>
             </tbody>
-            <tfoot id="tfoot-totals">
-                <tr class="total">
-                    <td colspan="26"><strong>Carregando totais...</strong></td>
+            <tfoot id="tfoot-total">
+                <tr class="total-row">
+                    <td><strong>TOTAL:</strong></td>
+                    <td colspan="3"></td>
+                    <td><strong id="total-geral">R$ 0</strong></td>
                 </tr>
             </tfoot>
         </table>
     </div>
     
-    <div class="resumo-servicos">
-        <h2>Resumo de Serviços e Contratos</h2>
-        <div class="tabela-container">
-            <table id="tabela-servicos">
-                <thead>
-                    <tr>
-                        <th title="Tipo de Serviço ou Procedimento">Serviço</th>
-                        <th title="Quantidade Contratada">Contratado</th>
-                        <th title="Valor Unitário">Valor Unitário</th>
-                        <th title="Valor Total do Serviço">Valor Total</th>
-                    </tr>
-                </thead>
-                <tbody id="tbody-servicos">
-                    <tr><td colspan="4" class="loading">Carregando resumo de serviços...</td></tr>
-                </tbody>
-                <tfoot>
-                    <tr class="total">
-                        <td colspan="3"><strong>Total de Serviços</strong></td>
-                        <td><strong><code>R$ 0</code></strong></td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-    </div>
+    <button class="sync-button" onclick="sincronizarDados()">🔄 Sincronizar Dados</button>
     
     <script>
-        // Sua URL do Apps Script (substitua pela sua se mudou)
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw-CxvpNHhYvCY-eONSPLvM8-tCZ8ZNiUhOasvqWwjQgtXDvhTtWNusDwf_pZskCivl/exec';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/SEU_ID_AQUI/exec'; // Substitua pela URL do seu Apps Script (termina em /exec)
+        
+        let currentMonth = 'dezembro';
+        let allData = [];
         
         function parseValor(val) {
             if (!val) return 0;
@@ -119,20 +116,8 @@
         }
         
         async function carregarDados() {
-            const loadingResumo = document.getElementById('loading-resumo');
-            const tbodyMensal = document.getElementById('tbody-custos');
-            const tbodyServicos = document.getElementById('tbody-servicos');
-            const tfootTotals = document.getElementById('tfoot-totals');
-            const tfootServicos = document.querySelector('#tabela-servicos tfoot tr');
-            
-            loadingResumo.textContent = 'Carregando...';
-            tbodyMensal.innerHTML = '<tr><td colspan="26" class="loading">Carregando dados mensais...</td></tr>';
-            tbodyServicos.innerHTML = '<tr><td colspan="4" class="loading">Carregando resumo de serviços...</td></tr>';
-            tfootTotals.innerHTML = '<tr class="total"><td colspan="26"><strong>Carregando totais...</strong></td></tr>';
-            tfootServicos.innerHTML = '<td colspan="3"><strong>Total de Serviços</strong></td><td><strong><code>R$ 0</code></strong></td>';
-            
             try {
-                console.log('Buscando dados de:', SCRIPT_URL);
+                console.log('Carregando dados de:', SCRIPT_URL);
                 const response = await fetch(SCRIPT_URL);
                 
                 if (!response.ok) {
@@ -146,118 +131,85 @@
                     throw new Error(`Erro no Apps Script: ${data.error}`);
                 }
                 
-                const meses = data.meses || [];
-                const numMeses = data.numMeses || 0;
-                const totalGeral = data.totalGeral || 0;
-                const totalDif = data.totalDif || 0;
-                const mediaMensal = data.mediaMensal || 0;
+                allData = data;
                 
-                // Filtra linhas de meses reais (ex.: "JAN", "FEV")
-                const dadosMensais = meses.filter(row => row[0] && typeof row[0] === 'string' && row[0].match(/^[A-Z]{3,4}$/));
-                
-                // Filtra resumos de serviços (ex.: "Pacote consulta", "Serviço")
-                const dadosServicos = meses.filter(row => row.length >= 4 && row[0] && (row[0].toString().includes('Pacote') || row[0].includes('Serviço') || row[0].includes('PROCEDIMENTOS')));
-                
-                // Resumo
-                document.getElementById('resumo').innerHTML = `
-                    <h2>Resumo Geral</h2>
-                    <p><strong>Meses Analisados:</strong> ${dadosMensais.length} (de ${numMeses} linhas totais)</p>
-                    <p><strong>Total Geral de Custos:</strong> <code>R$ ${totalGeral.toLocaleString('pt-BR')}</code></p>
-                    <p><strong>Média Mensal:</strong> <code>R$ ${mediaMensal.toLocaleString('pt-BR')}</code></p>
-                    <p><strong>Soma das Diferenças:</strong> <code>R$ ${totalDif.toLocaleString('pt-BR')}</code></p>
-                    <p><strong>Data da Última Atualização:</strong> ${data.dataAtualizacao || new Date().toLocaleDateString('pt-BR')}</p>
-                    <button class="sync-button" onclick="sincronizarHTML()">🔄 Sincronizar Dados Agora</button>
-                `;
-                
-                // Tabela mensal
-                tbodyMensal.innerHTML = '';
-                dadosMensais.forEach(row => {
-                    const tr = document.createElement('tr');
-                    let html = `<td>${row[0] || ''}</td>`;
-                    for (let i = 1; i < Math.min(row.length, 26); i++) {
-                        const val = parseValor(row[i]);
-                        const classe = (i === 25) ? ' class="diferenca"' : '';
-                        html += `<td${classe}><code>R$ ${val.toLocaleString('pt-BR')}</code></td>`;
-                    }
-                    while (html.split('<td').length - 1 < 26) {
-                        html += '<td><code>R$ 0</code></td>';
-                    }
-                    tr.innerHTML = html;
-                    tbodyMensal.appendChild(tr);
-                });
-                
-                if (dadosMensais.length === 0) {
-                    tbodyMensal.innerHTML = '<tr><td colspan="26" class="error">Nenhum dado mensal encontrado. Verifique o filtro no Apps Script.</td></tr>';
-                }
-                
-                // Rodapé mensal
-                tfootTotals.innerHTML = `
-                    <tr class="total">
-                        <td><strong>Total Geral</strong></td>
-                        <td colspan="24"><strong><code>R$ ${totalGeral.toLocaleString('pt-BR')}</code></strong></td>
-                        <td class="diferenca"><strong><code>R$ ${totalDif.toLocaleString('pt-BR')}</code></strong></td>
-                    </tr>
-                    <tr class="total">
-                        <td colspan="26"><strong>Média Mensal Geral: <code>R$ ${mediaMensal.toLocaleString('pt-BR')}</code></strong></td>
-                    </tr>
-                `;
-                
-                // Tabela de serviços
-                tbodyServicos.innerHTML = '';
-                let totalServicos = 0;
-                dadosServicos.forEach(row => {
-                    const tr = document.createElement('tr');
-                    const valTotal = parseValor(row[3] || 0);
-                    totalServicos += valTotal;
-                    tr.innerHTML = `
-                        <td>${row[0] || ''}</td>
-                        <td>${row[1] || ''}</td>
-                        <td><code>R$ ${parseValor(row[2]).toLocaleString('pt-BR')}</code></td>
-                        <td><code>R$ ${valTotal.toLocaleString('pt-BR')}</code></td>
+                // Extrair contrato
+                const contratoBlock = document.getElementById('contrato-block');
+                if (data.contrato) {
+                    contratoBlock.innerHTML = `
+                        <strong>CNPJ:</strong> ${data.contrato.cnpj || ''}<br>
+                        <strong>Objeto:</strong> ${data.contrato.objeto || ''}
                     `;
-                    tbodyServicos.appendChild(tr);
-                });
-                
-                if (dadosServicos.length === 0) {
-                    tbodyServicos.innerHTML = '<tr><td colspan="4" class="error">Nenhum resumo de serviços encontrado.</td></tr>';
                 }
                 
-                tfootServicos.innerHTML = `
-                    <td colspan="3"><strong>Total de Serviços</strong></td>
-                    <td><strong><code>R$ ${totalServicos.toLocaleString('pt-BR')}</code></strong></td>
-                `;
+                // Atualizar cards de resumo
+                const resumo = data.resumo || {};
+                document.getElementById('contratado-mes').textContent = `R$ ${resumo.contratadoMensal ? resumo.contratadoMensal.toLocaleString('pt-BR') : 0}`;
+                document.getElementById('consumido').textContent = `R$ ${resumo.consumido ? resumo.consumido.toLocaleString('pt-BR') : 0}`;
+                document.getElementById('utilizacao').textContent = `${resumo.utilizacao ? resumo.utilizacao.toFixed(1) : 0}%`;
                 
-                document.getElementById('sync-btn').disabled = false;
-                console.log('Sucesso! Dados carregados. Meses:', dadosMensais.length, 'Serviços:', dadosServicos.length);
+                // Filtrar procedimentos por mês (exemplo para 'dezembro')
+                const procedimentos = data.procedimentos || [];
+                updateTabela(procedimentos);
+                
+                // Configurar abas de meses
+                const monthTabs = document.querySelectorAll('.month-tab');
+                monthTabs.forEach((tab, index) => {
+                    const month = tab.textContent.toLowerCase();
+                    tab.onclick = () => switchMonth(month);
+                });
+                
+                console.log('Dashboard carregado com sucesso!');
                 
             } catch (error) {
                 console.error('Erro ao carregar:', error);
-                document.getElementById('resumo').innerHTML = `
-                    <h2>Erro na Conexão</h2>
-                    <p class="error">${error.message}</p>
-                    <p class="error"><small>Dicas: Verifique a URL do Apps Script no console (F12). Teste a URL no navegador.</small></p>
-                    <button class="sync-button" onclick="sincronizarHTML()">🔄 Tentar Novamente</button>
-                `;
-                tbodyMensal.innerHTML = '<tr><td colspan="26" class="error">Falha ao carregar dados mensais. Verifique a conexão.</td></tr>';
-                tbodyServicos.innerHTML = '<tr><td colspan="4" class="error">Falha ao carregar serviços.</td></tr>';
-                document.getElementById('sync-btn').disabled = false;
+                document.getElementById('tbody-procedimentos').innerHTML = '<tr><td colspan="5" class="error">Erro ao carregar dados. Verifique o Apps Script.</td></tr>';
             }
         }
         
-        async function sincronizarHTML() {
-            document.getElementById('sync-btn').disabled = true;
-            document.getElementById('sync-btn').textContent = 'Sincronizando...';
+        function switchMonth(month) {
+            currentMonth = month;
+            document.querySelectorAll('.month-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('month-title').textContent = month.charAt(0).toUpperCase() + month.slice(1);
+            
+            // Filtrar procedimentos para o mês atual (lógica simples baseada em dados)
+            const procedimentos = allData.procedimentos.filter(proc => proc.mes === currentMonth) || allData.procedimentos || [];
+            updateTabela(procedimentos);
+        }
+        
+        function updateTabela(procedimentos) {
+            const tbody = document.getElementById('tbody-procedimentos');
+            const totalGeral = document.getElementById('total-geral');
+            
+            tbody.innerHTML = '';
+            let totalValor = 0;
+            procedimentos.forEach(proc => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${proc.procedimento}</td>
+                    <td><code>R$ ${proc.valorUnit.toLocaleString('pt-BR')}</code></td>
+                    <td>${proc.qtdContratada.toLocaleString()}</td>
+                    <td>${proc.realizados.toLocaleString()}</td>
+                    <td><code>R$ ${proc.valorTotal.toLocaleString('pt-BR')}</code></td>
+                `;
+                tbody.appendChild(tr);
+                totalValor += proc.valorTotal;
+            });
+            
+            if (procedimentos.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="loading">Nenhum procedimento encontrado para este mês.</td></tr>';
+            }
+            
+            totalGeral.textContent = `R$ ${totalValor.toLocaleString('pt-BR')}`;
+        }
+        
+        async function sincronizarDados() {
             await carregarDados();
-            document.getElementById('sync-btn').disabled = false;
-            document.getElementById('sync-btn').textContent = '🔄 Sincronizar Dados Agora';
             alert('Dados sincronizados com sucesso!');
         }
         
         window.onload = carregarDados;
     </script>
-    
-    <footer style="text-align: center; margin-top: 40px; color: #7f8c8d; font-size: 0.9em;">
-        <p>Dashboard de Oftalmologia - Conectado ao Apps Script. Erros no console resolvidos (sem workers ou SVG).</p>
-    </footer>
 </body>
 </html>
