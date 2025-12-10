@@ -5,38 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oftalmologia - Custos Mensais por Procedimento</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #ffffff; line-height: 1.4; }
-        h1 { color: #2679c2; text-align: center; font-size: 2em; font-weight: bold; margin-bottom: 20px; }
-        .contrato-block { background-color: #e9f2fa; border-bottom: 2px solid #b5d0e8; padding: 15px; margin: 0 0 20px 0; font-size: 1em; }
-        .contrato-block strong { font-weight: bold; }
-        .month-tabs { display: flex; margin-bottom: 20px; flex-wrap: wrap; }
-        .month-tab { padding: 10px 15px; margin-right: 5px; border: 1px solid #ddd; background-color: #f0f0f0; color: #000; cursor: pointer; font-weight: normal; border-radius: 5px 5px 0 0; margin-bottom: 5px; }
-        .month-tab.active { background-color: #2196f3; color: white; font-weight: bold; }
-        .summary-cards { display: flex; justify-content: space-between; margin-bottom: 30px; flex-wrap: wrap; }
-        .summary-card { flex: 1; margin: 0 5px 10px 5px; padding: 20px; background: linear-gradient(to bottom, #7a4eab, #9c5cd7); color: white; text-align: center; border-radius: 8px; font-weight: bold; min-width: 200px; }
-        .summary-card h3 { font-size: 0.9em; margin: 0 0 10px 0; opacity: 0.9; }
-        .summary-card .value { font-size: 2em; margin: 0; }
-        .procedimentos-title { color: #2679c2; font-size: 1.5em; font-weight: bold; margin: 30px 0 15px 0; }
-        .tabela-container { overflow-x: auto; margin-bottom: 30px; border: 1px solid #ddd; border-radius: 0 0 5px 5px; }
+        /* Estilos baseados no dashboard de Radiologia */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; background-color: #f0f2f5; line-height: 1.6; color: #333; }
+        h1 { color: #0056b3; text-align: center; font-size: 2.5em; font-weight: 700; margin-bottom: 30px; text-shadow: 1px 1px 2px rgba(0,0,0,0.1); }
+        .contrato-block { background-color: #e6f7ff; border-left: 5px solid #007bff; padding: 15px 20px; margin: 0 0 25px 0; font-size: 1em; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .contrato-block strong { font-weight: 600; color: #0056b3; }
+        .month-tabs { display: flex; flex-wrap: wrap; justify-content: center; margin-bottom: 25px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); padding: 10px; }
+        .month-tab { padding: 10px 18px; margin: 5px; border: 1px solid #e0e0e0; background-color: #f8f9fa; color: #555; cursor: pointer; font-weight: 500; border-radius: 6px; transition: all 0.3s ease; }
+        .month-tab:hover { background-color: #e9ecef; color: #333; }
+        .month-tab.active { background-color: #007bff; color: white; font-weight: 600; border-color: #007bff; box-shadow: 0 2px 8px rgba(0,123,255,0.3); }
+        .month-title-container { text-align: center; margin-bottom: 25px; }
+        #month-title { color: #0056b3; font-size: 1.8em; font-weight: 600; margin: 0; }
+        .summary-cards { display: flex; flex-wrap: wrap; justify-content: space-around; margin-bottom: 35px; gap: 20px; }
+        .summary-card { flex: 1; min-width: 280px; padding: 25px; background: linear-gradient(135deg, #007bff 0%, #0056b3 100%); color: white; text-align: center; border-radius: 12px; font-weight: 600; box-shadow: 0 4px 15px rgba(0,0,0,0.15); transition: transform 0.3s ease; }
+        .summary-card:hover { transform: translateY(-5px); }
+        .summary-card h3 { font-size: 1em; margin: 0 0 12px 0; opacity: 0.9; letter-spacing: 0.5px; }
+        .summary-card .value { font-size: 2.5em; margin: 0; font-weight: 700; text-shadow: 1px 1px 3px rgba(0,0,0,0.2); }
+        .procedimentos-title { color: #0056b3; font-size: 1.8em; font-weight: 600; margin: 35px 0 20px 0; text-align: center; }
+        .tabela-container { overflow-x: auto; margin-bottom: 30px; border: 1px solid #e0e0e0; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); background-color: #fff; }
         table { width: 100%; border-collapse: collapse; min-width: 1000px; }
-        th, td { padding: 10px; text-align: right; border-bottom: 1px solid #e0e0e0; font-size: 0.9em; }
-        th { background-color: #f5f5f5; color: #555; font-weight: bold; text-align: center; white-space: nowrap; min-width: 120px; }
-        th:first-child { text-align: left; position: sticky; left: 0; background: #f5f5f5; z-index: 2; }
-        tr:nth-child(even) { background-color: #fafafa; }
-        tr:hover { background-color: #f0f8ff; }
-        .total-row td { font-weight: bold; background-color: #f0f8ff; border-top: 2px solid #ddd; }
-        .diferenca { background-color: #fff3cd; font-weight: bold; color: #856404; }
-        code { color: #d32f2f; font-weight: bold; }
-        .sync-button { background: #2196f3; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 10px 0; font-weight: bold; }
-        .sync-button:hover { background: #1976d2; }
-        .loading { text-align: center; color: #666; font-style: italic; }
-        .error { color: #d32f2f; text-align: center; }
-        @media (max-width: 768px) { 
-            .summary-cards { flex-direction: column; } 
-            .summary-card { margin: 0 0 10px 0; }
-            .month-tabs { flex-wrap: wrap; } 
-            th:not(:first-child):not(:last-child) { /* This rule from radiologia.html is problematic for this table structure */ }
-            table { min-width: 700px; } /* Adjust min-width for smaller screens if needed */
+        th, td { padding: 12px 15px; text-align: right; border-bottom: 1px solid #f0f0f0; font-size: 0.95em; }
+        th { background-color: #f8f9fa; color: #495057; font-weight: 600; text-align: center; white-space: nowrap; min-width: 120px; text-transform: uppercase; letter-spacing: 0.5px; }
+        th:first-child { text-align: left; position: sticky; left: 0; background: #f8f9fa; z-index: 2; }
+        tr:nth-child(even) { background-color: #fdfdfd; }
+        tr:hover { background-color: #e6f7ff; }
+        .total-row td { font-weight: 700; background-color: #e6f7ff; border-top: 2px solid #007bff; color: #0056b3; }
+        .total-row td:first-child { text-align: left; }
+        .diferenca { background-color: #fff3cd; font-weight: 600; color: #856404; }
+        code { color: #dc3545; font-weight: 600; background-color: #ffebeb; padding: 2px 5px; border-radius: 4px; }
+        .sync-button { display: block; margin: 20px auto 0; background: #28a745; color: white; padding: 12px 25px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 1.1em; transition: background-color 0.3s ease, transform 0.2s ease; box-shadow: 0 4px 10px rgba(40,167,69,0.3); }
+        .sync-button:hover { background: #218838; transform: translateY(-2px); }
+        .loading { text-align: center; color: #6c757d; font-style: italic; padding: 20px; }
+        .error { color: #dc3545; text-align: center; padding: 20px; font-weight: 600; }
+        
+        @media (max-width: 768px) {
+            body { padding: 15px; }
+            h1 { font-size: 2em; margin-bottom: 20px; }
+            .contrato-block { font-size: 0.9em; padding: 12px 15px; }
+            .month-tabs { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; padding: 8px; }
+            .month-tab { flex-shrink: 0; margin: 3px; padding: 8px 12px; font-size: 0.9em; }
+            #month-title { font-size: 1.5em; }
+            .summary-cards { flex-direction: column; gap: 15px; }
+            .summary-card { min-width: unset; width: 100%; }
+            .summary-card .value { font-size: 2em; }
+            .procedimentos-title { font-size: 1.5em; margin: 25px 0 15px 0; }
+            th, td { padding: 10px; font-size: 0.85em; }
+            .sync-button { font-size: 1em; padding: 10px 20px; }
         }
     </style>
 </head>
@@ -44,12 +58,13 @@
     <h1>Oftalmologia - Custos Mensais por Procedimento</h1>
     
     <div class="contrato-block" id="contrato-block">
-        <!-- Conteúdo do contrato será carregado aqui pelo JavaScript -->
-        Carregando dados do contrato...
+        <!-- Conteúdo do contrato será carregado aqui -->
+        <strong>Contrato:</strong> N/A | <strong>Empresa:</strong> N/A<br>
+        <strong>CNPJ:</strong> N/A<br>
+        <strong>Objeto:</strong> N/A
     </div>
     
     <div class="month-tabs">
-        <div class="month-tab active" data-month="dezembro">Dezembro</div>
         <div class="month-tab" data-month="janeiro">Janeiro</div>
         <div class="month-tab" data-month="fevereiro">Fevereiro</div>
         <div class="month-tab" data-month="marco">Março</div>
@@ -61,9 +76,12 @@
         <div class="month-tab" data-month="setembro">Setembro</div>
         <div class="month-tab" data-month="outubro">Outubro</div>
         <div class="month-tab" data-month="novembro">Novembro</div>
+        <div class="month-tab" data-month="dezembro">Dezembro</div>
     </div>
     
-    <h2 id="month-title">Dezembro</h2>
+    <div class="month-title-container">
+        <h2 id="month-title">Mês Selecionado</h2>
+    </div>
     
     <div class="summary-cards">
         <div class="summary-card">
@@ -76,7 +94,7 @@
         </div>
         <div class="summary-card">
             <h3>% Utilização</h3>
-            <div class="value" id="utilizacao">0%</div>
+            <div class="value" id="utilizacao">0,00%</div>
         </div>
     </div>
     
@@ -109,27 +127,28 @@
     <button class="sync-button" onclick="sincronizarDados()">🔄 Sincronizar Dados</button>
     
     <script>
-        // ATENÇÃO: Substitua esta URL pela URL do seu Web App do Google Apps Script
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyJFfDGA3j31Oph4ezS9_e4zOHTAED-81cJQ-cXx6UNJwcf_WHwkZNVcUsEuiOdcAeE/exec'; 
+        // URL do seu Apps Script implantado como Web App
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyJFfDGA3j31Oph4ezS9_e4zOHTAED-81cJQ-cXx6UNJwcf_WHwkZNVcUsEuiOdcAeE/exec';
         
-        let currentMonth = 'dezembro'; // Mês inicial
-        let allData = null; // Armazena todos os dados do Apps Script
+        let currentMonth = 'janeiro'; // Mês inicial padrão
+        let allDashboardData = null; // Armazena todos os dados do Apps Script
         
         // Função para formatar valores monetários
         function formatCurrency(value) {
-            return `R$ ${value.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
         }
 
-        // Função para formatar percentuais
-        function formatPercentage(value) {
-            return `${value.toFixed(1)}%`;
+        // Função para formatar números
+        function formatNumber(value) {
+            return new Intl.NumberFormat('pt-BR').format(value);
         }
-
+        
         async function carregarDados() {
+            const tbody = document.getElementById('tbody-procedimentos');
+            tbody.innerHTML = '<tr><td colspan="5" class="loading">Carregando dados...</td></tr>';
+            
             try {
                 console.log('Carregando dados de:', SCRIPT_URL);
-                document.getElementById('tbody-procedimentos').innerHTML = '<tr><td colspan="5" class="loading">Carregando procedimentos...</td></tr>';
-                
                 const response = await fetch(SCRIPT_URL);
                 
                 if (!response.ok) {
@@ -143,80 +162,85 @@
                     throw new Error(`Erro no Apps Script: ${data.error}`);
                 }
                 
-                allData = data; // Armazena os dados completos
+                allDashboardData = data; // Armazena os dados completos
                 
                 // Atualizar bloco de contrato
                 const contratoBlock = document.getElementById('contrato-block');
-                if (allData.contrato) {
+                if (allDashboardData.contract) {
                     contratoBlock.innerHTML = `
-                        <strong>CNPJ:</strong> ${allData.contrato.cnpj || 'N/A'}<br>
-                        <strong>Objeto:</strong> ${allData.contrato.objeto || 'N/A'}
+                        <strong>CNPJ:</strong> ${allDashboardData.contract.cnpj || 'N/A'}<br>
+                        <strong>Objeto:</strong> ${allDashboardData.contract.objeto || 'N/A'}
                     `;
                 }
                 
-                // Atualizar cards de resumo
-                const resumo = allData.resumo || {};
-                document.getElementById('contratado-mes').textContent = formatCurrency(resumo.contratadoMensal || 0);
-                document.getElementById('consumido').textContent = formatCurrency(resumo.consumido || 0);
-                document.getElementById('utilizacao').textContent = formatPercentage(resumo.utilizacao || 0);
-                
-                // Atualizar a tabela com os dados processados (o Apps Script já retorna os totais)
-                updateTabela(allData.procedimentos || []);
+                // Ativar a aba do mês inicial e atualizar o dashboard
+                switchMonth(currentMonth);
                 
                 console.log('Dashboard carregado com sucesso!');
                 
             } catch (error) {
                 console.error('Erro ao carregar:', error);
-                document.getElementById('tbody-procedimentos').innerHTML = `<tr><td colspan="5" class="error">Erro ao carregar dados: ${error.message}. Verifique o Apps Script.</td></tr>`;
-                document.getElementById('contrato-block').innerHTML = `<strong>Erro:</strong> ${error.message}`;
-                document.getElementById('contratado-mes').textContent = 'R$ 0,00';
-                document.getElementById('consumido').textContent = 'R$ 0,00';
-                document.getElementById('utilizacao').textContent = '0%';
-                document.getElementById('total-geral').textContent = 'R$ 0,00';
+                tbody.innerHTML = '<tr><td colspan="5" class="error">Erro ao carregar dados. Verifique o Apps Script e a URL.</td></tr>';
+                document.getElementById('contratado-mes').textContent = formatCurrency(0);
+                document.getElementById('consumido').textContent = formatCurrency(0);
+                document.getElementById('utilizacao').textContent = '0,00%';
             }
         }
         
-        function switchMonth(month) {
+        function switchMonth(month, event) {
             currentMonth = month;
+            
+            // Remove 'active' de todas as abas e adiciona à aba clicada
             document.querySelectorAll('.month-tab').forEach(tab => tab.classList.remove('active'));
-            const activeTab = document.querySelector(`.month-tab[data-month="${month}"]`);
-            if (activeTab) activeTab.classList.add('active');
+            if (event && event.target) {
+                event.target.classList.add('active');
+            } else { // Fallback para a carga inicial
+                const activeTab = document.querySelector(`.month-tab[data-month="${month}"]`);
+                if (activeTab) activeTab.classList.add('active');
+            }
             
             document.getElementById('month-title').textContent = month.charAt(0).toUpperCase() + month.slice(1);
             
-            // O Apps Script atualizado já retorna procedimentos com totais acumulados.
-            // Para filtrar por mês, o Apps Script precisaria retornar dados mensais específicos.
-            // Por enquanto, exibe todos os procedimentos mapeados (totais).
-            if (allData && allData.procedimentos) {
-                updateTabela(allData.procedimentos);
-            } else {
-                document.getElementById('tbody-procedimentos').innerHTML = '<tr><td colspan="5" class="loading">Nenhum procedimento encontrado.</td></tr>';
+            if (!allDashboardData) {
+                console.warn('Dados do dashboard ainda não carregados.');
+                return;
             }
+
+            // Atualizar cards de resumo
+            const summary = allDashboardData.summary || {};
+            document.getElementById('contratado-mes').textContent = formatCurrency(summary.contratadoMensal || 0);
+            document.getElementById('consumido').textContent = formatCurrency(summary.consumido || 0);
+            document.getElementById('utilizacao').textContent = `${(summary.utilizacao || 0).toFixed(2).replace('.', ',')}%`;
+            
+            // Atualizar tabela de procedimentos
+            updateTabela(allDashboardData.procedures || []);
         }
         
-        function updateTabela(procedimentos) {
+        function updateTabela(procedures) {
             const tbody = document.getElementById('tbody-procedimentos');
             const totalGeralElement = document.getElementById('total-geral');
             
             tbody.innerHTML = '';
             let totalValorAcumulado = 0;
-            
-            if (procedimentos.length === 0) {
+
+            if (procedures.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="5" class="loading">Nenhum procedimento encontrado.</td></tr>';
-            } else {
-                procedimentos.forEach(proc => {
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td>${proc.procedimento || 'N/A'}</td>
-                        <td><code>${formatCurrency(proc.valorUnit || 0)}</code></td>
-                        <td>${(proc.qtdContratada || 0).toLocaleString('pt-BR')}</td>
-                        <td>${(proc.realizados || 0).toLocaleString('pt-BR')}</td>
-                        <td><code>${formatCurrency(proc.valorTotal || 0)}</code></td>
-                    `;
-                    tbody.appendChild(tr);
-                    totalValorAcumulado += (proc.valorTotal || 0);
-                });
+                totalGeralElement.textContent = formatCurrency(0);
+                return;
             }
+            
+            procedures.forEach(proc => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${proc.nome || 'N/A'}</td>
+                    <td><code>${formatCurrency(proc.valorUnit || 0)}</code></td>
+                    <td>${formatNumber(proc.qtdContratada || 0)}</td>
+                    <td>${formatNumber(proc.realizados || 0)}</td>
+                    <td><code>${formatCurrency(proc.valorTotal || 0)}</code></td>
+                `;
+                tbody.appendChild(tr);
+                totalValorAcumulado += (proc.valorTotal || 0);
+            });
             
             totalGeralElement.textContent = formatCurrency(totalValorAcumulado);
         }
@@ -230,13 +254,12 @@
         document.addEventListener('DOMContentLoaded', () => {
             const monthTabs = document.querySelectorAll('.month-tab');
             monthTabs.forEach(tab => {
-                tab.addEventListener('click', () => switchMonth(tab.dataset.month));
+                tab.addEventListener('click', (event) => switchMonth(event.target.dataset.month, event));
             });
             
-            // Carrega os dados e ativa a aba do mês inicial ao carregar a página
-            carregarDados().then(() => {
-                switchMonth(currentMonth); 
-            });
+            // Carrega os dados e define o mês inicial ao carregar a página
+            carregarDados();
+            switchMonth(currentMonth); // Ativa a aba do mês inicial
         });
     </script>
 </body>
