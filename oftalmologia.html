@@ -137,15 +137,15 @@
                 const contratoBlock = document.getElementById('contrato-block');
                 if (data.contrato) {
                     contratoBlock.innerHTML = `
-                        <strong>CNPJ:</strong> ${data.contrato.cnpj || ''}<br>
-                        <strong>Objeto:</strong> ${data.contrato.objeto || ''}
+                        <strong>CNPJ:</strong> ${data.contrato.cnpj || 'N/A'}<br>
+                        <strong>Objeto:</strong> ${data.contrato.objeto || 'N/A'}
                     `;
                 }
                 
                 // Atualizar cards de resumo
                 const resumo = data.resumo || {};
-                document.getElementById('contratado-mes').textContent = `R$ ${resumo.contratadoMensal ? resumo.contratadoMensal.toLocaleString('pt-BR') : 0}`;
-                document.getElementById('consumido').textContent = `R$ ${resumo.consumido ? resumo.consumido.toLocaleString('pt-BR') : 0}`;
+                document.getElementById('contratado-mes').textContent = `R$ ${resumo.contratadoMensal ? resumo.contratadoMensal.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0,00'}`;
+                document.getElementById('consumido').textContent = `R$ ${resumo.consumido ? resumo.consumido.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0,00'}`;
                 document.getElementById('utilizacao').textContent = `${resumo.utilizacao ? resumo.utilizacao.toFixed(1) : 0}%`;
                 
                 // Filtrar procedimentos por mês (exemplo para 'dezembro')
@@ -156,7 +156,7 @@
                 const monthTabs = document.querySelectorAll('.month-tab');
                 monthTabs.forEach((tab, index) => {
                     const month = tab.textContent.toLowerCase();
-                    tab.onclick = () => switchMonth(month);
+                    tab.onclick = (event) => switchMonth(month, event); // Passar o evento
                 });
                 
                 console.log('Dashboard carregado com sucesso!');
@@ -167,14 +167,22 @@
             }
         }
         
-        function switchMonth(month) {
+        function switchMonth(month, event) {
             currentMonth = month;
             document.querySelectorAll('.month-tab').forEach(tab => tab.classList.remove('active'));
-            event.target.classList.add('active');
+            if (event && event.target) {
+                event.target.classList.add('active');
+            } else { // Fallback if event is not passed (e.g., initial load)
+                const activeTab = Array.from(document.querySelectorAll('.month-tab')).find(tab => tab.textContent.toLowerCase() === month);
+                if (activeTab) activeTab.classList.add('active');
+            }
             document.getElementById('month-title').textContent = month.charAt(0).toUpperCase() + month.slice(1);
             
             // Filtrar procedimentos para o mês atual (lógica simples baseada em dados)
-            const procedimentos = allData.procedimentos.filter(proc => proc.mes === currentMonth) || allData.procedimentos || [];
+            // O Apps Script atualizado já retorna procedimentos com 'mes' acumulado.
+            // Para filtrar por mês, o Apps Script precisaria retornar dados mensais específicos.
+            // Por enquanto, exibe todos os procedimentos mapeados.
+            const procedimentos = allData.procedimentos || [];
             updateTabela(procedimentos);
         }
         
@@ -188,20 +196,20 @@
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>${proc.procedimento}</td>
-                    <td><code>R$ ${proc.valorUnit.toLocaleString('pt-BR')}</code></td>
-                    <td>${proc.qtdContratada.toLocaleString()}</td>
-                    <td>${proc.realizados.toLocaleString()}</td>
-                    <td><code>R$ ${proc.valorTotal.toLocaleString('pt-BR')}</code></td>
+                    <td><code>R$ ${proc.valorUnit.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</code></td>
+                    <td>${proc.qtdContratada.toLocaleString('pt-BR')}</td>
+                    <td>${proc.realizados.toLocaleString('pt-BR')}</td>
+                    <td><code>R$ ${proc.valorTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</code></td>
                 `;
                 tbody.appendChild(tr);
                 totalValor += proc.valorTotal;
             });
             
             if (procedimentos.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" class="loading">Nenhum procedimento encontrado para este mês.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="5" class="loading">Nenhum procedimento encontrado.</td></tr>';
             }
             
-            totalGeral.textContent = `R$ ${totalValor.toLocaleString('pt-BR')}`;
+            totalGeral.textContent = `R$ ${totalValor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
         }
         
         async function sincronizarDados() {
@@ -209,7 +217,10 @@
             alert('Dados sincronizados com sucesso!');
         }
         
-        window.onload = carregarDados;
+        window.onload = () => {
+            carregarDados();
+            switchMonth(currentMonth); // Ativa a aba do mês inicial
+        };
     </script>
 </body>
 </html>
