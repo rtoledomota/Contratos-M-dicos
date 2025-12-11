@@ -1,133 +1,176 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+    <!-- Define a codificação de caracteres para o documento -->
     <meta charset="UTF-8">
-        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
+    <!-- Configura a viewport para garantir que a página seja responsiva em dispositivos móveis -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contratos Médicos - Dashboard</title>
+    <!-- Título da página que aparece na aba do navegador -->
+    <title>Dashboard de Contratos Médicos - Resumo Geral</title>
+    <!-- Estilos CSS internos para o layout e tema médico -->
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', sans-serif; background: #f8f9fa; color: #1a1a1a; }
-        header { background: linear-gradient(135deg, #0066cc 0%, #0088ff 100%); color: white; padding: 60px 20px; text-align: center; }
-        header h1 { font-size: 48px; margin-bottom: 10px; font-weight: 700; }
-        header p { font-size: 16px; opacity: 0.95; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 60px 20px; }
-        h2 { font-size: 32px; margin-bottom: 40px; text-align: center; color: #0066cc; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px; }
-        .card { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: all 0.3s; border-top: 4px solid #0066cc; }
-        .card:hover { transform: translateY(-8px); box-shadow: 0 12px 24px rgba(0,0,0,0.12); }
-        .card h3 { font-size: 24px; margin-bottom: 10px; color: #0066cc; }
-        .card p { font-size: 13px; color: #666; margin-bottom: 20px; }
-        .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; padding: 15px; background: linear-gradient(135deg, #f0f4ff 0%, #f8f9ff 100%); border-radius: 8px; border-left: 4px solid #0066cc; }
-        .stat { text-align: center; }
-        .stat-label { font-size: 11px; color: #666; text-transform: uppercase; margin-bottom: 5px; font-weight: 600; }
-        .stat-value { font-size: 18px; font-weight: 700; color: #0066cc; }
-        .btn { display: block; width: 100%; text-align: center; background: linear-gradient(135deg, #0066cc, #0088ff); color: white; padding: 14px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; transition: all 0.3s; border: none; cursor: pointer; }
-        .btn:hover { transform: scale(1.02); box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3); }
-        .resumo-geral { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 12px; margin-bottom: 40px; }
-        .resumo-geral h3 { font-size: 18px; margin-bottom: 20px; }
-        .resumo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-        .resumo-item { text-align: center; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 8px; }
-        .resumo-label { font-size: 12px; opacity: 0.9; margin-bottom: 5px; }
-        .resumo-valor { font-size: 22px; font-weight: 700; }
-        footer { background: #1a1a1a; color: white; padding: 40px 20px; text-align: center; font-size: 13px; margin-top: 60px; }
-        .status { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; margin-top: 10px; }
-        .status.ok { background: #d4edda; color: #155724; }
-        .status.alerta { background: #fff3cd; color: #856404; }
-        .status.critico { background: #f8d7da; color: #721c24; }
+        /* Estilos globais para o corpo da página */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fonte limpa e profissional */
+            margin: 0; /* Remove margens padrão do corpo */
+            background-color: #e9f5ff; /* Azul claro para o fundo */
+            color: #333; /* Cor de texto padrão */
+            line-height: 1.6; /* Espaçamento entre linhas */
+            display: flex; /* Usa flexbox para o layout principal */
+            flex-direction: column; /* Organiza os itens em coluna */
+            min-height: 100vh; /* Garante que o corpo ocupe pelo menos a altura total da viewport */
+        }
+
+        /* Estilos para o cabeçalho da página */
+        header {
+            background-color: #0056b3; /* Azul escuro para o cabeçalho */
+            color: #ffffff; /* Texto branco */
+            padding: 20px 0; /* Preenchimento superior e inferior */
+            text-align: center; /* Centraliza o texto */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+        }
+
+        /* Estilos para o título principal (h1) */
+        h1 {
+            margin: 0; /* Remove margem padrão */
+            font-size: 2.5em; /* Tamanho da fonte */
+        }
+
+        /* Estilos para a seção principal de conteúdo */
+        main {
+            flex: 1; /* Permite que o conteúdo principal ocupe o espaço restante */
+            padding: 20px; /* Preenchimento interno */
+            max-width: 1200px; /* Largura máxima para o conteúdo */
+            margin: 20px auto; /* Centraliza o conteúdo com margens automáticas */
+            background-color: #ffffff; /* Fundo branco para o conteúdo */
+            border-radius: 8px; /* Cantos arredondados */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra mais pronunciada */
+        }
+
+        /* Estilos para a descrição breve */
+        .description {
+            text-align: center; /* Centraliza o texto */
+            font-size: 1.2em; /* Tamanho da fonte */
+            margin-bottom: 40px; /* Margem inferior */
+            color: #6c757d; /* Cor de texto cinza */
+        }
+
+        /* Estilos para a navegação em cards */
+        .dashboard-nav {
+            display: flex; /* Usa flexbox para os cards */
+            flex-wrap: wrap; /* Permite que os cards quebrem para a próxima linha em telas menores */
+            justify-content: center; /* Centraliza os cards */
+            gap: 30px; /* Espaçamento entre os cards */
+        }
+
+        /* Estilos para cada card de navegação */
+        .nav-card {
+            background-color: #f8f9fa; /* Fundo cinza claro para os cards */
+            border: 1px solid #dee2e6; /* Borda sutil */
+            border-radius: 10px; /* Cantos arredondados */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Sombra para efeito de profundidade */
+            padding: 30px; /* Preenchimento interno */
+            text-align: center; /* Centraliza o texto */
+            text-decoration: none; /* Remove sublinhado do link */
+            color: #333; /* Cor de texto */
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transição suave para hover */
+            flex-basis: calc(33% - 40px); /* Largura dos cards (3 por linha em telas grandes) */
+            max-width: 350px; /* Largura máxima para cada card */
+            display: flex; /* Usa flexbox para o conteúdo do card */
+            flex-direction: column; /* Organiza o conteúdo em coluna */
+            justify-content: space-between; /* Distribui o espaço entre os itens */
+        }
+
+        /* Efeito de hover para os cards de navegação */
+        .nav-card:hover {
+            transform: translateY(-8px); /* Move o card ligeiramente para cima */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Sombra mais intensa */
+            color: #0056b3; /* Cor do texto muda no hover */
+        }
+
+        /* Estilos para os títulos dentro dos cards */
+        .nav-card h3 {
+            margin-top: 0; /* Remove margem superior padrão */
+            color: #007bff; /* Azul médio para os títulos */
+            font-size: 1.8em; /* Tamanho da fonte */
+            margin-bottom: 15px; /* Margem inferior */
+        }
+
+        /* Estilos para os parágrafos dentro dos cards */
+        .nav-card p {
+            color: #6c757d; /* Cor de texto cinza */
+            font-size: 1.1em; /* Tamanho da fonte */
+        }
+
+        /* Estilos para o rodapé da página */
+        footer {
+            background-color: #0056b3; /* Azul escuro para o rodapé */
+            color: #ffffff; /* Texto branco */
+            text-align: center; /* Centraliza o texto */
+            padding: 15px 0; /* Preenchimento */
+            margin-top: 40px; /* Margem superior para separar do conteúdo */
+            font-size: 0.9em; /* Tamanho da fonte */
+        }
+
+        /* Media queries para responsividade em telas menores */
+        @media (max-width: 992px) {
+            .nav-card {
+                flex-basis: calc(50% - 30px); /* 2 cards por linha em tablets */
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em; /* Reduz o tamanho do título principal */
+            }
+            .description {
+                font-size: 1em; /* Reduz o tamanho da descrição */
+            }
+            .nav-card {
+                flex-basis: calc(100% - 20px); /* 1 card por linha em celulares */
+                max-width: 400px; /* Largura máxima para cards em mobile */
+            }
+            main {
+                margin: 10px; /* Reduz margem lateral em mobile */
+                padding: 15px; /* Reduz preenchimento em mobile */
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Cabeçalho da página -->
     <header>
-        <h1>📋 Dashboard de Contratos Médicos</h1>
-        <p>Acompanhe seus contratos de forma centralizada e em tempo real</p>
+        <h1>Dashboard de Contratos Médicos - Resumo Geral</h1>
     </header>
-    
-    <div class="container">
-        <div class="resumo-geral">
-            <h3>📊 RESUMO GERAL - CONTRATOS (JAN a OUT/2025)</h3>
-            <div class="resumo-grid">
-                <div class="resumo-item">
-                    <div class="resumo-label">Total Contratado</div>
-                    <div class="resumo-valor">R$ 18.027.094,00</div>
-                </div>
-                <div class="resumo-item">
-                    <div class="resumo-label">Total Consumido</div>
-                    <div class="resumo-valor">R$ 21.769.815,19</div>
-                </div>
-                <div class="resumo-item">
-                    <div class="resumo-label">Saldo Acumulado</div>
-                    <div class="resumo-valor" style="color: #ff6b6b;">-R$ 3.742.721,19</div>
-                </div>
-                <div class="resumo-item">
-                    <div class="resumo-label">Taxa Média de Uso</div>
-                    <div class="resumo-valor">121%</div>
-                </div>
-            </div>
-        </div>
-        
-        <h2>Contratos por Especialidade</h2>
-        <div class="grid">
-            <div class="card">
-                <h3>🖼️ Radiologia / Diagnóstico por Imagem</h3>
-                <p>Serviços de diagnóstico por imagem - Análise detalhada de consumo</p>
-                <div class="stats">
-                    <div class="stat">
-                        <div class="stat-label">Contratado/Mês</div>
-                        <div class="stat-value">R$ 1.802.709,40</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-label">Consumido (Média)</div>
-                        <div class="stat-value">R$ 2.346.844,73</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-label">% Utilização</div>
-                        <div class="stat-value">130,2%</div>
-                    </div>
-                </div>
-                <span class="status ok">✅ DENTRO DO CONTRATO</span>
-                <a href="radiologia.html" class="btn">Ver Detalhes →</a>
-            </div>
-            
-            <div class="card">
-                <h3>👁️ Oftalmologia</h3>
-                <p>Serviços oftalmológicos - Análise detalhada de consumo</p>
-                <div class="stats">
-                    <div class="stat">
-                        <div class="stat-label">Contratado/Mês</div>
-                        <div class="stat-value">R$ 152.688</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-label">Consumido (Média)</div>
-                        <div class="stat-value">R$ 659.557</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-label">% Utilização</div>
-                        <div class="stat-value">432%</div>
-                    </div>
-                </div>
-                <span class="status critico">⚠️ CRÍTICO - Acima do contratado</span>
-                <a href="oftalmologia.html" class="btn">Ver Detalhes →</a>
-            </div>
-        </div>
-        
-        <h2 style="margin-top: 60px; margin-bottom: 30px;">Informações Importantes</h2>
-        <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); line-height: 1.8; color: #333;">
-            <p><strong>📌 Sobre este Dashboard:</strong></p>
-            <ul style="margin-left: 20px; margin-top: 10px;">
-                <li>Dados atualizados até outubro de 2025</li>
-                <li>Clique em cada especialidade para ver análise detalhada</li>
-                <li>Compare valor contratado vs. consumido por serviço</li>
-                <li>Acompanhe a taxa de utilização de cada procedimento</li>
-                <li>Identifique procedimentos que excedem o contratado</li>
-            </ul>
-        </div>
-    </div>
-    
+
+    <!-- Conteúdo principal da página -->
+    <main>
+        <!-- Descrição breve do dashboard -->
+        <p class="description">Acesse os dashboards específicos para gerenciar contratos médicos.</p>
+
+        <!-- Seção de navegação com cards para os diferentes dashboards -->
+        <nav class="dashboard-nav">
+            <!-- Card para o Resumo Geral -->
+            <a href="resumo.html" class="nav-card">
+                <h3>Resumo Geral</h3>
+                <p>Visão consolidada de todos os contratos e métricas chave.</p>
+            </a>
+            <!-- Card para o Dashboard de Radiologia -->
+            <a href="radiologia.html" class="nav-card">
+                <h3>Radiologia</h3>
+                <p>Detalhes e métricas específicas dos contratos de radiologia.</p>
+            </a>
+            <!-- Card para o Dashboard de Oftalmologia -->
+            <a href="oftalmologia.html" class="nav-card">
+                <h3>Oftalmologia</h3>
+                <p>Detalhes e métricas específicas dos contratos de oftalmologia.</p>
+            </a>
+        </nav>
+    </main>
+
+    <!-- Rodapé da página -->
     <footer>
-        <p>🔄 Dashboard Automático de Contratos Médicos | Atualizado em Nov/2025</p>
+        <p>&copy; 2023 Dashboard de Contratos Médicos. Todos os direitos reservados.</p>
     </footer>
 </body>
 </html>
