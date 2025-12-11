@@ -4,219 +4,191 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard de Contratos - Oftalmologia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Calibri:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        * {
+        body {
+            font-family: 'Calibri', sans-serif;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
         }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
         .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
-        
         header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 40px 20px;
+            padding: 25px;
             text-align: center;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
         }
-        
         header h1 {
-            font-size: 32px;
-            margin-bottom: 10px;
+            margin: 0;
+            font-size: 2.2em;
             font-weight: 700;
         }
-        
-        header p {
-            font-size: 16px;
-            opacity: 0.9;
+        .sync-btn-container {
+            text-align: center;
+            margin-bottom: 25px;
         }
-        
-        .controls {
-            padding: 20px;
-            background: #f8f9fa;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
         .sync-btn {
-            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            background: #28a745;
             color: white;
             border: none;
-            padding: 12px 24px;
-            border-radius: 6px;
+            padding: 12px 25px;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            transition: transform 0.2s, box-shadow 0.2s;
+            font-size: 1em;
+            font-weight: bold;
+            transition: background 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
-        
         .sync-btn:hover {
+            background: #218838;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
         }
-        
-        .status {
-            font-size: 14px;
-            color: #666;
+        .sync-btn:active {
+            transform: translateY(0);
         }
-        
         .tabs {
             display: flex;
-            overflow-x: auto;
-            background: #f8f9fa;
-            padding: 0 20px;
-            border-bottom: 1px solid #e0e0e0;
+            justify-content: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            background-color: #e9ecef;
+            border-radius: 8px;
+            padding: 5px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
         }
-        
         .tab {
-            background: transparent;
-            border: none;
-            padding: 15px 20px;
+            background: #ddd;
+            padding: 12px 22px;
+            margin: 3px;
             cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            color: #666;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s;
-            white-space: nowrap;
+            border-radius: 5px;
+            transition: background 0.3s ease, color 0.3s ease;
+            font-weight: 600;
+            color: #555;
+            flex-grow: 1;
+            text-align: center;
+            min-width: 100px;
         }
-        
-        .tab:hover {
-            color: #667eea;
-        }
-        
         .tab.active {
-            color: #667eea;
-            border-bottom-color: #667eea;
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
-        
+        .tab:hover:not(.active) {
+            background-color: #c9c9c9;
+        }
         .summary-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            padding: 30px 20px;
-            background: white;
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
         }
-        
         .card {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 25px;
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
-            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+            flex: 1;
+            margin: 10px;
+            min-width: 280px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
         }
-        
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
         }
-        
         .card h3 {
-            font-size: 14px;
-            opacity: 0.9;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .card p {
-            font-size: 28px;
+            margin: 0 0 12px 0;
+            font-size: 1.3em;
             font-weight: 700;
+        }
+        .card p {
+            font-size: 2.5em;
             margin: 0;
+            font-weight: 700;
         }
-        
-        .content {
-            padding: 30px 20px;
-            background: white;
-        }
-        
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin-top: 25px;
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
-        
-        th {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px;
-            text-align: left;
-            font-weight: 600;
-            font-size: 14px;
-        }
-        
-        td {
+        th, td {
+            border: 1px solid #e0e0e0;
             padding: 12px 15px;
-            border-bottom: 1px solid #e0e0e0;
-            font-size: 14px;
+            text-align: left;
+            font-size: 0.95em;
         }
-        
+        th {
+            background-color: #f8f8f8;
+            font-weight: 700;
+            color: #444;
+            text-transform: uppercase;
+            font-size: 0.9em;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
         tr:hover {
-            background: #f8f9fa;
+            background-color: #f1f1f1;
         }
-        
-        .loading {
+        .loading, .error {
             text-align: center;
-            padding: 40px;
-            color: #999;
+            padding: 30px;
+            font-size: 1.2em;
+            font-weight: 600;
         }
-        
+        .loading {
+            color: #667eea;
+        }
         .error {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 15px;
-            border-radius: 6px;
-            margin: 20px;
-            border: 1px solid #f5c6cb;
+            color: #dc3545;
         }
-        
-        .hidden {
-            display: none;
-        }
-        
         @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+            header {
+                padding: 15px;
+            }
             header h1 {
-                font-size: 24px;
+                font-size: 1.8em;
             }
-            
-            .summary-cards {
-                grid-template-columns: 1fr;
-            }
-            
-            .controls {
+            .tabs {
                 flex-direction: column;
                 align-items: stretch;
             }
-            
-            .sync-btn {
-                width: 100%;
+            .tab {
+                margin: 3px 0;
             }
-            
-            table {
-                font-size: 12px;
+            .summary-cards {
+                flex-direction: column;
             }
-            
+            .card {
+                margin: 10px 0;
+                min-width: unset;
+            }
             th, td {
-                padding: 8px;
+                padding: 10px;
+                font-size: 0.85em;
             }
         }
     </style>
@@ -224,30 +196,25 @@
 <body>
     <div class="container">
         <header>
-            <h1>📊 Dashboard de Contratos</h1>
-            <p>Oftalmologia</p>
+            <h1>Dashboard de Contratos - Oftalmologia</h1>
         </header>
-        
-        <div class="controls">
-            <button class="sync-btn" onclick="syncData()">🔄 Sincronizar Dados</button>
-            <span class="status" id="status">Pronto</span>
+        <div class="sync-btn-container">
+            <button class="sync-btn" onclick="syncData()">Sincronizar Dados</button>
         </div>
-        
         <div class="tabs" id="tabs"></div>
-        
         <div class="summary-cards" id="summary-cards"></div>
-        
-        <div class="content">
-            <div id="loading" class="loading">Carregando dados...</div>
-            <div id="error" class="error hidden"></div>
-            <table id="procedures-table" class="hidden">
+        <div id="content">
+            <div class="loading" id="loading">Carregando dados...</div>
+            <div class="error" id="error" style="display: none;"></div>
+            <table id="procedures-table" style="display: none;">
                 <thead>
                     <tr>
                         <th>Procedimento</th>
                         <th>Contratado</th>
                         <th>Realizado</th>
                         <th>Valor Unitário</th>
-                        <th>Total</th>
+                        <th>Total Contratado</th>
+                        <th>Total Realizado</th>
                         <th>% Utilização</th>
                     </tr>
                 </thead>
@@ -255,127 +222,212 @@
             </table>
         </div>
     </div>
-    
     <script>
-        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyJFfDGA3j31Oph4ezS9_e4zOHTAED-81cJQ-cXx6UNJwcf_WHwkZNVcUsEuiOdcAeE/exec";
-        const months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-        
-        let currentMonth = 0;
-        let dashboardData = null;
-        
+        // **AVISO IMPORTANTE:**
+        // SUBSTITUA ESTA URL PELA URL DO SEU WEB APP DO GOOGLE APPS SCRIPT APÓS O DEPLOY.
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyJFfDGA3j31Oph4ezS9_e4zOHTAED-81cJQ-cXx6UNJwcf_WHwkZNVcUsEuiOdcAeE/exec'; // Exemplo, substitua!
+
+        const MONTHS_NAMES = [
+            'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto',
+            'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+        ];
+        let currentMonthIndex = new Date().getMonth(); // Mês atual por padrão
+        let dashboardData = {}; // Armazena os dados do dashboard
+
+        /**
+         * Inicializa o dashboard ao carregar a página.
+         */
         function init() {
             createTabs();
+            selectMonth(currentMonthIndex); // Seleciona o mês atual por padrão
             loadData();
         }
-        
+
+        /**
+         * Cria as abas de navegação para os meses.
+         */
         function createTabs() {
-            const tabsContainer = document.getElementById("tabs");
-            months.forEach((month, index) => {
-                const tab = document.createElement("button");
-                tab.className = "tab" + (index === 0 ? " active" : "");
-                tab.textContent = month;
+            const tabsContainer = document.getElementById('tabs');
+            tabsContainer.innerHTML = ''; // Limpa abas existentes
+            MONTHS_NAMES.forEach((monthName, index) => {
+                const tab = document.createElement('div');
+                tab.className = 'tab';
+                tab.textContent = monthName;
                 tab.onclick = () => selectMonth(index);
                 tabsContainer.appendChild(tab);
             });
         }
-        
+
+        /**
+         * Seleciona um mês e atualiza a exibição do dashboard.
+         * @param {number} index O índice do mês (0 para Janeiro, 11 para Dezembro).
+         */
         function selectMonth(index) {
-            currentMonth = index;
-            document.querySelectorAll(".tab").forEach((tab, i) => {
-                tab.classList.toggle("active", i === index);
+            currentMonthIndex = index;
+            document.querySelectorAll('.tab').forEach((tab, i) => {
+                tab.classList.toggle('active', i === index);
             });
             updateDisplay();
         }
-        
-        function updateStatus(message) {
-            document.getElementById("status").textContent = message;
-        }
-        
+
+        /**
+         * Carrega os dados do Google Apps Script Web App.
+         */
         function loadData() {
-            updateStatus("Carregando...");
-            document.getElementById("loading").style.display = "block";
-            document.getElementById("error").classList.add("hidden");
-            document.getElementById("procedures-table").classList.add("hidden");
-            
-            fetch(APPS_SCRIPT_URL)
-                .then(response => response.json())
-                .then(data => {
-                    dashboardData = data;
-                    document.getElementById("loading").style.display = "none";
-                    updateStatus("Sincronizado");
-                    updateDisplay();
+            showLoading(true);
+            hideError();
+            hideTable();
+
+            fetch(SCRIPT_URL)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Erro HTTP: ${response.status} ${response.statusText}`);
+                    }
+                    return response.json();
                 })
-                .catch(error => {
-                    document.getElementById("loading").style.display = "none";
-                    document.getElementById("error").classList.remove("hidden");
-                    document.getElementById("error").textContent = "Erro ao carregar dados: " + error.message;
-                    updateStatus("Erro ao sincronizar");
+                .then(json => {
+                    if (json.success) {
+                        dashboardData = json.data;
+                        updateDisplay();
+                    } else {
+                        showError('Erro ao carregar dados: ' + (json.error || 'Erro desconhecido.'));
+                    }
+                })
+                .catch(err => {
+                    console.error('Erro ao buscar dados:', err);
+                    showError('Erro ao carregar dados: ' + err.message + '. Verifique a URL do Web App e os logs do Apps Script.');
+                })
+                .finally(() => {
+                    showLoading(false);
                 });
         }
-        
+
+        /**
+         * Força a sincronização dos dados (recarrega do Apps Script).
+         */
         function syncData() {
             loadData();
         }
-        
+
+        /**
+         * Atualiza a exibição do dashboard com base nos dados do mês selecionado.
+         */
         function updateDisplay() {
-            if (!dashboardData || !dashboardData.months || currentMonth >= dashboardData.months.length) {
+            const monthName = MONTHS_NAMES[currentMonthIndex];
+            const monthData = dashboardData[monthName];
+
+            if (!monthData) {
+                showError(`Nenhum dado disponível para ${monthName}.`);
+                hideSummaryCards();
+                hideTable();
                 return;
             }
-            
-            const monthData = dashboardData.months[currentMonth];
+
             updateSummaryCards(monthData);
-            updateTable(monthData.procedures);
-            document.getElementById("procedures-table").classList.remove("hidden");
+            updateProceduresTable(monthData.procedures);
+            showTable();
         }
-        
+
+        /**
+         * Atualiza os cards de resumo com os dados do mês.
+         * @param {Object} monthData Dados do mês selecionado.
+         */
         function updateSummaryCards(monthData) {
-            const cardsContainer = document.getElementById("summary-cards");
-            const contract = dashboardData.contract;
-            
+            const cardsContainer = document.getElementById('summary-cards');
             cardsContainer.innerHTML = `
                 <div class="card">
-                    <h3>Contrato</h3>
-                    <p>${contract.numero}</p>
+                    <h3>Contratado/Mês</h3>
+                    <p>${monthData.contratadoMes}</p>
                 </div>
                 <div class="card">
-                    <h3>Valor Mensal</h3>
-                    <p>${contract.valorMensal}</p>
+                    <h3>Consumido</h3>
+                    <p>${monthData.consumido}</p>
                 </div>
                 <div class="card">
-                    <h3>Consumo ${monthData.mes}</h3>
-                    <p>${monthData.consumo || 0}</p>
-                </div>
-                <div class="card">
-                    <h3>Total Procedimentos</h3>
-                    <p>${monthData.procedures ? monthData.procedures.length : 0}</p>
+                    <h3>% Utilização</h3>
+                    <p>${monthData.utilizacaoPercentual}%</p>
                 </div>
             `;
         }
-        
-        function updateTable(procedures) {
-            const tbody = document.getElementById("table-body");
-            tbody.innerHTML = "";
-            
+
+        /**
+         * Atualiza a tabela de procedimentos com os dados do mês.
+         * @param {Array<Object>} procedures Lista de procedimentos.
+         */
+        function updateProceduresTable(procedures) {
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = ''; // Limpa linhas existentes
+
             if (!procedures || procedures.length === 0) {
-                tbody.innerHTML = "<tr><td colspan='6' style='text-align: center; color: #999;'>Nenhum procedimento disponível</td></tr>";
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="7" style="text-align: center;">Nenhum procedimento encontrado para este mês.</td>`;
+                tbody.appendChild(row);
                 return;
             }
-            
+
             procedures.forEach(proc => {
-                const row = document.createElement("tr");
+                const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${proc.procedimento}</td>
                     <td>${proc.contratado}</td>
                     <td>${proc.realizado}</td>
-                    <td>R$ ${parseFloat(proc.valorUnitario).toFixed(2)}</td>
-                    <td>R$ ${parseFloat(proc.total).toFixed(2)}</td>
-                    <td>${proc.utilizacao}%</td>
+                    <td>${proc.valorUnitario}</td>
+                    <td>${proc.totalContratado}</td>
+                    <td>${proc.totalRealizado}</td>
+                    <td>${proc.utilizacaoPercentual}%</td>
                 `;
                 tbody.appendChild(row);
             });
         }
-        
-        window.addEventListener("load", init);
+
+        /**
+         * Exibe ou oculta o indicador de carregamento.
+         * @param {boolean} show True para exibir, false para ocultar.
+         */
+        function showLoading(show) {
+            document.getElementById('loading').style.display = show ? 'block' : 'none';
+        }
+
+        /**
+         * Exibe uma mensagem de erro.
+         * @param {string} message A mensagem de erro.
+         */
+        function showError(message) {
+            const errorElement = document.getElementById('error');
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+
+        /**
+         * Oculta a mensagem de erro.
+         */
+        function hideError() {
+            document.getElementById('error').style.display = 'none';
+        }
+
+        /**
+         * Exibe a tabela de procedimentos.
+         */
+        function showTable() {
+            document.getElementById('procedures-table').style.display = 'table';
+        }
+
+        /**
+         * Oculta a tabela de procedimentos.
+         */
+        function hideTable() {
+            document.getElementById('procedures-table').style.display = 'none';
+        }
+
+        /**
+         * Oculta os cards de resumo.
+         */
+        function hideSummaryCards() {
+            document.getElementById('summary-cards').innerHTML = '';
+        }
+
+        // Inicializa o dashboard quando a página é carregada
+        window.onload = init;
     </script>
 </body>
 </html>
