@@ -4,191 +4,112 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard de Contratos - Oftalmologia</title>
-    <link href="https://fonts.googleapis.com/css2?family=Calibri:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Calibri', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
             color: #333;
-            line-height: 1.6;
         }
         .container {
             max-width: 1200px;
-            margin: 20px auto;
+            margin: 0 auto;
             padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
         header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 25px;
+            padding: 20px;
             text-align: center;
             border-radius: 8px;
-            margin-bottom: 25px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-        }
-        header h1 {
-            margin: 0;
-            font-size: 2.2em;
-            font-weight: 700;
-        }
-        .sync-btn-container {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-        .sync-btn {
-            background: #28a745;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1em;
-            font-weight: bold;
-            transition: background 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-        .sync-btn:hover {
-            background: #218838;
-            transform: translateY(-2px);
-        }
-        .sync-btn:active {
-            transform: translateY(0);
+            margin-bottom: 20px;
         }
         .tabs {
             display: flex;
             justify-content: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
-            background-color: #e9ecef;
-            border-radius: 8px;
-            padding: 5px;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
         }
         .tab {
             background: #ddd;
-            padding: 12px 22px;
-            margin: 3px;
+            padding: 10px 20px;
+            margin: 0 5px;
             cursor: pointer;
             border-radius: 5px;
-            transition: background 0.3s ease, color 0.3s ease;
-            font-weight: 600;
-            color: #555;
-            flex-grow: 1;
-            text-align: center;
-            min-width: 100px;
+            transition: background 0.3s;
         }
         .tab.active {
-            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            background: #667eea;
             color: white;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-        }
-        .tab:hover:not(.active) {
-            background-color: #c9c9c9;
         }
         .summary-cards {
             display: flex;
             justify-content: space-around;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
         }
         .card {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 25px;
-            border-radius: 10px;
+            padding: 20px;
+            border-radius: 8px;
             text-align: center;
             flex: 1;
             margin: 10px;
-            min-width: 280px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-5px);
+            min-width: 200px;
         }
         .card h3 {
-            margin: 0 0 12px 0;
-            font-size: 1.3em;
-            font-weight: 700;
+            margin: 0 0 10px 0;
         }
         .card p {
-            font-size: 2.5em;
+            font-size: 24px;
             margin: 0;
-            font-weight: 700;
+        }
+        .sync-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .sync-btn:hover {
+            background: #218838;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 25px;
-            background-color: #fff;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
         }
         th, td {
-            border: 1px solid #e0e0e0;
-            padding: 12px 15px;
+            border: 1px solid #ddd;
+            padding: 8px;
             text-align: left;
-            font-size: 0.95em;
         }
         th {
-            background-color: #f8f8f8;
-            font-weight: 700;
-            color: #444;
-            text-transform: uppercase;
-            font-size: 0.9em;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-        .loading, .error {
-            text-align: center;
-            padding: 30px;
-            font-size: 1.2em;
-            font-weight: 600;
+            background-color: #f2f2f2;
         }
         .loading {
-            color: #667eea;
+            text-align: center;
+            padding: 20px;
         }
         .error {
-            color: #dc3545;
+            color: red;
+            text-align: center;
+            padding: 20px;
         }
         @media (max-width: 768px) {
-            .container {
-                margin: 10px;
-                padding: 15px;
-            }
-            header {
-                padding: 15px;
-            }
-            header h1 {
-                font-size: 1.8em;
-            }
             .tabs {
                 flex-direction: column;
-                align-items: stretch;
-            }
-            .tab {
-                margin: 3px 0;
+                align-items: center;
             }
             .summary-cards {
                 flex-direction: column;
             }
             .card {
                 margin: 10px 0;
-                min-width: unset;
-            }
-            th, td {
-                padding: 10px;
-                font-size: 0.85em;
             }
         }
     </style>
@@ -198,9 +119,7 @@
         <header>
             <h1>Dashboard de Contratos - Oftalmologia</h1>
         </header>
-        <div class="sync-btn-container">
-            <button class="sync-btn" onclick="syncData()">Sincronizar Dados</button>
-        </div>
+        <button class="sync-btn" onclick="syncData()">Sincronizar Dados</button>
         <div class="tabs" id="tabs"></div>
         <div class="summary-cards" id="summary-cards"></div>
         <div id="content">
@@ -213,8 +132,7 @@
                         <th>Contratado</th>
                         <th>Realizado</th>
                         <th>Valor Unitário</th>
-                        <th>Total Contratado</th>
-                        <th>Total Realizado</th>
+                        <th>Total</th>
                         <th>% Utilização</th>
                     </tr>
                 </thead>
@@ -223,115 +141,84 @@
         </div>
     </div>
     <script>
-        // **AVISO IMPORTANTE:**
-        // SUBSTITUA ESTA URL PELA URL DO SEU WEB APP DO GOOGLE APPS SCRIPT APÓS O DEPLOY.
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyJFfDGA3j31Oph4ezS9_e4zOHTAED-81cJQ-cXx6UNJwcf_WHwkZNVcUsEuiOdcAeE/exec'; // Exemplo, substitua!
+        const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+        let currentMonth = 0;
+        let dashboardData = []; // Renomeado para evitar conflito com 'data' do fetch
 
-        const MONTHS_NAMES = [
-            'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto',
-            'Setembro', 'Outubro', 'Novembro', 'Dezembro'
-        ];
-        let currentMonthIndex = new Date().getMonth(); // Mês atual por padrão
-        let dashboardData = {}; // Armazena os dados do dashboard
+        // URL do seu Web App do Google Apps Script
+        const WEB_APP_URL = '[SUBSTITUA_COM_URL_DO_WEB_APP]'; 
 
-        /**
-         * Inicializa o dashboard ao carregar a página.
-         */
         function init() {
             createTabs();
-            selectMonth(currentMonthIndex); // Seleciona o mês atual por padrão
             loadData();
         }
 
-        /**
-         * Cria as abas de navegação para os meses.
-         */
         function createTabs() {
             const tabsContainer = document.getElementById('tabs');
-            tabsContainer.innerHTML = ''; // Limpa abas existentes
-            MONTHS_NAMES.forEach((monthName, index) => {
+            months.forEach((month, index) => {
                 const tab = document.createElement('div');
                 tab.className = 'tab';
-                tab.textContent = monthName;
+                tab.textContent = month;
                 tab.onclick = () => selectMonth(index);
+                if (index === 0) tab.classList.add('active');
                 tabsContainer.appendChild(tab);
             });
         }
 
-        /**
-         * Seleciona um mês e atualiza a exibição do dashboard.
-         * @param {number} index O índice do mês (0 para Janeiro, 11 para Dezembro).
-         */
         function selectMonth(index) {
-            currentMonthIndex = index;
+            currentMonth = index;
             document.querySelectorAll('.tab').forEach((tab, i) => {
                 tab.classList.toggle('active', i === index);
             });
             updateDisplay();
         }
 
-        /**
-         * Carrega os dados do Google Apps Script Web App.
-         */
         function loadData() {
-            showLoading(true);
-            hideError();
-            hideTable();
-
-            fetch(SCRIPT_URL)
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('error').style.display = 'none';
+            document.getElementById('procedures-table').style.display = 'none';
+            
+            fetch(WEB_APP_URL)
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error(`Erro HTTP: ${response.status} ${response.statusText}`);
+                        throw new Error(`HTTP error! status: ${response.status}`);
                     }
                     return response.json();
                 })
                 .then(json => {
                     if (json.success) {
-                        dashboardData = json.data;
+                        dashboardData = json.data; // Acessa a propriedade 'data' do JSON retornado
+                        document.getElementById('loading').style.display = 'none';
                         updateDisplay();
                     } else {
-                        showError('Erro ao carregar dados: ' + (json.error || 'Erro desconhecido.'));
+                        throw new Error(json.error || 'Erro desconhecido ao carregar dados.');
                     }
                 })
                 .catch(err => {
-                    console.error('Erro ao buscar dados:', err);
-                    showError('Erro ao carregar dados: ' + err.message + '. Verifique a URL do Web App e os logs do Apps Script.');
-                })
-                .finally(() => {
-                    showLoading(false);
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('error').style.display = 'block';
+                    document.getElementById('error').textContent = 'Erro ao carregar dados: ' + err.message + '. Verifique o console para mais detalhes.';
+                    console.error('Erro detalhado:', err);
                 });
         }
 
-        /**
-         * Força a sincronização dos dados (recarrega do Apps Script).
-         */
         function syncData() {
             loadData();
         }
 
-        /**
-         * Atualiza a exibição do dashboard com base nos dados do mês selecionado.
-         */
         function updateDisplay() {
-            const monthName = MONTHS_NAMES[currentMonthIndex];
-            const monthData = dashboardData[monthName];
-
-            if (!monthData) {
-                showError(`Nenhum dado disponível para ${monthName}.`);
-                hideSummaryCards();
-                hideTable();
+            if (!dashboardData || dashboardData.length === 0 || !dashboardData[currentMonth]) {
+                document.getElementById('summary-cards').innerHTML = '<p>Nenhum dado disponível para este mês.</p>';
+                document.getElementById('procedures-table').style.display = 'none';
                 return;
             }
-
+            
+            const monthData = dashboardData[currentMonth];
             updateSummaryCards(monthData);
-            updateProceduresTable(monthData.procedures);
-            showTable();
+            updateTable(monthData.procedures);
+            document.getElementById('procedures-table').style.display = 'table';
         }
 
-        /**
-         * Atualiza os cards de resumo com os dados do mês.
-         * @param {Object} monthData Dados do mês selecionado.
-         */
         function updateSummaryCards(monthData) {
             const cardsContainer = document.getElementById('summary-cards');
             cardsContainer.innerHTML = `
@@ -350,21 +237,13 @@
             `;
         }
 
-        /**
-         * Atualiza a tabela de procedimentos com os dados do mês.
-         * @param {Array<Object>} procedures Lista de procedimentos.
-         */
-        function updateProceduresTable(procedures) {
+        function updateTable(procedures) {
             const tbody = document.getElementById('table-body');
-            tbody.innerHTML = ''; // Limpa linhas existentes
-
+            tbody.innerHTML = '';
             if (!procedures || procedures.length === 0) {
-                const row = document.createElement('tr');
-                row.innerHTML = `<td colspan="7" style="text-align: center;">Nenhum procedimento encontrado para este mês.</td>`;
-                tbody.appendChild(row);
+                tbody.innerHTML = '<tr><td colspan="6">Nenhum procedimento registrado para este mês.</td></tr>';
                 return;
             }
-
             procedures.forEach(proc => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
@@ -372,61 +251,13 @@
                     <td>${proc.contratado}</td>
                     <td>${proc.realizado}</td>
                     <td>${proc.valorUnitario}</td>
-                    <td>${proc.totalContratado}</td>
-                    <td>${proc.totalRealizado}</td>
+                    <td>${proc.total}</td>
                     <td>${proc.utilizacaoPercentual}%</td>
                 `;
                 tbody.appendChild(row);
             });
         }
 
-        /**
-         * Exibe ou oculta o indicador de carregamento.
-         * @param {boolean} show True para exibir, false para ocultar.
-         */
-        function showLoading(show) {
-            document.getElementById('loading').style.display = show ? 'block' : 'none';
-        }
-
-        /**
-         * Exibe uma mensagem de erro.
-         * @param {string} message A mensagem de erro.
-         */
-        function showError(message) {
-            const errorElement = document.getElementById('error');
-            errorElement.textContent = message;
-            errorElement.style.display = 'block';
-        }
-
-        /**
-         * Oculta a mensagem de erro.
-         */
-        function hideError() {
-            document.getElementById('error').style.display = 'none';
-        }
-
-        /**
-         * Exibe a tabela de procedimentos.
-         */
-        function showTable() {
-            document.getElementById('procedures-table').style.display = 'table';
-        }
-
-        /**
-         * Oculta a tabela de procedimentos.
-         */
-        function hideTable() {
-            document.getElementById('procedures-table').style.display = 'none';
-        }
-
-        /**
-         * Oculta os cards de resumo.
-         */
-        function hideSummaryCards() {
-            document.getElementById('summary-cards').innerHTML = '';
-        }
-
-        // Inicializa o dashboard quando a página é carregada
         window.onload = init;
     </script>
 </body>
